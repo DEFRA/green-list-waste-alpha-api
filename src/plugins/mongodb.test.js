@@ -20,11 +20,11 @@ describe('#mongoDb', () => {
     })
 
     test('MongoDb should have expected database name', () => {
-      expect(server.db.databaseName).toBe('cdp-node-backend-template')
+      expect(server.db.databaseName).toBe('green-list-waste-alpha-api')
     })
 
     test('MongoDb should have expected namespace', () => {
-      expect(server.db.namespace).toBe('cdp-node-backend-template')
+      expect(server.db.namespace).toBe('green-list-waste-alpha-api')
     })
   })
 

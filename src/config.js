@@ -32,7 +32,7 @@ export const config = convict({
   serviceName: {
     doc: 'Api Service Name',
     format: String,
-    default: 'cdp-node-backend-template'
+    default: 'green-list-waste-alpha-api'
   },
   cdpEnvironment: {
     doc: 'The CDP environment the app is running in. With the addition of "local" for local development',
@@ -86,7 +86,7 @@ export const config = convict({
     databaseName: {
       doc: 'database for mongodb',
       format: String,
-      default: 'cdp-node-backend-template',
+      default: 'green-list-waste-alpha-api',
       env: 'MONGO_DATABASE'
     },
     mongoOptions: {

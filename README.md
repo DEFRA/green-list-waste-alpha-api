@@ -1,4 +1,4 @@
-# CDP Node.js Backend Template
+# green-list-waste-alpha-api
 
 Core delivery platform Node.js Backend Template.
 
@@ -36,7 +36,7 @@ easier to use the Node Version Manager [nvm](https://github.com/creationix/nvm)
 To use the correct version of Node.js for this application, via nvm:
 
 ```bash
-cd cdp-node-backend-template
+cd green-list-waste-alpha-api
 nvm use
 ```
 
@@ -192,13 +192,13 @@ return await fetch(url, {
 Build:
 
 ```bash
-docker build --no-cache --tag cdp-node-backend-template .
+docker build --no-cache --tag green-list-waste-alpha-api .
 ```
 
 Run:
 
 ```bash
-docker run -e PORT=3001 -p 3001:3001 cdp-node-backend-template
+docker run -e PORT=3001 -p 3001:3001 green-list-waste-alpha-api
 ```
 
 ### Docker Compose

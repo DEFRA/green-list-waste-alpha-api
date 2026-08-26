@@ -39,7 +39,7 @@ services:
 
   ################################################################################
 
-  cdp-node-backend-template:
+  green-list-waste-alpha-api:
     build:
       context: .
       target: development
