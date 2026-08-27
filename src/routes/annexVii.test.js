@@ -61,7 +61,7 @@ const validPayload = {
   },
   recoveryOperation: { rCodeDCode: 'R1' },
   usualDescriptionOfWaste: 'Description of the waste being shipped',
-  wasteIdentification: { list: 'Basel Annex IX', code: 'B1234' },
+  wasteIdentification: { baselAnnexIX: 'B1234', ecListOfWastes: '150101' },
   countriesStatesConcerned: {
     exportDispatchCountry: 'GB',
     importDestinationCountry: 'DE',

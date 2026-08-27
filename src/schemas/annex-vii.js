@@ -77,14 +77,26 @@ const languageValueSchema = Joi.object({
 
 /*
 [Waste Identification]
-identification of the waste being shipped, including its list and code, as well as any commodity codes associated with it
+codes identifying the waste being shipped, matching box 10 of the paper Annex VII form -
+a shipment fills in whichever of the six classification codes are relevant, not just one
 is used within the annexvii schema
 */
 const wasteIdentificationSchema = Joi.object({
-  list: Joi.string().required(),
-  code: Joi.string().required(),
+  baselAnnexIX: Joi.string(),
+  oecd: Joi.string(),
+  annexIIIA: Joi.string(),
+  annexIIIB: Joi.string(),
+  ecListOfWastes: Joi.string(),
+  nationalCode: Joi.string(),
   commodityCodes: Joi.array().items(Joi.string())
-})
+}).or(
+  'baselAnnexIX',
+  'oecd',
+  'annexIIIA',
+  'annexIIIB',
+  'ecListOfWastes',
+  'nationalCode'
+)
 
 /*
 [Facility]
