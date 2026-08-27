@@ -1,0 +1,111 @@
+{
+  "annexVIIDocumentNo": "AX-2024-000001",
+  "shipmentArranger": {
+    "operatorId": "OP-12345",
+    "uuid": "550e8400-e29b-41d4-a716-446655440000",
+    "contactDetails": {
+      "contactPerson": "John Doe",
+      "phone": "+1234567890",
+      "email": "john.doe@somecompany.co.uk"
+    },
+    "isAlsoWasteProducer": false
+  },
+  "importerConsignee": {
+    "operatorId": "OP-67890",
+    "uuid": "550e8400-e29b-41d4-a716-446655440001",
+    "contactDetails": {
+      "contactPerson": "Jane Smith",
+      "phone": "+0987654321",
+      "email": "jane.smith@somecompany.co.uk"
+    }
+  },
+  "shipment": {
+    "actualQuantity": { "tonnes": 100, "metersCubed": 10 },
+    "actualDateOfShipment": "2024-06-01",
+    "createdDueToTakeBack": false,
+    "createdDueToIllegalActivity": false,
+    "commodityCodes": ["4707 10 00"]
+  },
+  "carriers": [
+    {
+      "operatorId": "OP-11111",
+      "uuid": "550e8400-e29b-41d4-a716-446655440002",
+      "contactDetails": {
+        "contactPerson": "Alice Johnson",
+        "phone": "+1122334455",
+        "email": "alice.johnson@carrierone.co.uk"
+      },
+      "meansOfTransportCode": "R",
+      "transferDate": "2024-06-02",
+      "declaration": {
+        "authenticatedBy": {
+          "name": "Alice Johnson",
+          "email": "alice.johnson@carrierone.co.uk",
+          "roleInOrganisation": "Logistics Manager",
+          "authenticationTimestamp": "2024-06-02T08:00:00Z",
+          "uuid": "550e8400-e29b-41d4-a716-446655440010"
+        }
+      }
+    }
+  ],
+  "wasteProducer": {
+    "operatorId": "OP-33333",
+    "uuid": "550e8400-e29b-41d4-a716-446655440004",
+    "contactDetails": {
+      "contactPerson": "Emily Davis",
+      "phone": "+1234567892",
+      "email": "emily.davis@wastegenerator.co.uk"
+    },
+    "shipmentStartLocation": {
+      "operatorId": "OP-33333",
+      "countryCode": "GB",
+      "postalCode": "AB1 2CD",
+      "cityName": "Anytown",
+      "addressDetails": "321 Waste Street",
+      "longitude": -1.4701,
+      "latitude": 53.3811,
+      "responsiblePerson": {
+        "name": "Emily Davis",
+        "phone": "+1234567892",
+        "email": "emily.davis@wastegenerator.co.uk"
+      }
+    },
+    "declaration": {
+      "authenticatedBy": {
+        "name": "Emily Davis",
+        "email": "emily.davis@wastegenerator.co.uk",
+        "roleInOrganisation": "Environmental Manager",
+        "authenticationTimestamp": "2024-06-01T10:00:00Z",
+        "uuid": "550e8400-e29b-41d4-a716-446655440012"
+      }
+    }
+  },
+  "recoveryFacility": {
+    "operatorId": "OP-44444",
+    "uuid": "550e8400-e29b-41d4-a716-446655440005",
+    "facilityType": "recoveryFacility",
+    "isInterimFacility": false,
+    "contactDetails": {
+      "contactPerson": "Michael Brown",
+      "phone": "+0987654323",
+      "email": "michael.brown@recoveryfacility.co.uk"
+    }
+  },
+  "recoveryOperation": { "rCodeDCode": "R1" },
+  "usualDescriptionOfWaste": "Description of the waste being shipped",
+  "wasteIdentification": { "list": "Basel Annex IX", "code": "B1234" },
+  "countriesStatesConcerned": {
+    "exportDispatchCountry": "GB",
+    "importDestinationCountry": "DE",
+    "transitCountries": ["FR", "BE"]
+  },
+  "declarationOfShipmentArranger": {
+    "authenticatedBy": {
+      "name": "John Doe",
+      "email": "john.doe@somecompany.co.uk",
+      "roleInOrganisation": "Director",
+      "authenticationTimestamp": "2024-06-01T11:00:00Z",
+      "uuid": "550e8400-e29b-41d4-a716-446655440013"
+    }
+  }
+}
