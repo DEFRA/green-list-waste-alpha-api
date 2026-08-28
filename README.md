@@ -17,6 +17,29 @@ Run with docker:
 docker compose up
 ```
 
+## Running tests
+
+Run the full test suite with coverage:
+
+```bash
+npm test
+```
+
+This runs `vitest run --coverage` (v8 provider), printing a coverage summary
+to the terminal and writing an `lcov` report to `./coverage/lcov.info`.
+
+To re-run tests on file changes instead:
+
+```bash
+npm run test:watch
+```
+
+To run a single test file, pass it to vitest directly:
+
+```bash
+npx vitest run src/routes/annexVii.test.js
+```
+
 ## Inspecting MongoDB
 
 The `mongodb` container already includes `mongosh`, so no install is needed to look at data:
