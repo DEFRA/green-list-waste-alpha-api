@@ -1,0 +1,4192 @@
+[
+  {
+    "code": "01 01 01",
+    "description": "wastes from mineral metalliferous excavation",
+    "hazardous": false
+  },
+  {
+    "code": "01 01 02",
+    "description": "wastes from mineral non-metalliferous excavation",
+    "hazardous": false
+  },
+  {
+    "code": "01 03 04",
+    "description": "acid-generating tailings from processing of sulphide ore",
+    "hazardous": true
+  },
+  {
+    "code": "01 03 05",
+    "description": "other tailings containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "01 03 06",
+    "description": "tailings other than those mentioned in 01 03 04 and 01 03 05",
+    "hazardous": false
+  },
+  {
+    "code": "01 03 07",
+    "description": "other wastes containing dangerous substances from physical and chemical processing of metalliferous minerals",
+    "hazardous": true
+  },
+  {
+    "code": "01 03 08",
+    "description": "dusty and powdery wastes other than those mentioned in 01 03 07",
+    "hazardous": false
+  },
+  {
+    "code": "01 03 09",
+    "description": "red mud from alumina production other than the wastes mentioned in 01 03 07",
+    "hazardous": false
+  },
+  {
+    "code": "01 03 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "01 04 07",
+    "description": "wastes containing dangerous substances from physical and chemical processing of non-metalliferous minerals",
+    "hazardous": true
+  },
+  {
+    "code": "01 04 08",
+    "description": "waste gravel and crushed rocks other than those mentioned in 01 04 07",
+    "hazardous": false
+  },
+  {
+    "code": "01 04 09",
+    "description": "waste sand and clays",
+    "hazardous": false
+  },
+  {
+    "code": "01 04 10",
+    "description": "dusty and powdery wastes other than those mentioned in 01 04 07",
+    "hazardous": false
+  },
+  {
+    "code": "01 04 11",
+    "description": "wastes from potash and rock-salt processing other than those mentioned in 01 04 07",
+    "hazardous": false
+  },
+  {
+    "code": "01 04 12",
+    "description": "tailings and other wastes from washing and cleaning of minerals other than those mentioned in 01 04 07 and 01 04 11",
+    "hazardous": false
+  },
+  {
+    "code": "01 04 13",
+    "description": "wastes from stone cutting and sawing other than those mentioned in 01 04 07",
+    "hazardous": false
+  },
+  {
+    "code": "01 04 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "01 05 04",
+    "description": "fresh-water drilling muds and wastes",
+    "hazardous": false
+  },
+  {
+    "code": "01 05 05",
+    "description": "oil-containing drilling muds and wastes",
+    "hazardous": true
+  },
+  {
+    "code": "01 05 06",
+    "description": "drilling muds and other drilling wastes containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "01 05 07",
+    "description": "barite-containing drilling muds and wastes other than those mentioned in 01 05 05 and 01 05 06",
+    "hazardous": false
+  },
+  {
+    "code": "01 05 08",
+    "description": "chloride-containing drilling muds and wastes other than those mentioned in 01 05 05 and 01 05 06",
+    "hazardous": false
+  },
+  {
+    "code": "01 05 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "02 01 01",
+    "description": "sludges from washing and cleaning",
+    "hazardous": false
+  },
+  {
+    "code": "02 01 02",
+    "description": "animal-tissue waste",
+    "hazardous": false
+  },
+  {
+    "code": "02 01 03",
+    "description": "plant-tissue waste",
+    "hazardous": false
+  },
+  {
+    "code": "02 01 04",
+    "description": "waste plastics (except packaging)",
+    "hazardous": false
+  },
+  {
+    "code": "02 01 06",
+    "description": "animal faeces, urine and manure (including spoiled straw), effluent, collected separately and treated off-site",
+    "hazardous": false
+  },
+  {
+    "code": "02 01 07",
+    "description": "wastes from forestry",
+    "hazardous": false
+  },
+  {
+    "code": "02 01 08",
+    "description": "agrochemical waste containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "02 01 09",
+    "description": "agrochemical waste other than those mentioned in 02 01 08",
+    "hazardous": false
+  },
+  {
+    "code": "02 01 10",
+    "description": "waste metal",
+    "hazardous": false
+  },
+  {
+    "code": "02 01 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "02 02 01",
+    "description": "sludges from washing and cleaning",
+    "hazardous": false
+  },
+  {
+    "code": "02 02 02",
+    "description": "animal-tissue waste list below, the introduction to the Annex of Decision 2000/532/EC is relevant.",
+    "hazardous": false
+  },
+  {
+    "code": "02 02 03",
+    "description": "materials unsuitable for consumption or processing",
+    "hazardous": false
+  },
+  {
+    "code": "02 02 04",
+    "description": "sludges from on-site effluent treatment",
+    "hazardous": false
+  },
+  {
+    "code": "02 02 99",
+    "description": "wastes not otherwise specified conserve production; yeast and yeast extract production, molasses preparation and fermentation",
+    "hazardous": false
+  },
+  {
+    "code": "02 03 01",
+    "description": "sludges from washing, cleaning, peeling, centrifuging and separation",
+    "hazardous": false
+  },
+  {
+    "code": "02 03 02",
+    "description": "wastes from preserving agents",
+    "hazardous": false
+  },
+  {
+    "code": "02 03 03",
+    "description": "wastes from solvent extraction",
+    "hazardous": false
+  },
+  {
+    "code": "02 03 04",
+    "description": "materials unsuitable for consumption or processing",
+    "hazardous": false
+  },
+  {
+    "code": "02 03 05",
+    "description": "sludges from on-site effluent treatment",
+    "hazardous": false
+  },
+  {
+    "code": "02 03 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "02 04 01",
+    "description": "soil from cleaning and washing beet",
+    "hazardous": false
+  },
+  {
+    "code": "02 04 02",
+    "description": "off-specification calcium carbonate",
+    "hazardous": false
+  },
+  {
+    "code": "02 04 03",
+    "description": "sludges from on-site effluent treatment",
+    "hazardous": false
+  },
+  {
+    "code": "02 04 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "02 05 01",
+    "description": "materials unsuitable for consumption or processing",
+    "hazardous": false
+  },
+  {
+    "code": "02 05 02",
+    "description": "sludges from on-site effluent treatment",
+    "hazardous": false
+  },
+  {
+    "code": "02 05 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "02 06 01",
+    "description": "materials unsuitable for consumption or processing",
+    "hazardous": false
+  },
+  {
+    "code": "02 06 02",
+    "description": "wastes from preserving agents",
+    "hazardous": false
+  },
+  {
+    "code": "02 06 03",
+    "description": "sludges from on-site effluent treatment",
+    "hazardous": false
+  },
+  {
+    "code": "02 06 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "02 07 01",
+    "description": "wastes from washing, cleaning and mechanical reduction of raw materials",
+    "hazardous": false
+  },
+  {
+    "code": "02 07 02",
+    "description": "wastes from spirits distillation",
+    "hazardous": false
+  },
+  {
+    "code": "02 07 03",
+    "description": "wastes from chemical treatment",
+    "hazardous": false
+  },
+  {
+    "code": "02 07 04",
+    "description": "materials unsuitable for consumption or processing",
+    "hazardous": false
+  },
+  {
+    "code": "02 07 05",
+    "description": "sludges from on-site effluent treatment",
+    "hazardous": false
+  },
+  {
+    "code": "02 07 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "03 01 01",
+    "description": "waste bark and cork",
+    "hazardous": false
+  },
+  {
+    "code": "03 01 04",
+    "description": "sawdust, shavings, cuttings, wood, particle board and veneer containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "03 01 05",
+    "description": "sawdust, shavings, cuttings, wood, particle board and veneer other than those mentioned in 03 01 04",
+    "hazardous": false
+  },
+  {
+    "code": "03 01 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "03 02 01",
+    "description": "non-halogenated organic wood preservatives",
+    "hazardous": true
+  },
+  {
+    "code": "03 02 02",
+    "description": "organochlorinated wood preservatives",
+    "hazardous": true
+  },
+  {
+    "code": "03 02 03",
+    "description": "organometallic wood preservatives",
+    "hazardous": true
+  },
+  {
+    "code": "03 02 04",
+    "description": "inorganic wood preservatives",
+    "hazardous": true
+  },
+  {
+    "code": "03 02 05",
+    "description": "other wood preservatives containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "03 02 99",
+    "description": "wood preservatives not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "03 03 01",
+    "description": "waste bark and wood",
+    "hazardous": false
+  },
+  {
+    "code": "03 03 02",
+    "description": "green liquor sludge (from recovery of cooking liquor)",
+    "hazardous": false
+  },
+  {
+    "code": "03 03 05",
+    "description": "de-inking sludges from paper recycling",
+    "hazardous": false
+  },
+  {
+    "code": "03 03 07",
+    "description": "mechanically separated rejects from pulping of waste paper and cardboard",
+    "hazardous": false
+  },
+  {
+    "code": "03 03 08",
+    "description": "wastes from sorting of paper and cardboard destined for recycling",
+    "hazardous": false
+  },
+  {
+    "code": "03 03 09",
+    "description": "lime mud waste",
+    "hazardous": false
+  },
+  {
+    "code": "03 03 10",
+    "description": "fibre rejects, fibre-, filler- and coating sludges from mechanical separation",
+    "hazardous": false
+  },
+  {
+    "code": "03 03 11",
+    "description": "sludges from on-site effluent treatment other than those mentioned in 03 03 10",
+    "hazardous": false
+  },
+  {
+    "code": "03 03 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "04 01 01",
+    "description": "fleshings and lime split wastes",
+    "hazardous": false
+  },
+  {
+    "code": "04 01 02",
+    "description": "liming waste",
+    "hazardous": false
+  },
+  {
+    "code": "04 01 03",
+    "description": "degreasing wastes containing solvents without a liquid phase",
+    "hazardous": true
+  },
+  {
+    "code": "04 01 04",
+    "description": "tanning liquor containing chromium",
+    "hazardous": false
+  },
+  {
+    "code": "04 01 05",
+    "description": "tanning liquor free of chromium",
+    "hazardous": false
+  },
+  {
+    "code": "04 01 06",
+    "description": "sludges, in particular from on-site effluent treatment containing chromium",
+    "hazardous": false
+  },
+  {
+    "code": "04 01 07",
+    "description": "sludges, in particular from on-site effluent treatment free of chromium",
+    "hazardous": false
+  },
+  {
+    "code": "04 01 08",
+    "description": "waste tanned leather (blue sheetings, shavings, cuttings, buffing dust) containing chromium",
+    "hazardous": false
+  },
+  {
+    "code": "04 01 09",
+    "description": "wastes from dressing and finishing",
+    "hazardous": false
+  },
+  {
+    "code": "04 01 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "04 02 09",
+    "description": "wastes from composite materials (impregnated textile, elastomer, plastomer)",
+    "hazardous": false
+  },
+  {
+    "code": "04 02 10",
+    "description": "organic matter from natural products (e.g. grease, wax)",
+    "hazardous": false
+  },
+  {
+    "code": "04 02 14",
+    "description": "wastes from finishing containing organic solvents",
+    "hazardous": true
+  },
+  {
+    "code": "04 02 15",
+    "description": "wastes from finishing other than those mentioned in 04 02 14",
+    "hazardous": false
+  },
+  {
+    "code": "04 02 16",
+    "description": "dyestuffs and pigments containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "04 02 17",
+    "description": "dyestuffs and pigments other than those mentioned in 04 02 16",
+    "hazardous": false
+  },
+  {
+    "code": "04 02 19",
+    "description": "sludges from on-site effluent treatment containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "04 02 20",
+    "description": "sludges from on-site effluent treatment other than those mentioned in 04 02 19",
+    "hazardous": false
+  },
+  {
+    "code": "04 02 21",
+    "description": "wastes from unprocessed textile fibres",
+    "hazardous": false
+  },
+  {
+    "code": "04 02 22",
+    "description": "wastes from processed textile fibres",
+    "hazardous": false
+  },
+  {
+    "code": "04 02 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "05 01 02",
+    "description": "desalter sludges",
+    "hazardous": true
+  },
+  {
+    "code": "05 01 03",
+    "description": "tank bottom sludges",
+    "hazardous": true
+  },
+  {
+    "code": "05 01 04",
+    "description": "acid alkyl sludges",
+    "hazardous": true
+  },
+  {
+    "code": "05 01 05",
+    "description": "oil spills",
+    "hazardous": true
+  },
+  {
+    "code": "05 01 06",
+    "description": "oily sludges from maintenance operations of the plant or equipment",
+    "hazardous": true
+  },
+  {
+    "code": "05 01 07",
+    "description": "acid tars",
+    "hazardous": true
+  },
+  {
+    "code": "05 01 08",
+    "description": "other tars",
+    "hazardous": true
+  },
+  {
+    "code": "05 01 09",
+    "description": "sludges from on-site effluent treatment containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "05 01 10",
+    "description": "sludges from on-site effluent treatment other than those mentioned in 05 01 09",
+    "hazardous": false
+  },
+  {
+    "code": "05 01 11",
+    "description": "wastes from cleaning of fuels with bases",
+    "hazardous": true
+  },
+  {
+    "code": "05 01 12",
+    "description": "oil containing acids",
+    "hazardous": true
+  },
+  {
+    "code": "05 01 13",
+    "description": "boiler feedwater sludges",
+    "hazardous": false
+  },
+  {
+    "code": "05 01 14",
+    "description": "wastes from cooling columns",
+    "hazardous": false
+  },
+  {
+    "code": "05 01 15",
+    "description": "spent filter clays",
+    "hazardous": true
+  },
+  {
+    "code": "05 01 16",
+    "description": "sulphur-containing wastes from petroleum desulphurisation",
+    "hazardous": false
+  },
+  {
+    "code": "05 01 17",
+    "description": "bitumen",
+    "hazardous": false
+  },
+  {
+    "code": "05 01 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "05 06 01",
+    "description": "acid tars",
+    "hazardous": true
+  },
+  {
+    "code": "05 06 03",
+    "description": "other tars",
+    "hazardous": true
+  },
+  {
+    "code": "05 06 04",
+    "description": "waste from cooling columns",
+    "hazardous": false
+  },
+  {
+    "code": "05 06 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "05 07 01",
+    "description": "wastes containing mercury",
+    "hazardous": true
+  },
+  {
+    "code": "05 07 02",
+    "description": "wastes containing sulphur",
+    "hazardous": false
+  },
+  {
+    "code": "05 07 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "06 01 01",
+    "description": "sulphuric acid and sulphurous acid",
+    "hazardous": true
+  },
+  {
+    "code": "06 01 02",
+    "description": "hydrochloric acid",
+    "hazardous": true
+  },
+  {
+    "code": "06 01 03",
+    "description": "hydrofluoric acid",
+    "hazardous": true
+  },
+  {
+    "code": "06 01 04",
+    "description": "phosphoric and phosphorous acid",
+    "hazardous": true
+  },
+  {
+    "code": "06 01 05",
+    "description": "nitric acid and nitrous acid",
+    "hazardous": true
+  },
+  {
+    "code": "06 01 06",
+    "description": "other acids",
+    "hazardous": true
+  },
+  {
+    "code": "06 01 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "06 02 01",
+    "description": "calcium hydroxide",
+    "hazardous": true
+  },
+  {
+    "code": "06 02 03",
+    "description": "ammonium hydroxide",
+    "hazardous": true
+  },
+  {
+    "code": "06 02 04",
+    "description": "sodium and potassium hydroxide",
+    "hazardous": true
+  },
+  {
+    "code": "06 02 05",
+    "description": "other bases",
+    "hazardous": true
+  },
+  {
+    "code": "06 02 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "06 03 11",
+    "description": "solid salts and solutions containing cyanides",
+    "hazardous": true
+  },
+  {
+    "code": "06 03 13",
+    "description": "solid salts and solutions containing heavy metals",
+    "hazardous": true
+  },
+  {
+    "code": "06 03 14",
+    "description": "solid salts and solutions other than those mentioned in 06 03 11 and 06 03 13",
+    "hazardous": false
+  },
+  {
+    "code": "06 03 15",
+    "description": "metallic oxides containing heavy metals",
+    "hazardous": true
+  },
+  {
+    "code": "06 03 16",
+    "description": "metallic oxides other than those mentioned in 06 03 15",
+    "hazardous": false
+  },
+  {
+    "code": "06 03 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "06 04 03",
+    "description": "wastes containing arsenic",
+    "hazardous": true
+  },
+  {
+    "code": "06 04 04",
+    "description": "wastes containing mercury",
+    "hazardous": true
+  },
+  {
+    "code": "06 04 05",
+    "description": "wastes containing other heavy metals",
+    "hazardous": true
+  },
+  {
+    "code": "06 04 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "06 05 02",
+    "description": "sludges from on-site effluent treatment containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "06 05 03",
+    "description": "sludges from on-site effluent treatment other than those mentioned in 06 05 02",
+    "hazardous": false
+  },
+  {
+    "code": "06 06 02",
+    "description": "wastes containing dangerous sulphides",
+    "hazardous": true
+  },
+  {
+    "code": "06 06 03",
+    "description": "wastes containing sulphides other than those mentioned in 06 06 02",
+    "hazardous": false
+  },
+  {
+    "code": "06 06 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "06 07 01",
+    "description": "wastes containing asbestos from electrolysis",
+    "hazardous": true
+  },
+  {
+    "code": "06 07 02",
+    "description": "activated carbon from chlorine production",
+    "hazardous": true
+  },
+  {
+    "code": "06 07 03",
+    "description": "barium sulphate sludge containing mercury",
+    "hazardous": true
+  },
+  {
+    "code": "06 07 04",
+    "description": "solutions and acids, e.g. contact acid",
+    "hazardous": true
+  },
+  {
+    "code": "06 07 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "06 08 02",
+    "description": "wastes containing dangerous chlorosilanes",
+    "hazardous": true
+  },
+  {
+    "code": "06 08 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "06 09 02",
+    "description": "phosphorous slag",
+    "hazardous": false
+  },
+  {
+    "code": "06 09 03",
+    "description": "calcium-based reaction wastes containing or contaminated with dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "06 09 04",
+    "description": "calcium-based reaction wastes other than those mentioned in 06 09 03",
+    "hazardous": false
+  },
+  {
+    "code": "06 09 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "06 10 02",
+    "description": "wastes containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "06 10 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "06 11 01",
+    "description": "calcium-based reaction wastes from titanium dioxide production",
+    "hazardous": false
+  },
+  {
+    "code": "06 11 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "06 13 01",
+    "description": "inorganic plant protection products, wood-preserving agents and other biocides.",
+    "hazardous": true
+  },
+  {
+    "code": "06 13 02",
+    "description": "spent activated carbon (except 06 07 02)",
+    "hazardous": true
+  },
+  {
+    "code": "06 13 03",
+    "description": "carbon black",
+    "hazardous": false
+  },
+  {
+    "code": "06 13 04",
+    "description": "wastes from asbestos processing",
+    "hazardous": true
+  },
+  {
+    "code": "06 13 05",
+    "description": "soot",
+    "hazardous": true
+  },
+  {
+    "code": "06 13 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "07 01 01",
+    "description": "aqueous washing liquids and mother liquors",
+    "hazardous": true
+  },
+  {
+    "code": "07 01 03",
+    "description": "organic halogenated solvents, washing liquids and mother liquors",
+    "hazardous": true
+  },
+  {
+    "code": "07 01 04",
+    "description": "other organic solvents, washing liquids and mother liquors",
+    "hazardous": true
+  },
+  {
+    "code": "07 01 07",
+    "description": "halogenated still bottoms and reaction residues",
+    "hazardous": true
+  },
+  {
+    "code": "07 01 08",
+    "description": "other still bottoms and reaction residues",
+    "hazardous": true
+  },
+  {
+    "code": "07 01 09",
+    "description": "halogenated filter cakes and spent absorbents",
+    "hazardous": true
+  },
+  {
+    "code": "07 01 10",
+    "description": "other filter cakes and spent absorbents",
+    "hazardous": true
+  },
+  {
+    "code": "07 01 11",
+    "description": "sludges from on-site effluent treatment containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "07 01 12",
+    "description": "sludges from on-site effluent treatment other than those mentioned in 07 01 11",
+    "hazardous": false
+  },
+  {
+    "code": "07 01 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "07 02 01",
+    "description": "aqueous washing liquids and mother liquors",
+    "hazardous": true
+  },
+  {
+    "code": "07 02 03",
+    "description": "organic halogenated solvents, washing liquids and mother liquors",
+    "hazardous": true
+  },
+  {
+    "code": "07 02 04",
+    "description": "other organic solvents, washing liquids and mother liquors",
+    "hazardous": true
+  },
+  {
+    "code": "07 02 07",
+    "description": "halogenated still bottoms and reaction residues",
+    "hazardous": true
+  },
+  {
+    "code": "07 02 08",
+    "description": "other still bottoms and reaction residues",
+    "hazardous": true
+  },
+  {
+    "code": "07 02 09",
+    "description": "halogenated filter cakes and spent absorbents",
+    "hazardous": true
+  },
+  {
+    "code": "07 02 10",
+    "description": "other filter cakes and spent absorbents",
+    "hazardous": true
+  },
+  {
+    "code": "07 02 11",
+    "description": "sludges from on-site effluent treatment containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "07 02 12",
+    "description": "sludges from on-site effluent treatment other than those mentioned in 07 02 11",
+    "hazardous": false
+  },
+  {
+    "code": "07 02 13",
+    "description": "waste plastic",
+    "hazardous": false
+  },
+  {
+    "code": "07 02 14",
+    "description": "wastes from additives containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "07 02 15",
+    "description": "wastes from additives other than those mentioned in 07 02 14",
+    "hazardous": false
+  },
+  {
+    "code": "07 02 16",
+    "description": "wastes containing dangerous silicones",
+    "hazardous": true
+  },
+  {
+    "code": "07 02 17",
+    "description": "waste containing silicones other than those mentioned in 07 02 16",
+    "hazardous": false
+  },
+  {
+    "code": "07 02 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "07 03 01",
+    "description": "aqueous washing liquids and mother liquors",
+    "hazardous": true
+  },
+  {
+    "code": "07 03 03",
+    "description": "organic halogenated solvents, washing liquids and mother liquors",
+    "hazardous": true
+  },
+  {
+    "code": "07 03 04",
+    "description": "other organic solvents, washing liquids and mother liquors",
+    "hazardous": true
+  },
+  {
+    "code": "07 03 07",
+    "description": "halogenated still bottoms and reaction residues",
+    "hazardous": true
+  },
+  {
+    "code": "07 03 08",
+    "description": "other still bottoms and reaction residues",
+    "hazardous": true
+  },
+  {
+    "code": "07 03 09",
+    "description": "halogenated filter cakes and spent absorbents",
+    "hazardous": true
+  },
+  {
+    "code": "07 03 10",
+    "description": "other filter cakes and spent absorbents",
+    "hazardous": true
+  },
+  {
+    "code": "07 03 11",
+    "description": "sludges from on-site effluent treatment containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "07 03 12",
+    "description": "sludges from on-site effluent treatment other than those mentioned in 07 03 11",
+    "hazardous": false
+  },
+  {
+    "code": "07 03 99",
+    "description": "wastes not otherwise specified preserving agents (except 03 02) and other biocides",
+    "hazardous": false
+  },
+  {
+    "code": "07 04 01",
+    "description": "aqueous washing liquids and mother liquors",
+    "hazardous": true
+  },
+  {
+    "code": "07 04 03",
+    "description": "organic halogenated solvents, washing liquids and mother liquors",
+    "hazardous": true
+  },
+  {
+    "code": "07 04 04",
+    "description": "other organic solvents, washing liquids and mother liquors",
+    "hazardous": true
+  },
+  {
+    "code": "07 04 07",
+    "description": "halogenated still bottoms and reaction residues",
+    "hazardous": true
+  },
+  {
+    "code": "07 04 08",
+    "description": "other still bottoms and reaction residues",
+    "hazardous": true
+  },
+  {
+    "code": "07 04 09",
+    "description": "halogenated filter cakes and spent absorbents",
+    "hazardous": true
+  },
+  {
+    "code": "07 04 10",
+    "description": "other filter cakes and spent absorbents",
+    "hazardous": true
+  },
+  {
+    "code": "07 04 11",
+    "description": "sludges from on-site effluent treatment containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "07 04 12",
+    "description": "sludges from on-site effluent treatment other than those mentioned in 07 04 11",
+    "hazardous": false
+  },
+  {
+    "code": "07 04 13",
+    "description": "solid wastes containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "07 04 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "07 05 01",
+    "description": "aqueous washing liquids and mother liquors",
+    "hazardous": true
+  },
+  {
+    "code": "07 05 03",
+    "description": "organic halogenated solvents, washing liquids and mother liquors",
+    "hazardous": true
+  },
+  {
+    "code": "07 05 04",
+    "description": "other organic solvents, washing liquids and mother liquors",
+    "hazardous": true
+  },
+  {
+    "code": "07 05 07",
+    "description": "halogenated still bottoms and reaction residues",
+    "hazardous": true
+  },
+  {
+    "code": "07 05 08",
+    "description": "other still bottoms and reaction residues",
+    "hazardous": true
+  },
+  {
+    "code": "07 05 09",
+    "description": "halogenated filter cakes and spent absorbents",
+    "hazardous": true
+  },
+  {
+    "code": "07 05 10",
+    "description": "other filter cakes and spent absorbents",
+    "hazardous": true
+  },
+  {
+    "code": "07 05 11",
+    "description": "sludges from on-site effluent treatment containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "07 05 12",
+    "description": "sludges from on-site effluent treatment other than those mentioned in 07 05 11",
+    "hazardous": false
+  },
+  {
+    "code": "07 05 13",
+    "description": "solid wastes containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "07 05 14",
+    "description": "solid wastes other than those mentioned in 07 05 13",
+    "hazardous": false
+  },
+  {
+    "code": "07 05 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "07 06 01",
+    "description": "aqueous washing liquids and mother liquors",
+    "hazardous": true
+  },
+  {
+    "code": "07 06 03",
+    "description": "organic halogenated solvents, washing liquids and mother liquors",
+    "hazardous": true
+  },
+  {
+    "code": "07 06 04",
+    "description": "other organic solvents, washing liquids and mother liquors",
+    "hazardous": true
+  },
+  {
+    "code": "07 06 07",
+    "description": "halogenated still bottoms and reaction residues",
+    "hazardous": true
+  },
+  {
+    "code": "07 06 08",
+    "description": "other still bottoms and reaction residues",
+    "hazardous": true
+  },
+  {
+    "code": "07 06 09",
+    "description": "halogenated filter cakes and spent absorbents",
+    "hazardous": true
+  },
+  {
+    "code": "07 06 10",
+    "description": "other filter cakes and spent absorbents",
+    "hazardous": true
+  },
+  {
+    "code": "07 06 11",
+    "description": "sludges from on-site effluent treatment containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "07 06 12",
+    "description": "sludges from on-site effluent treatment other than those mentioned in 07 06 11",
+    "hazardous": false
+  },
+  {
+    "code": "07 06 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "07 07 01",
+    "description": "aqueous washing liquids and mother liquors",
+    "hazardous": true
+  },
+  {
+    "code": "07 07 03",
+    "description": "organic halogenated solvents, washing liquids and mother liquors",
+    "hazardous": true
+  },
+  {
+    "code": "07 07 04",
+    "description": "other organic solvents, washing liquids and mother liquors",
+    "hazardous": true
+  },
+  {
+    "code": "07 07 07",
+    "description": "halogenated still bottoms and reaction residues",
+    "hazardous": true
+  },
+  {
+    "code": "07 07 08",
+    "description": "other still bottoms and reaction residues",
+    "hazardous": true
+  },
+  {
+    "code": "07 07 09",
+    "description": "halogenated filter cakes and spent absorbents",
+    "hazardous": true
+  },
+  {
+    "code": "07 07 10",
+    "description": "other filter cakes and spent absorbents",
+    "hazardous": true
+  },
+  {
+    "code": "07 07 11",
+    "description": "sludges from on-site effluent treatment containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "07 07 12",
+    "description": "sludges from on-site effluent treatment other than those mentioned in 07 07 11",
+    "hazardous": false
+  },
+  {
+    "code": "07 07 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "08 01 11",
+    "description": "waste paint and varnish containing organic solvents or other dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "08 01 12",
+    "description": "waste paint and varnish other than those mentioned in 08 01 11",
+    "hazardous": false
+  },
+  {
+    "code": "08 01 13",
+    "description": "sludges from paint or varnish containing organic solvents or other dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "08 01 14",
+    "description": "sludges from paint or varnish other than those mentioned in 08 01 13",
+    "hazardous": false
+  },
+  {
+    "code": "08 01 15",
+    "description": "aqueous sludges containing paint or varnish containing organic solvents or other dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "08 01 16",
+    "description": "aqueous sludges containing paint or varnish other than those mentioned in 08 01 15",
+    "hazardous": false
+  },
+  {
+    "code": "08 01 17",
+    "description": "wastes from paint or varnish removal containing organic solvents or other dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "08 01 18",
+    "description": "wastes from paint or varnish removal other than those mentioned in 08 01 17",
+    "hazardous": false
+  },
+  {
+    "code": "08 01 19",
+    "description": "aqueous suspensions containing paint or varnish containing organic solvents or other dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "08 01 20",
+    "description": "aqueous suspensions containing paint or varnish other than those mentioned in 08 01 19",
+    "hazardous": false
+  },
+  {
+    "code": "08 01 21",
+    "description": "waste paint or varnish remover",
+    "hazardous": true
+  },
+  {
+    "code": "08 01 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "08 02 01",
+    "description": "waste coating powders",
+    "hazardous": false
+  },
+  {
+    "code": "08 02 02",
+    "description": "aqueous sludges containing ceramic materials",
+    "hazardous": false
+  },
+  {
+    "code": "08 02 03",
+    "description": "aqueous suspensions containing ceramic materials",
+    "hazardous": false
+  },
+  {
+    "code": "08 02 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "08 03 07",
+    "description": "aqueous sludges containing ink",
+    "hazardous": false
+  },
+  {
+    "code": "08 03 08",
+    "description": "aqueous liquid waste containing ink",
+    "hazardous": false
+  },
+  {
+    "code": "08 03 12",
+    "description": "waste ink containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "08 03 13",
+    "description": "waste ink other than those mentioned in 08 03 12",
+    "hazardous": false
+  },
+  {
+    "code": "08 03 14",
+    "description": "ink sludges containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "08 03 15",
+    "description": "ink sludges other than those mentioned in 08 03 14",
+    "hazardous": false
+  },
+  {
+    "code": "08 03 16",
+    "description": "waste etching solutions",
+    "hazardous": true
+  },
+  {
+    "code": "08 03 17",
+    "description": "waste printing toner containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "08 03 18",
+    "description": "waste printing toner other than those mentioned in 08 03 17",
+    "hazardous": false
+  },
+  {
+    "code": "08 03 19",
+    "description": "disperse oil",
+    "hazardous": true
+  },
+  {
+    "code": "08 03 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "08 04 09",
+    "description": "waste adhesives and sealants containing organic solvents or other dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "08 04 10",
+    "description": "waste adhesives and sealants other than those mentioned in 08 04 09",
+    "hazardous": false
+  },
+  {
+    "code": "08 04 11",
+    "description": "adhesive and sealant sludges containing organic solvents or other dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "08 04 12",
+    "description": "adhesive and sealant sludges other than those mentioned in 08 04 11",
+    "hazardous": false
+  },
+  {
+    "code": "08 04 13",
+    "description": "aqueous sludges containing adhesives or sealants containing organic solvents or other dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "08 04 14",
+    "description": "aqueous sludges containing adhesives or sealants other than those mentioned in 08 04 13",
+    "hazardous": false
+  },
+  {
+    "code": "08 04 15",
+    "description": "aqueous liquid waste containing adhesives or sealants containing organic solvents or other dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "08 04 16",
+    "description": "aqueous liquid waste containing adhesives or sealants other than those mentioned in 08 04 15",
+    "hazardous": false
+  },
+  {
+    "code": "08 04 17",
+    "description": "rosin oil",
+    "hazardous": true
+  },
+  {
+    "code": "08 04 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "08 05 01",
+    "description": "waste isocyanates",
+    "hazardous": true
+  },
+  {
+    "code": "09 01 01",
+    "description": "water-based developer and activator solutions",
+    "hazardous": true
+  },
+  {
+    "code": "09 01 02",
+    "description": "water-based offset plate developer solutions",
+    "hazardous": true
+  },
+  {
+    "code": "09 01 03",
+    "description": "solvent-based developer solutions",
+    "hazardous": true
+  },
+  {
+    "code": "09 01 04",
+    "description": "fixer solutions",
+    "hazardous": true
+  },
+  {
+    "code": "09 01 05",
+    "description": "bleach solutions and bleach fixer solutions",
+    "hazardous": true
+  },
+  {
+    "code": "09 01 06",
+    "description": "wastes containing silver from on-site treatment of photographic wastes",
+    "hazardous": true
+  },
+  {
+    "code": "09 01 07",
+    "description": "photographic film and paper containing silver or silver compounds",
+    "hazardous": false
+  },
+  {
+    "code": "09 01 08",
+    "description": "photographic film and paper free of silver or silver compounds",
+    "hazardous": false
+  },
+  {
+    "code": "09 01 10",
+    "description": "single-use cameras without batteries",
+    "hazardous": false
+  },
+  {
+    "code": "09 01 11",
+    "description": "single-use cameras containing batteries included in 16 06 01, 16 06 02 or 16 06 03",
+    "hazardous": true
+  },
+  {
+    "code": "09 01 12",
+    "description": "single-use cameras containing batteries other than those mentioned in 09 01 11",
+    "hazardous": false
+  },
+  {
+    "code": "09 01 13",
+    "description": "aqueous liquid waste from on-site reclamation of silver other than those mentioned in 09 01 06",
+    "hazardous": true
+  },
+  {
+    "code": "09 01 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "10 01 01",
+    "description": "bottom ash, slag and boiler dust (excluding boiler dust mentioned in 10 01 04)",
+    "hazardous": false
+  },
+  {
+    "code": "10 01 02",
+    "description": "coal fly ash",
+    "hazardous": false
+  },
+  {
+    "code": "10 01 03",
+    "description": "fly ash from peat and untreated wood",
+    "hazardous": false
+  },
+  {
+    "code": "10 01 04",
+    "description": "oil fly ash and boiler dust",
+    "hazardous": true
+  },
+  {
+    "code": "10 01 05",
+    "description": "calcium-based reaction wastes from flue-gas desulphurisation in solid form",
+    "hazardous": false
+  },
+  {
+    "code": "10 01 07",
+    "description": "calcium-based reaction wastes from flue-gas desulphurisation in sludge form",
+    "hazardous": false
+  },
+  {
+    "code": "10 01 09",
+    "description": "sulphuric acid",
+    "hazardous": true
+  },
+  {
+    "code": "10 01 13",
+    "description": "fly ash from emulsified hydrocarbons used as fuel",
+    "hazardous": true
+  },
+  {
+    "code": "10 01 14",
+    "description": "bottom ash, slag and boiler dust from coincineration containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "10 01 15",
+    "description": "bottom ash, slag and boiler dust from coincineration other than those mentioned in 10 01 14",
+    "hazardous": false
+  },
+  {
+    "code": "10 01 16",
+    "description": "fly ash from coincineration containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "10 01 17",
+    "description": "fly ash from coincineration other than those mentioned in 10 01 16",
+    "hazardous": false
+  },
+  {
+    "code": "10 01 18",
+    "description": "wastes from gas cleaning containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "10 01 19",
+    "description": "wastes from gas cleaning other than those mentioned in 10 01 05, 10 01 07 and 10 01 18",
+    "hazardous": false
+  },
+  {
+    "code": "10 01 20",
+    "description": "sludges from on-site effluent treatment containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "10 01 21",
+    "description": "sludges from on-site effluent treatment other than those mentioned in 10 01 20",
+    "hazardous": false
+  },
+  {
+    "code": "10 01 22",
+    "description": "aqueous sludges from boiler cleansing containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "10 01 23",
+    "description": "aqueous sludges from boiler cleansing other than those mentioned in 10 01 22",
+    "hazardous": false
+  },
+  {
+    "code": "10 01 24",
+    "description": "sands from fluidised beds",
+    "hazardous": false
+  },
+  {
+    "code": "10 01 25",
+    "description": "wastes from fuel storage and preparation of coal-fired power plants",
+    "hazardous": false
+  },
+  {
+    "code": "10 01 26",
+    "description": "wastes from cooling-water treatment",
+    "hazardous": false
+  },
+  {
+    "code": "10 01 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "10 02 01",
+    "description": "wastes from the processing of slag",
+    "hazardous": false
+  },
+  {
+    "code": "10 02 02",
+    "description": "unprocessed slag",
+    "hazardous": false
+  },
+  {
+    "code": "10 02 07",
+    "description": "solid wastes from gas treatment containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "10 02 08",
+    "description": "solid wastes from gas treatment other than those mentioned in 10 02 07",
+    "hazardous": false
+  },
+  {
+    "code": "10 02 10",
+    "description": "mill scales",
+    "hazardous": false
+  },
+  {
+    "code": "10 02 11",
+    "description": "wastes from cooling-water treatment containing oil",
+    "hazardous": true
+  },
+  {
+    "code": "10 02 12",
+    "description": "wastes from cooling-water treatment other than those mentioned in 10 02 11",
+    "hazardous": false
+  },
+  {
+    "code": "10 02 13",
+    "description": "sludges and filter cakes from gas treatment containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "10 02 14",
+    "description": "sludges and filter cakes from gas treatment other than those mentioned in 10 02 13",
+    "hazardous": false
+  },
+  {
+    "code": "10 02 15",
+    "description": "other sludges and filter cakes",
+    "hazardous": false
+  },
+  {
+    "code": "10 02 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "10 03 02",
+    "description": "anode scraps",
+    "hazardous": false
+  },
+  {
+    "code": "10 03 04",
+    "description": "primary production slags",
+    "hazardous": false
+  },
+  {
+    "code": "10 03 05",
+    "description": "waste alumina",
+    "hazardous": false
+  },
+  {
+    "code": "10 03 08",
+    "description": "salt slags from secondary production",
+    "hazardous": true
+  },
+  {
+    "code": "10 03 09",
+    "description": "black drosses from secondary production",
+    "hazardous": true
+  },
+  {
+    "code": "10 03 15",
+    "description": "skimmings that are flammable or emit, upon contact with water, flammable gases in dangerous quantities",
+    "hazardous": true
+  },
+  {
+    "code": "10 03 16",
+    "description": "skimmings other than those mentioned in 10 03 15",
+    "hazardous": false
+  },
+  {
+    "code": "10 03 17",
+    "description": "tar-containing wastes from anode manufacture",
+    "hazardous": true
+  },
+  {
+    "code": "10 03 18",
+    "description": "carbon-containing wastes from anode manufacture other than those mentioned in 10 03 17",
+    "hazardous": false
+  },
+  {
+    "code": "10 03 19",
+    "description": "flue-gas dust containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "10 03 20",
+    "description": "flue-gas dust other than those mentioned in 10 03 19",
+    "hazardous": false
+  },
+  {
+    "code": "10 03 21",
+    "description": "other particulates and dust (including ball-mill dust) containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "10 03 22",
+    "description": "other particulates and dust (including ball-mill dust) other than those mentioned in 10 03 21",
+    "hazardous": false
+  },
+  {
+    "code": "10 03 23",
+    "description": "solid wastes from gas treatment containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "10 03 24",
+    "description": "solid wastes from gas treatment other than those mentioned in 10 03 23",
+    "hazardous": false
+  },
+  {
+    "code": "10 03 25",
+    "description": "sludges and filter cakes from gas treatment containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "10 03 26",
+    "description": "sludges and filter cakes from gas treatment other than those mentioned in 10 03 25",
+    "hazardous": false
+  },
+  {
+    "code": "10 03 27",
+    "description": "wastes from cooling-water treatment containing oil",
+    "hazardous": true
+  },
+  {
+    "code": "10 03 28",
+    "description": "wastes from cooling-water treatment other than those mentioned in 10 03 27",
+    "hazardous": false
+  },
+  {
+    "code": "10 03 29",
+    "description": "wastes from treatment of salt slags and black drosses containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "10 03 30",
+    "description": "wastes from treatment of salt slags and black drosses other than those mentioned in 10 03 29",
+    "hazardous": false
+  },
+  {
+    "code": "10 03 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "10 04 01",
+    "description": "slags from primary and secondary production",
+    "hazardous": true
+  },
+  {
+    "code": "10 04 02",
+    "description": "dross and skimmings from primary and secondary production",
+    "hazardous": true
+  },
+  {
+    "code": "10 04 03",
+    "description": "calcium arsenate",
+    "hazardous": true
+  },
+  {
+    "code": "10 04 04",
+    "description": "flue-gas dust",
+    "hazardous": true
+  },
+  {
+    "code": "10 04 05",
+    "description": "other particulates and dust",
+    "hazardous": true
+  },
+  {
+    "code": "10 04 06",
+    "description": "solid wastes from gas treatment",
+    "hazardous": true
+  },
+  {
+    "code": "10 04 07",
+    "description": "sludges and filter cakes from gas treatment",
+    "hazardous": true
+  },
+  {
+    "code": "10 04 09",
+    "description": "wastes from cooling-water treatment containing oil",
+    "hazardous": true
+  },
+  {
+    "code": "10 04 10",
+    "description": "wastes from cooling-water treatment other than those mentioned in 10 04 09",
+    "hazardous": false
+  },
+  {
+    "code": "10 04 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "10 05 01",
+    "description": "slags from primary and secondary production",
+    "hazardous": false
+  },
+  {
+    "code": "10 05 03",
+    "description": "flue-gas dust",
+    "hazardous": true
+  },
+  {
+    "code": "10 05 04",
+    "description": "other particulates and dust",
+    "hazardous": false
+  },
+  {
+    "code": "10 05 05",
+    "description": "solid waste from gas treatment",
+    "hazardous": true
+  },
+  {
+    "code": "10 05 06",
+    "description": "sludges and filter cakes from gas treatment",
+    "hazardous": true
+  },
+  {
+    "code": "10 05 08",
+    "description": "wastes from cooling-water treatment containing oil",
+    "hazardous": true
+  },
+  {
+    "code": "10 05 09",
+    "description": "wastes from cooling-water treatment other than those mentioned in 10 05 08",
+    "hazardous": false
+  },
+  {
+    "code": "10 05 10",
+    "description": "dross and skimmings that are flammable or emit, upon contact with water, flammable gases in dangerous quantities",
+    "hazardous": true
+  },
+  {
+    "code": "10 05 11",
+    "description": "dross and skimmings other than those mentioned in 10 05 10",
+    "hazardous": false
+  },
+  {
+    "code": "10 05 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "10 06 01",
+    "description": "dross and skimmings from primary and secondary production",
+    "hazardous": false
+  },
+  {
+    "code": "10 06 02",
+    "description": "slags from primary and secondary production",
+    "hazardous": false
+  },
+  {
+    "code": "10 06 03",
+    "description": "flue-gas dust",
+    "hazardous": true
+  },
+  {
+    "code": "10 06 04",
+    "description": "other particulates and dust",
+    "hazardous": false
+  },
+  {
+    "code": "10 06 06",
+    "description": "solid wastes from gas treatment",
+    "hazardous": true
+  },
+  {
+    "code": "10 06 07",
+    "description": "sludges and filter cakes from gas treatment",
+    "hazardous": true
+  },
+  {
+    "code": "10 06 09",
+    "description": "wastes from cooling-water treatment containing oil",
+    "hazardous": true
+  },
+  {
+    "code": "10 06 10",
+    "description": "wastes from cooling-water treatment other than those mentioned in 10 06 09",
+    "hazardous": false
+  },
+  {
+    "code": "10 06 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "10 07 01",
+    "description": "slags from primary and secondary production",
+    "hazardous": false
+  },
+  {
+    "code": "10 07 02",
+    "description": "dross and skimmings from primary and secondary production",
+    "hazardous": false
+  },
+  {
+    "code": "10 07 03",
+    "description": "solid wastes from gas treatment",
+    "hazardous": false
+  },
+  {
+    "code": "10 07 04",
+    "description": "other particulates and dust",
+    "hazardous": false
+  },
+  {
+    "code": "10 07 05",
+    "description": "sludges and filter cakes from gas treatment",
+    "hazardous": false
+  },
+  {
+    "code": "10 07 07",
+    "description": "wastes from cooling-water treatment containing oil",
+    "hazardous": true
+  },
+  {
+    "code": "10 07 08",
+    "description": "wastes from cooling-water treatment other than those mentioned in 10 07 07",
+    "hazardous": false
+  },
+  {
+    "code": "10 07 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "10 08 04",
+    "description": "particulates and dust",
+    "hazardous": true
+  },
+  {
+    "code": "10 08 08",
+    "description": "salt slag from primary and secondary production",
+    "hazardous": true
+  },
+  {
+    "code": "10 08 09",
+    "description": "other slags",
+    "hazardous": true
+  },
+  {
+    "code": "10 08 10",
+    "description": "dross and skimmings that are flammable or emit, upon contact with water, flammable gases in dangerous quantities",
+    "hazardous": true
+  },
+  {
+    "code": "10 08 11",
+    "description": "dross and skimmings other than those mentioned in 10 08 10",
+    "hazardous": false
+  },
+  {
+    "code": "10 08 12",
+    "description": "tar-containing wastes from anode manufacture",
+    "hazardous": true
+  },
+  {
+    "code": "10 08 13",
+    "description": "carbon-containing wastes from anode manufacture other than those mentioned in 10 08 12",
+    "hazardous": false
+  },
+  {
+    "code": "10 08 14",
+    "description": "anode scrap",
+    "hazardous": false
+  },
+  {
+    "code": "10 08 15",
+    "description": "flue-gas dust containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "10 08 16",
+    "description": "flue-gas dust other than those mentioned in 10 08 15",
+    "hazardous": false
+  },
+  {
+    "code": "10 08 17",
+    "description": "sludges and filter cakes from flue-gas treatment containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "10 08 18",
+    "description": "sludges and filter cakes from flue-gas treatment other than those mentioned in 10 08 17",
+    "hazardous": false
+  },
+  {
+    "code": "10 08 19",
+    "description": "wastes from cooling-water treatment containing oil",
+    "hazardous": true
+  },
+  {
+    "code": "10 08 20",
+    "description": "wastes from cooling-water treatment other than those mentioned in 10 08 19",
+    "hazardous": false
+  },
+  {
+    "code": "10 08 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "10 09 03",
+    "description": "furnace slag",
+    "hazardous": false
+  },
+  {
+    "code": "10 09 05",
+    "description": "casting cores and moulds which have not undergone pouring containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "10 09 06",
+    "description": "casting cores and moulds which have not undergone pouring other than those mentioned in 10 09 05",
+    "hazardous": false
+  },
+  {
+    "code": "10 09 07",
+    "description": "casting cores and moulds which have undergone pouring containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "10 09 08",
+    "description": "casting cores and moulds which have undergone pouring other than those mentioned in 10 09 07",
+    "hazardous": false
+  },
+  {
+    "code": "10 09 09",
+    "description": "flue-gas dust containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "10 09 10",
+    "description": "flue-gas dust other than those mentioned in 10 09 09",
+    "hazardous": false
+  },
+  {
+    "code": "10 09 11",
+    "description": "other particulates containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "10 09 12",
+    "description": "other particulates other than those mentioned in 10 09 11",
+    "hazardous": false
+  },
+  {
+    "code": "10 09 13",
+    "description": "waste binders containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "10 09 14",
+    "description": "waste binders other than those mentioned in 10 09 13",
+    "hazardous": false
+  },
+  {
+    "code": "10 09 15",
+    "description": "waste crack-indicating agent containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "10 09 16",
+    "description": "waste crack-indicating agent other than those mentioned in 10 09 15",
+    "hazardous": false
+  },
+  {
+    "code": "10 09 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "10 10 03",
+    "description": "furnace slag",
+    "hazardous": false
+  },
+  {
+    "code": "10 10 05",
+    "description": "casting cores and moulds which have not undergone pouring containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "10 10 06",
+    "description": "casting cores and moulds which have not undergone pouring other than those mentioned in 10 10 05",
+    "hazardous": false
+  },
+  {
+    "code": "10 10 07",
+    "description": "casting cores and moulds which have undergone pouring containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "10 10 08",
+    "description": "casting cores and moulds which have undergone pouring other than those mentioned in 10 10 07",
+    "hazardous": false
+  },
+  {
+    "code": "10 10 09",
+    "description": "flue-gas dust containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "10 10 10",
+    "description": "flue-gas dust other than those mentioned in 10 10 09",
+    "hazardous": false
+  },
+  {
+    "code": "10 10 11",
+    "description": "other particulates containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "10 10 12",
+    "description": "other particulates other than those mentioned in 10 10 11",
+    "hazardous": false
+  },
+  {
+    "code": "10 10 13",
+    "description": "waste binders containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "10 10 14",
+    "description": "waste binders other than those mentioned in 10 10 13",
+    "hazardous": false
+  },
+  {
+    "code": "10 10 15",
+    "description": "waste crack-indicating agent containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "10 10 16",
+    "description": "waste crack-indicating agent other than those mentioned in 10 10 15",
+    "hazardous": false
+  },
+  {
+    "code": "10 10 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "10 11 03",
+    "description": "waste glass-based fibrous materials",
+    "hazardous": false
+  },
+  {
+    "code": "10 11 05",
+    "description": "particulates and dust",
+    "hazardous": false
+  },
+  {
+    "code": "10 11 09",
+    "description": "waste preparation mixture before thermal processing containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "10 11 10",
+    "description": "waste preparation mixture before thermal processing other than those mentioned in 10 11 09",
+    "hazardous": false
+  },
+  {
+    "code": "10 11 11",
+    "description": "waste glass in small particles and glass powder containing heavy metals (e.g. from cathode ray tubes)",
+    "hazardous": true
+  },
+  {
+    "code": "10 11 12",
+    "description": "waste glass other than those mentioned in 10 11 11",
+    "hazardous": false
+  },
+  {
+    "code": "10 11 13",
+    "description": "glass-polishing and -grinding sludge containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "10 11 14",
+    "description": "glass-polishing and -grinding sludge other than those mentioned in 10 11 13",
+    "hazardous": false
+  },
+  {
+    "code": "10 11 15",
+    "description": "solid wastes from flue-gas treatment containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "10 11 16",
+    "description": "solid wastes from flue-gas treatment other than those mentioned in 10 11 15",
+    "hazardous": false
+  },
+  {
+    "code": "10 11 17",
+    "description": "sludges and filter cakes from flue-gas treatment containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "10 11 18",
+    "description": "sludges and filter cakes from flue-gas treatment other than those mentioned in 10 11 17",
+    "hazardous": false
+  },
+  {
+    "code": "10 11 19",
+    "description": "solid wastes from on-site effluent treatment containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "10 11 20",
+    "description": "solid wastes from on-site effluent treatment other than those mentioned in 10 11 19",
+    "hazardous": false
+  },
+  {
+    "code": "10 11 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "10 12 01",
+    "description": "waste preparation mixture before thermal processing",
+    "hazardous": false
+  },
+  {
+    "code": "10 12 03",
+    "description": "particulates and dust",
+    "hazardous": false
+  },
+  {
+    "code": "10 12 05",
+    "description": "sludges and filter cakes from gas treatment",
+    "hazardous": false
+  },
+  {
+    "code": "10 12 06",
+    "description": "discarded molds",
+    "hazardous": false
+  },
+  {
+    "code": "10 12 08",
+    "description": "waste ceramics, bricks, tiles and construction products (after thermal processing)",
+    "hazardous": false
+  },
+  {
+    "code": "10 12 09",
+    "description": "solid wastes from gas treatment containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "10 12 10",
+    "description": "solid wastes from gas treatment other than those mentioned in 10 12 09",
+    "hazardous": false
+  },
+  {
+    "code": "10 12 11",
+    "description": "wastes from glazing containing heavy metals",
+    "hazardous": true
+  },
+  {
+    "code": "10 12 12",
+    "description": "wastes from glazing other than those mentioned in 10 12 11",
+    "hazardous": false
+  },
+  {
+    "code": "10 12 13",
+    "description": "sludge from on-site effluent treatment",
+    "hazardous": false
+  },
+  {
+    "code": "10 12 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "10 13 01",
+    "description": "waste preparation mixture before thermal processing",
+    "hazardous": false
+  },
+  {
+    "code": "10 13 04",
+    "description": "wastes from calcination and hydration of lime",
+    "hazardous": false
+  },
+  {
+    "code": "10 13 06",
+    "description": "particulates and dust (except 10 13 12 and 10 13 13)",
+    "hazardous": false
+  },
+  {
+    "code": "10 13 07",
+    "description": "sludges and filter cakes from gas treatment",
+    "hazardous": false
+  },
+  {
+    "code": "10 13 09",
+    "description": "wastes from asbestos-cement manufacture containing asbestos",
+    "hazardous": true
+  },
+  {
+    "code": "10 13 10",
+    "description": "wastes from asbestos-cement manufacture other than those mentioned in 10 13 09",
+    "hazardous": false
+  },
+  {
+    "code": "10 13 11",
+    "description": "wastes from cement-based composite materials other than those mentioned in 10 13 09 and 10 13 10",
+    "hazardous": false
+  },
+  {
+    "code": "10 13 12",
+    "description": "solid wastes from gas treatment containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "10 13 13",
+    "description": "solid wastes from gas treatment other than those mentioned in 10 13 12",
+    "hazardous": false
+  },
+  {
+    "code": "10 13 14",
+    "description": "waste concrete and concrete sludge",
+    "hazardous": false
+  },
+  {
+    "code": "10 13 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "10 14 01",
+    "description": "waste from gas cleaning containing mercury zinc coating processes, pickling processes, etching, phosphatising, alkaline degreasing, anodising)",
+    "hazardous": true
+  },
+  {
+    "code": "11 01 05",
+    "description": "pickling acids",
+    "hazardous": true
+  },
+  {
+    "code": "11 01 06",
+    "description": "acids not otherwise specified",
+    "hazardous": true
+  },
+  {
+    "code": "11 01 07",
+    "description": "pickling bases",
+    "hazardous": true
+  },
+  {
+    "code": "11 01 08",
+    "description": "phosphatising sludges",
+    "hazardous": true
+  },
+  {
+    "code": "11 01 09",
+    "description": "sludges and filter cakes containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "11 01 10",
+    "description": "sludges and filter cakes other than those mentioned in 11 01 09",
+    "hazardous": false
+  },
+  {
+    "code": "11 01 11",
+    "description": "aqueous rinsing liquids containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "11 01 12",
+    "description": "aqueous rinsing liquids other than those mentioned in 11 01 11",
+    "hazardous": false
+  },
+  {
+    "code": "11 01 13",
+    "description": "degreasing wastes containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "11 01 14",
+    "description": "degreasing wastes other than those mentioned in 11 01 13",
+    "hazardous": false
+  },
+  {
+    "code": "11 01 15",
+    "description": "eluate and sludges from membrane systems or ion exchange systems containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "11 01 16",
+    "description": "saturated or spent ion exchange resins",
+    "hazardous": true
+  },
+  {
+    "code": "11 01 98",
+    "description": "other wastes containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "11 01 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "11 02 02",
+    "description": "sludges from zinc hydrometallurgy (including Jarosite, goethite)",
+    "hazardous": true
+  },
+  {
+    "code": "11 02 03",
+    "description": "wastes from the production of anodes for aqueous electrolytical processes",
+    "hazardous": false
+  },
+  {
+    "code": "11 02 05",
+    "description": "wastes from copper hydrometallurgical processes containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "11 02 06",
+    "description": "wastes from copper hydrometallurgical processes other than those mentioned in 11 02 05",
+    "hazardous": false
+  },
+  {
+    "code": "11 02 07",
+    "description": "other wastes containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "11 02 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "11 03 01",
+    "description": "wastes containing cyanide",
+    "hazardous": true
+  },
+  {
+    "code": "11 03 02",
+    "description": "other wastes",
+    "hazardous": true
+  },
+  {
+    "code": "11 05 01",
+    "description": "hard zinc",
+    "hazardous": false
+  },
+  {
+    "code": "11 05 02",
+    "description": "zinc ash",
+    "hazardous": false
+  },
+  {
+    "code": "11 05 03",
+    "description": "solid wastes from gas treatment",
+    "hazardous": true
+  },
+  {
+    "code": "11 05 04",
+    "description": "spent flux",
+    "hazardous": true
+  },
+  {
+    "code": "11 05 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "12 01 01",
+    "description": "ferrous metal filings and turnings",
+    "hazardous": false
+  },
+  {
+    "code": "12 01 02",
+    "description": "ferrous metal dust and particles",
+    "hazardous": false
+  },
+  {
+    "code": "12 01 03",
+    "description": "non-ferrous metal filings and turnings",
+    "hazardous": false
+  },
+  {
+    "code": "12 01 04",
+    "description": "non-ferrous metal dust and particles",
+    "hazardous": false
+  },
+  {
+    "code": "12 01 05",
+    "description": "plastics shavings and turnings",
+    "hazardous": false
+  },
+  {
+    "code": "12 01 06",
+    "description": "mineral-based machining oils containing halogens (except emulsions and solutions)",
+    "hazardous": true
+  },
+  {
+    "code": "12 01 07",
+    "description": "mineral-based machining oils free of halogens (except emulsions and solutions)",
+    "hazardous": true
+  },
+  {
+    "code": "12 01 08",
+    "description": "machining emulsions and solutions containing halogens",
+    "hazardous": true
+  },
+  {
+    "code": "12 01 09",
+    "description": "machining emulsions and solutions free of halogens",
+    "hazardous": true
+  },
+  {
+    "code": "12 01 10",
+    "description": "synthetic machining oils",
+    "hazardous": true
+  },
+  {
+    "code": "12 01 12",
+    "description": "spent waxes and fats",
+    "hazardous": true
+  },
+  {
+    "code": "12 01 13",
+    "description": "welding wastes",
+    "hazardous": false
+  },
+  {
+    "code": "12 01 14",
+    "description": "machining sludges containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "12 01 15",
+    "description": "machining sludges other than those mentioned in 12 01 14",
+    "hazardous": false
+  },
+  {
+    "code": "12 01 16",
+    "description": "waste blasting material containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "12 01 17",
+    "description": "waste blasting material other than those mentioned in 12 01 16",
+    "hazardous": false
+  },
+  {
+    "code": "12 01 18",
+    "description": "metal sludge (grinding, honing and lapping sludge) containing oil",
+    "hazardous": true
+  },
+  {
+    "code": "12 01 19",
+    "description": "readily biodegradable machining oil",
+    "hazardous": true
+  },
+  {
+    "code": "12 01 20",
+    "description": "spent grinding bodies and grinding materials containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "12 01 21",
+    "description": "spent grinding bodies and grinding materials other than those mentioned in 12 01 20",
+    "hazardous": false
+  },
+  {
+    "code": "12 01 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "12 03 01",
+    "description": "aqueous washing liquids",
+    "hazardous": true
+  },
+  {
+    "code": "12 03 02",
+    "description": "steam degreasing wastes",
+    "hazardous": true
+  },
+  {
+    "code": "13 01 01",
+    "description": "hydraulic oils, containing PCBs",
+    "hazardous": true
+  },
+  {
+    "code": "13 01 04",
+    "description": "chlorinated emulsions",
+    "hazardous": true
+  },
+  {
+    "code": "13 01 05",
+    "description": "non-chlorinated emulsions",
+    "hazardous": true
+  },
+  {
+    "code": "13 01 09",
+    "description": "mineral-based chlorinated hydraulic oils",
+    "hazardous": true
+  },
+  {
+    "code": "13 01 10",
+    "description": "mineral based non-chlorinated hydraulic oils",
+    "hazardous": true
+  },
+  {
+    "code": "13 01 11",
+    "description": "synthetic hydraulic oils",
+    "hazardous": true
+  },
+  {
+    "code": "13 01 12",
+    "description": "readily biodegradable hydraulic oils",
+    "hazardous": true
+  },
+  {
+    "code": "13 01 13",
+    "description": "other hydraulic oils",
+    "hazardous": true
+  },
+  {
+    "code": "13 02 04",
+    "description": "mineral-based chlorinated engine, gear and lubricating oils",
+    "hazardous": true
+  },
+  {
+    "code": "13 02 05",
+    "description": "mineral-based non-chlorinated engine, gear and lubricating oils",
+    "hazardous": true
+  },
+  {
+    "code": "13 02 06",
+    "description": "synthetic engine, gear and lubricating oils",
+    "hazardous": true
+  },
+  {
+    "code": "13 02 07",
+    "description": "readily biodegradable engine, gear and lubricating oils",
+    "hazardous": true
+  },
+  {
+    "code": "13 02 08",
+    "description": "other engine, gear and lubricating oils",
+    "hazardous": true
+  },
+  {
+    "code": "13 03 01",
+    "description": "insulating or heat transmission oils containing PCBs",
+    "hazardous": true
+  },
+  {
+    "code": "13 03 06",
+    "description": "mineral-based chlorinated insulating and heat transmission oils other than those mentioned in 13 03 01",
+    "hazardous": true
+  },
+  {
+    "code": "13 03 07",
+    "description": "mineral-based non-chlorinated insulating and heat transmission oils",
+    "hazardous": true
+  },
+  {
+    "code": "13 03 08",
+    "description": "synthetic insulating and heat transmission oils",
+    "hazardous": true
+  },
+  {
+    "code": "13 03 09",
+    "description": "readily biodegradable insulating and heat transmission oils",
+    "hazardous": true
+  },
+  {
+    "code": "13 03 10",
+    "description": "other insulating and heat transmission oils",
+    "hazardous": true
+  },
+  {
+    "code": "13 04 01",
+    "description": "bilge oils from inland navigation",
+    "hazardous": true
+  },
+  {
+    "code": "13 04 02",
+    "description": "bilge oils from jetty sewers",
+    "hazardous": true
+  },
+  {
+    "code": "13 04 03",
+    "description": "bilge oils from other navigation",
+    "hazardous": true
+  },
+  {
+    "code": "13 05 01",
+    "description": "solids from grit chambers and oil/water separators",
+    "hazardous": true
+  },
+  {
+    "code": "13 05 02",
+    "description": "sludges from oil/water separators",
+    "hazardous": true
+  },
+  {
+    "code": "13 05 03",
+    "description": "interceptor sludges",
+    "hazardous": true
+  },
+  {
+    "code": "13 05 06",
+    "description": "oil from oil/water separators",
+    "hazardous": true
+  },
+  {
+    "code": "13 05 07",
+    "description": "oily water from oil/water separators",
+    "hazardous": true
+  },
+  {
+    "code": "13 05 08",
+    "description": "mixtures of wastes from grit chambers and oil/water separators",
+    "hazardous": true
+  },
+  {
+    "code": "13 07 01",
+    "description": "fuel oil and diesel",
+    "hazardous": true
+  },
+  {
+    "code": "13 07 02",
+    "description": "petrol",
+    "hazardous": true
+  },
+  {
+    "code": "13 07 03",
+    "description": "other fuels (including mixtures)",
+    "hazardous": true
+  },
+  {
+    "code": "13 08 01",
+    "description": "desalter sludges or emulsions",
+    "hazardous": true
+  },
+  {
+    "code": "13 08 02",
+    "description": "other emulsions",
+    "hazardous": true
+  },
+  {
+    "code": "13 08 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": true
+  },
+  {
+    "code": "14 06 01",
+    "description": "chlorofluorocarbons, HCFC, HFC polychlorinated biphenyls and polychlorinated terphenyls (PCB/PCT) (OJ L 243, 24.9.1996, p. 31).",
+    "hazardous": true
+  },
+  {
+    "code": "14 06 02",
+    "description": "other halogenated solvents and solvent mixtures",
+    "hazardous": true
+  },
+  {
+    "code": "14 06 03",
+    "description": "other solvents and solvent mixtures",
+    "hazardous": true
+  },
+  {
+    "code": "14 06 04",
+    "description": "sludges or solid wastes containing halogenated solvents",
+    "hazardous": true
+  },
+  {
+    "code": "14 06 05",
+    "description": "sludges or solid wastes containing other solvents",
+    "hazardous": true
+  },
+  {
+    "code": "15 01 01",
+    "description": "paper and cardboard packaging",
+    "hazardous": false
+  },
+  {
+    "code": "15 01 02",
+    "description": "plastic packaging",
+    "hazardous": false
+  },
+  {
+    "code": "15 01 03",
+    "description": "wooden packaging",
+    "hazardous": false
+  },
+  {
+    "code": "15 01 04",
+    "description": "metallic packaging",
+    "hazardous": false
+  },
+  {
+    "code": "15 01 05",
+    "description": "composite packaging",
+    "hazardous": false
+  },
+  {
+    "code": "15 01 06",
+    "description": "mixed packaging",
+    "hazardous": false
+  },
+  {
+    "code": "15 01 07",
+    "description": "glass packaging",
+    "hazardous": false
+  },
+  {
+    "code": "15 01 09",
+    "description": "textile packaging",
+    "hazardous": false
+  },
+  {
+    "code": "15 01 10",
+    "description": "packaging containing residues of or contaminated by dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "15 01 11",
+    "description": "metallic packaging containing a dangerous solid porous matrix (e.g. asbestos), including empty pressure containers",
+    "hazardous": true
+  },
+  {
+    "code": "15 02 02",
+    "description": "absorbents, filter materials (including oil filters not otherwise specified), wiping cloths, protective clothing contaminated by dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "15 02 03",
+    "description": "absorbents, filter materials, wiping cloths and protective clothing other than those mentioned in 15 02 02 dismantling of end-of-life vehicles and vehicle maintenance (except 13, 14, 16 06 and 16 08)",
+    "hazardous": false
+  },
+  {
+    "code": "16 01 03",
+    "description": "end-of-life tyres",
+    "hazardous": false
+  },
+  {
+    "code": "16 01 04",
+    "description": "end-of-life vehicles",
+    "hazardous": true
+  },
+  {
+    "code": "16 01 06",
+    "description": "end-of-life vehicles, containing neither liquids nor other hazardous components",
+    "hazardous": false
+  },
+  {
+    "code": "16 01 07",
+    "description": "oil filters",
+    "hazardous": true
+  },
+  {
+    "code": "16 01 08",
+    "description": "components containing mercury",
+    "hazardous": true
+  },
+  {
+    "code": "16 01 09",
+    "description": "components containing PCBs",
+    "hazardous": true
+  },
+  {
+    "code": "16 01 10",
+    "description": "explosive components (e.g. air bags)",
+    "hazardous": true
+  },
+  {
+    "code": "16 01 11",
+    "description": "brake pads containing asbestos",
+    "hazardous": true
+  },
+  {
+    "code": "16 01 12",
+    "description": "brake pads other than those mentioned in 16 01 11",
+    "hazardous": false
+  },
+  {
+    "code": "16 01 13",
+    "description": "brake fluids",
+    "hazardous": true
+  },
+  {
+    "code": "16 01 14",
+    "description": "antifreeze fluids containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "16 01 15",
+    "description": "antifreeze fluids other than those mentioned in 16 01 14",
+    "hazardous": false
+  },
+  {
+    "code": "16 01 16",
+    "description": "tanks for liquefied gas",
+    "hazardous": false
+  },
+  {
+    "code": "16 01 17",
+    "description": "ferrous metal",
+    "hazardous": false
+  },
+  {
+    "code": "16 01 18",
+    "description": "non-ferrous metal",
+    "hazardous": false
+  },
+  {
+    "code": "16 01 19",
+    "description": "plastic",
+    "hazardous": false
+  },
+  {
+    "code": "16 01 20",
+    "description": "glass",
+    "hazardous": false
+  },
+  {
+    "code": "16 01 21",
+    "description": "hazardous components other than those mentioned in 16 01 07 to 16 01 11 and 16 01 13 and 16 01 14",
+    "hazardous": true
+  },
+  {
+    "code": "16 01 22",
+    "description": "components not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "16 01 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "16 02 09",
+    "description": "transformers and capacitors containing PCBs",
+    "hazardous": true
+  },
+  {
+    "code": "16 02 10",
+    "description": "discarded equipment containing or contaminated by PCBs other than those mentioned in 16 02 09",
+    "hazardous": true
+  },
+  {
+    "code": "16 02 11",
+    "description": "discarded equipment containing chlorofluorocarbons, HCFC, HFC",
+    "hazardous": true
+  },
+  {
+    "code": "16 02 12",
+    "description": "discarded equipment containing free asbestos",
+    "hazardous": true
+  },
+  {
+    "code": "16 02 13",
+    "description": "discarded equipment containing hazardous components other than those mentioned in 16 02 09 to 16",
+    "hazardous": true
+  },
+  {
+    "code": "16 02 14",
+    "description": "discarded equipment other than those mentioned in 16 02 09 to 16 02 13 marked as hazardous, mercury switches, glass from cathode ray tubes and other activated glass etc.",
+    "hazardous": false
+  },
+  {
+    "code": "16 02 15",
+    "description": "hazardous components removed from discarded equipment",
+    "hazardous": true
+  },
+  {
+    "code": "16 02 16",
+    "description": "components removed from discarded equipment other than those mentioned in 16 02 15",
+    "hazardous": false
+  },
+  {
+    "code": "16 03 03",
+    "description": "inorganic wastes containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "16 03 04",
+    "description": "inorganic wastes other than those mentioned in 16 03 03",
+    "hazardous": false
+  },
+  {
+    "code": "16 03 05",
+    "description": "organic wastes containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "16 03 06",
+    "description": "organic wastes other than those mentioned in 16 03 05",
+    "hazardous": false
+  },
+  {
+    "code": "16 04 01",
+    "description": "waste ammunition",
+    "hazardous": true
+  },
+  {
+    "code": "16 04 02",
+    "description": "fireworks wastes",
+    "hazardous": true
+  },
+  {
+    "code": "16 04 03",
+    "description": "other waste explosives",
+    "hazardous": true
+  },
+  {
+    "code": "16 05 04",
+    "description": "gases in pressure containers (including halons) containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "16 05 05",
+    "description": "gases in pressure containers other than those mentioned in 16 05 04",
+    "hazardous": false
+  },
+  {
+    "code": "16 05 06",
+    "description": "laboratory chemicals consisting of or containing dangerous substances including mixtures of laboratory chemicals",
+    "hazardous": true
+  },
+  {
+    "code": "16 05 07",
+    "description": "discarded inorganic chemicals consisting of or containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "16 05 08",
+    "description": "discarded organic chemicals consisting of or containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "16 05 09",
+    "description": "discarded chemicals other than those mentioned in 16 05 06, 16 05 07 or 16 05 08",
+    "hazardous": false
+  },
+  {
+    "code": "16 06 01",
+    "description": "lead batteries",
+    "hazardous": true
+  },
+  {
+    "code": "16 06 02",
+    "description": "Ni-Cd batteries",
+    "hazardous": true
+  },
+  {
+    "code": "16 06 03",
+    "description": "mercury-containing batteries",
+    "hazardous": true
+  },
+  {
+    "code": "16 06 04",
+    "description": "alkaline batteries (except 16 06 03)",
+    "hazardous": false
+  },
+  {
+    "code": "16 06 05",
+    "description": "other batteries and accumulators",
+    "hazardous": false
+  },
+  {
+    "code": "16 06 06",
+    "description": "separately collected electrolyte from batteries and accumulators",
+    "hazardous": true
+  },
+  {
+    "code": "16 07 08",
+    "description": "wastes containing oil",
+    "hazardous": true
+  },
+  {
+    "code": "16 07 09",
+    "description": "wastes containing other dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "16 07 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "16 08 01",
+    "description": "spent catalysts containing gold, silver, rhenium, rhodium, palladium, iridium or platinum (except 16 08 07)",
+    "hazardous": false
+  },
+  {
+    "code": "16 08 02",
+    "description": "spent catalysts containing dangerous transition metals or dangerous transition metal compounds",
+    "hazardous": true
+  },
+  {
+    "code": "16 08 03",
+    "description": "spent catalysts containing transition metals or transition metal compounds not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "16 08 04",
+    "description": "spent fluid catalytic cracking catalysts (except 16 08 07)",
+    "hazardous": false
+  },
+  {
+    "code": "16 08 05",
+    "description": "spent catalysts containing phosphoric acid",
+    "hazardous": true
+  },
+  {
+    "code": "16 08 06",
+    "description": "spent liquids used as catalysts",
+    "hazardous": true
+  },
+  {
+    "code": "16 08 07",
+    "description": "spent catalysts contaminated with dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "16 09 01",
+    "description": "permanganates, e.g. potassium permanganate",
+    "hazardous": true
+  },
+  {
+    "code": "16 09 02",
+    "description": "chromates, e.g. potassium chromate, potassium or sodium dichromate",
+    "hazardous": true
+  },
+  {
+    "code": "16 09 03",
+    "description": "peroxides, e.g. hydrogen peroxide",
+    "hazardous": true
+  },
+  {
+    "code": "16 09 04",
+    "description": "oxidising substances, not otherwise specified",
+    "hazardous": true
+  },
+  {
+    "code": "16 10 01",
+    "description": "aqueous liquid wastes containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "16 10 02",
+    "description": "aqueous liquid wastes other than those mentioned in 16 10 01",
+    "hazardous": false
+  },
+  {
+    "code": "16 10 03",
+    "description": "aqueous concentrates containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "16 10 04",
+    "description": "aqueous concentrates other than those mentioned in 16 10 03",
+    "hazardous": false
+  },
+  {
+    "code": "16 11 01",
+    "description": "carbon-based linings and refractories from metallurgical processes containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "16 11 02",
+    "description": "carbon-based linings and refractories from metallurgical processes others than those mentioned in 16 11 01",
+    "hazardous": false
+  },
+  {
+    "code": "16 11 03",
+    "description": "other linings and refractories from metallurgical processes containing dangerous substances tungsten, titanium, chromium, iron, nickel, zinc, zirconium, molybdenum and tantalum. These metals or their compounds are dangerous if they are classified as dangerous substances. The classification of dangerous substances shall determine which among those transition metals and which transition metal compounds are hazardous.",
+    "hazardous": true
+  },
+  {
+    "code": "16 11 04",
+    "description": "other linings and refractories from metallurgical processes other than those mentioned in 16 11 03",
+    "hazardous": false
+  },
+  {
+    "code": "16 11 05",
+    "description": "linings and refractories from non-metallurgical processes containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "16 11 06",
+    "description": "linings and refractories from non-metallurgical processes others than those mentioned in 16 11 05",
+    "hazardous": false
+  },
+  {
+    "code": "17 01 01",
+    "description": "concrete",
+    "hazardous": false
+  },
+  {
+    "code": "17 01 02",
+    "description": "bricks",
+    "hazardous": false
+  },
+  {
+    "code": "17 01 03",
+    "description": "tiles and ceramics",
+    "hazardous": false
+  },
+  {
+    "code": "17 01 06",
+    "description": "mixtures of, or separate fractions of concrete, bricks, tiles and ceramics containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "17 01 07",
+    "description": "mixtures of concrete, bricks, tiles and ceramics other than those mentioned in 17 01 06",
+    "hazardous": false
+  },
+  {
+    "code": "17 02 01",
+    "description": "wood",
+    "hazardous": false
+  },
+  {
+    "code": "17 02 02",
+    "description": "glass",
+    "hazardous": false
+  },
+  {
+    "code": "17 02 03",
+    "description": "plastic",
+    "hazardous": false
+  },
+  {
+    "code": "17 02 04",
+    "description": "glass, plastic and wood containing or contaminated with dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "17 03 01",
+    "description": "bituminous mixtures containing coal tar",
+    "hazardous": true
+  },
+  {
+    "code": "17 03 02",
+    "description": "bituminous mixtures other than those mentioned in 17 03 01",
+    "hazardous": false
+  },
+  {
+    "code": "17 03 03",
+    "description": "coal tar and tarred products",
+    "hazardous": true
+  },
+  {
+    "code": "17 04 01",
+    "description": "copper, bronze, brass",
+    "hazardous": false
+  },
+  {
+    "code": "17 04 02",
+    "description": "aluminium",
+    "hazardous": false
+  },
+  {
+    "code": "17 04 03",
+    "description": "lead",
+    "hazardous": false
+  },
+  {
+    "code": "17 04 04",
+    "description": "zinc",
+    "hazardous": false
+  },
+  {
+    "code": "17 04 05",
+    "description": "iron and steel",
+    "hazardous": false
+  },
+  {
+    "code": "17 04 06",
+    "description": "tin",
+    "hazardous": false
+  },
+  {
+    "code": "17 04 07",
+    "description": "mixed metals",
+    "hazardous": false
+  },
+  {
+    "code": "17 04 09",
+    "description": "metal waste contaminated with dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "17 04 10",
+    "description": "cables containing oil, coal tar and other dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "17 04 11",
+    "description": "cables other than those mentioned in 17 04 10",
+    "hazardous": false
+  },
+  {
+    "code": "17 05 03",
+    "description": "soil and stones containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "17 05 04",
+    "description": "soil and stones other than those mentioned in 17 05 03",
+    "hazardous": false
+  },
+  {
+    "code": "17 05 05",
+    "description": "dredging spoil containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "17 05 06",
+    "description": "dredging spoil other than those mentioned in 17 05 05",
+    "hazardous": false
+  },
+  {
+    "code": "17 05 07",
+    "description": "track ballast containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "17 05 08",
+    "description": "track ballast other than those mentioned in 17 05 07",
+    "hazardous": false
+  },
+  {
+    "code": "17 06 01",
+    "description": "insulation materials containing asbestos",
+    "hazardous": true
+  },
+  {
+    "code": "17 06 03",
+    "description": "other insulation materials consisting of or containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "17 06 04",
+    "description": "insulation materials other than those mentioned in 17 06 01 and 17 06 03",
+    "hazardous": false
+  },
+  {
+    "code": "17 06 05",
+    "description": "construction materials containing asbestos",
+    "hazardous": true
+  },
+  {
+    "code": "17 08 01",
+    "description": "gypsum-based construction materials contaminated with dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "17 08 02",
+    "description": "gypsum-based construction materials other than those mentioned in 17 08 01",
+    "hazardous": false
+  },
+  {
+    "code": "17 09 01",
+    "description": "construction and demolition wastes containing mercury",
+    "hazardous": true
+  },
+  {
+    "code": "17 09 02",
+    "description": "construction and demolition wastes containing PCB (e.g. PCB-containing sealants, PCB-containing resin-based floorings, PCB-containing sealed glazing units, PCB-containing capacitors)",
+    "hazardous": true
+  },
+  {
+    "code": "17 09 03",
+    "description": "other construction and demolition wastes (including mixed wastes) containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "17 09 04",
+    "description": "mixed construction and demolition wastes other than those mentioned in 17 09 01, 17 09 02 and 17 09 03",
+    "hazardous": false
+  },
+  {
+    "code": "18 01 01",
+    "description": "sharps (except 18 01 03)",
+    "hazardous": false
+  },
+  {
+    "code": "18 01 02",
+    "description": "body parts and organs including blood bags and blood preserves (except 18 01 03)",
+    "hazardous": false
+  },
+  {
+    "code": "18 01 03",
+    "description": "wastes whose collection and disposal is subject to special requirements in order to prevent infection",
+    "hazardous": true
+  },
+  {
+    "code": "18 01 04",
+    "description": "wastes whose collection and disposal is not subject to special requirements in order to prevent infection (e.g. dressings, plaster casts, linen, disposable clothing, diapers)",
+    "hazardous": false
+  },
+  {
+    "code": "18 01 06",
+    "description": "chemicals consisting of or containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "18 01 07",
+    "description": "chemicals other than those mentioned in 18 01 06",
+    "hazardous": false
+  },
+  {
+    "code": "18 01 08",
+    "description": "cytotoxic and cytostatic medicines",
+    "hazardous": true
+  },
+  {
+    "code": "18 01 09",
+    "description": "medicines other than those mentioned in 18 01 08",
+    "hazardous": false
+  },
+  {
+    "code": "18 01 10",
+    "description": "amalgam waste from dental care",
+    "hazardous": true
+  },
+  {
+    "code": "18 02 01",
+    "description": "sharps (except 18 02 02)",
+    "hazardous": false
+  },
+  {
+    "code": "18 02 02",
+    "description": "wastes whose collection and disposal is subject to special requirements in order to prevent infection",
+    "hazardous": true
+  },
+  {
+    "code": "18 02 03",
+    "description": "wastes whose collection and disposal is not subject to special requirements in order to prevent infection",
+    "hazardous": false
+  },
+  {
+    "code": "18 02 05",
+    "description": "chemicals consisting of or containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "18 02 06",
+    "description": "chemicals other than those mentioned in 18 02 05",
+    "hazardous": false
+  },
+  {
+    "code": "18 02 07",
+    "description": "cytotoxic and cytostatic medicines",
+    "hazardous": true
+  },
+  {
+    "code": "18 02 08",
+    "description": "medicines other than those mentioned in 18 02 07",
+    "hazardous": false
+  },
+  {
+    "code": "19 01 02",
+    "description": "ferrous materials removed from bottom ash",
+    "hazardous": false
+  },
+  {
+    "code": "19 01 05",
+    "description": "filter cake from gas treatment",
+    "hazardous": true
+  },
+  {
+    "code": "19 01 06",
+    "description": "aqueous liquid wastes from gas treatment and other aqueous liquid wastes",
+    "hazardous": true
+  },
+  {
+    "code": "19 01 07",
+    "description": "solid wastes from gas treatment",
+    "hazardous": true
+  },
+  {
+    "code": "19 01 10",
+    "description": "spent activated carbon from flue-gas treatment",
+    "hazardous": true
+  },
+  {
+    "code": "19 01 11",
+    "description": "bottom ash and slag containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "19 01 12",
+    "description": "bottom ash and slag other than those mentioned in 19 01 11",
+    "hazardous": false
+  },
+  {
+    "code": "19 01 13",
+    "description": "fly ash containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "19 01 14",
+    "description": "fly ash other than those mentioned in 19 01 13",
+    "hazardous": false
+  },
+  {
+    "code": "19 01 15",
+    "description": "boiler dust containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "19 01 16",
+    "description": "boiler dust other than those mentioned in 19 01 15",
+    "hazardous": false
+  },
+  {
+    "code": "19 01 17",
+    "description": "pyrolysis wastes containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "19 01 18",
+    "description": "pyrolysis wastes other than those mentioned in 19 01 17",
+    "hazardous": false
+  },
+  {
+    "code": "19 01 19",
+    "description": "sands from fluidised beds",
+    "hazardous": false
+  },
+  {
+    "code": "19 01 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "19 02 03",
+    "description": "premixed wastes composed only of non hazardous wastes",
+    "hazardous": false
+  },
+  {
+    "code": "19 02 04",
+    "description": "premixed wastes composed of at least one hazardous waste",
+    "hazardous": true
+  },
+  {
+    "code": "19 02 05",
+    "description": "sludges from physico/chemical treatment containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "19 02 06",
+    "description": "sludges from physico/chemical treatment other than those mentioned in 19 02 05",
+    "hazardous": false
+  },
+  {
+    "code": "19 02 07",
+    "description": "oil and concentrates from separation",
+    "hazardous": true
+  },
+  {
+    "code": "19 02 08",
+    "description": "liquid combustible wastes containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "19 02 09",
+    "description": "solid combustible wastes containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "19 02 10",
+    "description": "combustible wastes other than those mentioned in 19 02 08 and 19 02 09",
+    "hazardous": false
+  },
+  {
+    "code": "19 02 11",
+    "description": "other wastes containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "19 02 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "19 03 04",
+    "description": "wastes marked as hazardous, partly stabilised",
+    "hazardous": true
+  },
+  {
+    "code": "19 03 05",
+    "description": "stabilised wastes other than those mentioned in 19 03 04",
+    "hazardous": false
+  },
+  {
+    "code": "19 03 06",
+    "description": "wastes marked as hazardous, solidified",
+    "hazardous": true
+  },
+  {
+    "code": "19 03 07",
+    "description": "solidified wastes other than those mentioned in 19 03 06",
+    "hazardous": false
+  },
+  {
+    "code": "19 04 01",
+    "description": "vitrified waste",
+    "hazardous": false
+  },
+  {
+    "code": "19 04 02",
+    "description": "fly ash and other flue-gas treatment wastes",
+    "hazardous": true
+  },
+  {
+    "code": "19 04 03",
+    "description": "non-vitrified solid phase",
+    "hazardous": true
+  },
+  {
+    "code": "19 04 04",
+    "description": "aqueous liquid wastes from vitrified waste tempering",
+    "hazardous": false
+  },
+  {
+    "code": "19 05 01",
+    "description": "non-composted fraction of municipal and similar wastes",
+    "hazardous": false
+  },
+  {
+    "code": "19 05 02",
+    "description": "non-composted fraction of animal and vegetable waste",
+    "hazardous": false
+  },
+  {
+    "code": "19 05 03",
+    "description": "off-specification compost",
+    "hazardous": false
+  },
+  {
+    "code": "19 05 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "19 06 03",
+    "description": "liquor from anaerobic treatment of municipal waste",
+    "hazardous": false
+  },
+  {
+    "code": "19 06 04",
+    "description": "digestate from anaerobic treatment of municipal waste",
+    "hazardous": false
+  },
+  {
+    "code": "19 06 05",
+    "description": "liquor from anaerobic treatment of animal and vegetable waste",
+    "hazardous": false
+  },
+  {
+    "code": "19 06 06",
+    "description": "digestate from anaerobic treatment of animal and vegetable waste",
+    "hazardous": false
+  },
+  {
+    "code": "19 06 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "19 07 02",
+    "description": "landfill leachate containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "19 07 03",
+    "description": "landfill leachate other than those mentioned in 19 07 02",
+    "hazardous": false
+  },
+  {
+    "code": "19 08 01",
+    "description": "screenings",
+    "hazardous": false
+  },
+  {
+    "code": "19 08 02",
+    "description": "waste from desanding",
+    "hazardous": false
+  },
+  {
+    "code": "19 08 05",
+    "description": "sludges from treatment of urban waste water",
+    "hazardous": false
+  },
+  {
+    "code": "19 08 06",
+    "description": "saturated or spent ion exchange resins",
+    "hazardous": true
+  },
+  {
+    "code": "19 08 07",
+    "description": "solutions and sludges from regeneration of ion exchangers",
+    "hazardous": true
+  },
+  {
+    "code": "19 08 08",
+    "description": "membrane system waste containing heavy metals",
+    "hazardous": true
+  },
+  {
+    "code": "19 08 09",
+    "description": "grease and oil mixture from oil/water separation containing only edible oil and fats",
+    "hazardous": false
+  },
+  {
+    "code": "19 08 10",
+    "description": "grease and oil mixture from oil/water separation other than those mentioned in 19 08 09",
+    "hazardous": true
+  },
+  {
+    "code": "19 08 11",
+    "description": "sludges containing dangerous substances from biological treatment of industrial waste water",
+    "hazardous": true
+  },
+  {
+    "code": "19 08 12",
+    "description": "sludges from biological treatment of industrial waste water other than those mentioned in 19 08 11",
+    "hazardous": false
+  },
+  {
+    "code": "19 08 13",
+    "description": "sludges containing dangerous substances from other treatment of industrial waste water",
+    "hazardous": true
+  },
+  {
+    "code": "19 08 14",
+    "description": "sludges from other treatment of industrial waste water other than those mentioned in 19 08 13",
+    "hazardous": false
+  },
+  {
+    "code": "19 08 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "19 09 01",
+    "description": "solid waste from primary filtration and screenings",
+    "hazardous": false
+  },
+  {
+    "code": "19 09 02",
+    "description": "sludges from water clarification",
+    "hazardous": false
+  },
+  {
+    "code": "19 09 03",
+    "description": "sludges from decarbonation",
+    "hazardous": false
+  },
+  {
+    "code": "19 09 04",
+    "description": "spent activated carbon",
+    "hazardous": false
+  },
+  {
+    "code": "19 09 05",
+    "description": "saturated or spent ion exchange resins",
+    "hazardous": false
+  },
+  {
+    "code": "19 09 06",
+    "description": "solutions and sludges from regeneration of ion exchangers",
+    "hazardous": false
+  },
+  {
+    "code": "19 09 99",
+    "description": "wastes not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "19 10 01",
+    "description": "iron and steel waste",
+    "hazardous": false
+  },
+  {
+    "code": "19 10 02",
+    "description": "non-ferrous waste",
+    "hazardous": false
+  },
+  {
+    "code": "19 10 03",
+    "description": "fluff \u2014 light fraction and dust containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "19 10 04",
+    "description": "fluff \u2014 light fraction and dust other than those mentioned in 19 10 03",
+    "hazardous": false
+  },
+  {
+    "code": "19 10 05",
+    "description": "other fractions containing dangerous substances hazardous waste. Solidification processes only change the physical state of the waste (e.g. liquid into solid) by using additives without changing the chemical properties of the waste. completely into non-dangerous constituents could be released into the environment in the short, middle or long term.",
+    "hazardous": true
+  },
+  {
+    "code": "19 10 06",
+    "description": "other fractions other than those mentioned in 19 10 05",
+    "hazardous": false
+  },
+  {
+    "code": "19 11 01",
+    "description": "spent filter clays",
+    "hazardous": true
+  },
+  {
+    "code": "19 11 02",
+    "description": "acid tars",
+    "hazardous": true
+  },
+  {
+    "code": "19 11 03",
+    "description": "aqueous liquid wastes",
+    "hazardous": true
+  },
+  {
+    "code": "19 11 04",
+    "description": "wastes from cleaning of fuel with bases",
+    "hazardous": true
+  },
+  {
+    "code": "19 11 05",
+    "description": "sludges from on-site effluent treatment containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "19 11 06",
+    "description": "sludges from on-site effluent treatment other than those mentioned in 19 11 05",
+    "hazardous": false
+  },
+  {
+    "code": "19 11 07",
+    "description": "wastes from flue-gas cleaning",
+    "hazardous": true
+  },
+  {
+    "code": "19 11 99",
+    "description": "wastes not otherwise specified specified",
+    "hazardous": false
+  },
+  {
+    "code": "19 12 01",
+    "description": "paper and cardboard",
+    "hazardous": false
+  },
+  {
+    "code": "19 12 02",
+    "description": "ferrous metal",
+    "hazardous": false
+  },
+  {
+    "code": "19 12 03",
+    "description": "non-ferrous metal",
+    "hazardous": false
+  },
+  {
+    "code": "19 12 04",
+    "description": "plastic and rubber",
+    "hazardous": false
+  },
+  {
+    "code": "19 12 05",
+    "description": "glass",
+    "hazardous": false
+  },
+  {
+    "code": "19 12 06",
+    "description": "wood containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "19 12 07",
+    "description": "wood other than that mentioned in 19 12 06",
+    "hazardous": false
+  },
+  {
+    "code": "19 12 08",
+    "description": "textiles",
+    "hazardous": false
+  },
+  {
+    "code": "19 12 09",
+    "description": "minerals (e.g. sand, stones)",
+    "hazardous": false
+  },
+  {
+    "code": "19 12 10",
+    "description": "combustible waste (refuse derived fuel)",
+    "hazardous": false
+  },
+  {
+    "code": "19 12 11",
+    "description": "other wastes (including mixtures of materials) from mechanical treatment of waste containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "19 12 12",
+    "description": "other wastes (including mixtures of materials) from mechanical treatment of wastes other than those mentioned in 19 12 11",
+    "hazardous": false
+  },
+  {
+    "code": "19 13 01",
+    "description": "solid wastes from soil remediation containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "19 13 02",
+    "description": "solid wastes from soil remediation other than those mentioned in 19 13 01",
+    "hazardous": false
+  },
+  {
+    "code": "19 13 03",
+    "description": "sludges from soil remediation containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "19 13 04",
+    "description": "sludges from soil remediation other than those mentioned in 19 13 03",
+    "hazardous": false
+  },
+  {
+    "code": "19 13 05",
+    "description": "sludges from groundwater remediation containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "19 13 06",
+    "description": "sludges from groundwater remediation other than those mentioned in 19 13 05",
+    "hazardous": false
+  },
+  {
+    "code": "19 13 07",
+    "description": "aqueous liquid wastes and aqueous concentrates from groundwater remediation containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "19 13 08",
+    "description": "aqueous liquid wastes and aqueous concentrates from groundwater remediation other than those mentioned in 19 13 07",
+    "hazardous": false
+  },
+  {
+    "code": "20 01 01",
+    "description": "paper and cardboard",
+    "hazardous": false
+  },
+  {
+    "code": "20 01 02",
+    "description": "glass",
+    "hazardous": false
+  },
+  {
+    "code": "20 01 08",
+    "description": "biodegradable kitchen and canteen waste",
+    "hazardous": false
+  },
+  {
+    "code": "20 01 10",
+    "description": "clothes",
+    "hazardous": false
+  },
+  {
+    "code": "20 01 11",
+    "description": "textiles",
+    "hazardous": false
+  },
+  {
+    "code": "20 01 13",
+    "description": "solvents",
+    "hazardous": true
+  },
+  {
+    "code": "20 01 14",
+    "description": "acids",
+    "hazardous": true
+  },
+  {
+    "code": "20 01 15",
+    "description": "alkalines",
+    "hazardous": true
+  },
+  {
+    "code": "20 01 17",
+    "description": "photochemicals",
+    "hazardous": true
+  },
+  {
+    "code": "20 01 19",
+    "description": "pesticides",
+    "hazardous": true
+  },
+  {
+    "code": "20 01 21",
+    "description": "fluorescent tubes and other mercury-containing waste",
+    "hazardous": true
+  },
+  {
+    "code": "20 01 23",
+    "description": "discarded equipment containing chlorofluorocarbons",
+    "hazardous": true
+  },
+  {
+    "code": "20 01 25",
+    "description": "edible oil and fat",
+    "hazardous": false
+  },
+  {
+    "code": "20 01 26",
+    "description": "oil and fat other than those mentioned in 20 01 25",
+    "hazardous": true
+  },
+  {
+    "code": "20 01 27",
+    "description": "paint, inks, adhesives and resins containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "20 01 28",
+    "description": "paint, inks, adhesives and resins other than those mentioned in 20 01 27",
+    "hazardous": false
+  },
+  {
+    "code": "20 01 29",
+    "description": "detergents containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "20 01 30",
+    "description": "detergents other than those mentioned in 20 01 29",
+    "hazardous": false
+  },
+  {
+    "code": "20 01 31",
+    "description": "cytotoxic and cytostatic medicines",
+    "hazardous": true
+  },
+  {
+    "code": "20 01 32",
+    "description": "medicines other than those mentioned in 20 01 31",
+    "hazardous": false
+  },
+  {
+    "code": "20 01 33",
+    "description": "batteries and accumulators included in 16 06 01, 16 06 02 or 16 06 03 and unsorted batteries and accumulators containing these batteries",
+    "hazardous": true
+  },
+  {
+    "code": "20 01 34",
+    "description": "batteries and accumulators other than those mentioned in 20 01 33",
+    "hazardous": false
+  },
+  {
+    "code": "20 01 35",
+    "description": "discarded electrical and electronic equipment other than those mentioned in 20 01 21 and 20 01 23 containing hazardous components",
+    "hazardous": true
+  },
+  {
+    "code": "20 01 36",
+    "description": "discarded electrical and electronic equipment other than those mentioned in 20 01 21, 20 01 23 and 20 01",
+    "hazardous": false
+  },
+  {
+    "code": "20 01 37",
+    "description": "wood containing dangerous substances",
+    "hazardous": true
+  },
+  {
+    "code": "20 01 38",
+    "description": "wood other than that mentioned in 20 01 37",
+    "hazardous": false
+  },
+  {
+    "code": "20 01 39",
+    "description": "plastics",
+    "hazardous": false
+  },
+  {
+    "code": "20 01 40",
+    "description": "metals",
+    "hazardous": false
+  },
+  {
+    "code": "20 01 41",
+    "description": "wastes from chimney sweeping",
+    "hazardous": false
+  },
+  {
+    "code": "20 01 99",
+    "description": "other fractions not otherwise specified",
+    "hazardous": false
+  },
+  {
+    "code": "20 02 01",
+    "description": "biodegradable waste",
+    "hazardous": false
+  },
+  {
+    "code": "20 02 02",
+    "description": "soil and stones",
+    "hazardous": false
+  },
+  {
+    "code": "20 02 03",
+    "description": "other non-biodegradable wastes",
+    "hazardous": false
+  },
+  {
+    "code": "20 03 01",
+    "description": "mixed municipal waste",
+    "hazardous": false
+  },
+  {
+    "code": "20 03 02",
+    "description": "waste from markets",
+    "hazardous": false
+  },
+  {
+    "code": "20 03 03",
+    "description": "street-cleaning residues",
+    "hazardous": false
+  },
+  {
+    "code": "20 03 04",
+    "description": "septic tank sludge",
+    "hazardous": false
+  },
+  {
+    "code": "20 03 06",
+    "description": "waste from sewage cleaning",
+    "hazardous": false
+  },
+  {
+    "code": "20 03 07",
+    "description": "bulky waste",
+    "hazardous": false
+  }
+]

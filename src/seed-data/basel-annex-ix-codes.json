@@ -1,0 +1,238 @@
+[
+  {
+    "code": "B1010",
+    "description": "Metal and metal-alloy wastes in metallic, non-dispersible form; Precious metals (gold, silver, the platinum group, but not mercury); Iron and steel scrap; Copper scrap; Nickel scrap; Aluminium scrap; Zinc scrap; Tin scrap; Tungsten scrap; Molybdenum scrap; Tantalum scrap; Magnesium scrap; Cobalt scrap; Bismuth scrap; Titanium scrap; Zirconium scrap; Manganese scrap; Germanium scrap; Vanadium scrap; Scrap of Hafnium, Indium, Niobium, Rhenium and Gallium; Thorium scrap; Rare earths scrap; Chromium scrap"
+  },
+  {
+    "code": "B1020",
+    "description": "Clean, uncontaminated metal scrap, including alloys, in bulk finished form (sheet, plate, beams, rods, etc.); Antimony scrap; Beryllium scrap; Cadmium scrap; Lead scrap (but excluding lead-acid batteries); Selenium scrap; Tellurium scrap"
+  },
+  {
+    "code": "B1030",
+    "description": "Refractory metals containing residues"
+  },
+  {
+    "code": "B1031",
+    "description": "Molybdenum, tungsten, titanium, tantalum, niobium and rhenium metal and metal alloy wastes in metallic dispersible form (metal powder), excluding such wastes as specified in list A under entry A1050, Galvanic sludges."
+  },
+  {
+    "code": "B1040",
+    "description": "Scrap assemblies from electrical power generation not contaminated with lubricating oil, PCB or PCT to an extent to render them hazardous"
+  },
+  {
+    "code": "B1050",
+    "description": "Mixed non-ferrous metal, heavy fraction scrap, not containing Annex I materials in concentrations sufficient to exhibit Annex III characteristics"
+  },
+  {
+    "code": "B1060",
+    "description": "Waste Selenium and Tellurium in metallic elemental form including powder"
+  },
+  {
+    "code": "B1070",
+    "description": "Waste of copper and copper alloys in dispersible form, unless they contain Annex I constituents to an extent that they exhibit Annex III characteristics"
+  },
+  {
+    "code": "B1080",
+    "description": "Zinc ash and residues including zinc alloys residues in dispersible form unless containing Annex I constituents in concentration such as to exhibit Annex III characteristics or exhibiting hazard characteristic H4.3"
+  },
+  {
+    "code": "B1090",
+    "description": "Waste batteries conforming to a specification, excluding those made with lead, cadmium or mercury"
+  },
+  {
+    "code": "B1100",
+    "description": "Metal-bearing wastes arising from melting, smelting and refining of metals; Hard zinc spelter; Zinc-containing drosses; Galvanising slab zinc top dross (>90 % Zn); Galvanising slab zinc bottom dross (>92 % Zn); Zinc die casting dross (>85 % Zn); Hot dip galvanisers slab zinc dross (batch) (>92 % Zn); Zinc skimmings; Aluminium skimmings (or skims) excluding salt slag may result in separated fractions containing significantly enhanced concentrations of those Annex I materials. Development (UNCTAD) that zinc ashes should not be dangerous goods.; Slags from copper processing for further processing or refining not containing arsenic, lead or cadmium to an extent that they exhibit Annex III hazard characteristics; Wastes of refractory linings, including crucibles, originating from copper smelting; Slags from precious metals processing for further refining; Tantalum bearing tin slags with less than 0,5 % tin"
+  },
+  {
+    "code": "B1110",
+    "description": "Electrical and electronic assemblies; Electronic assemblies consisting only of metals or alloys; Waste electrical and electronic assemblies or scrap (including printed circuit boards) not containing components such as accumulators and other batteries included on list A, mercury-switches, glass from cathode-ray tubes and other activated glass and PCB-capacitors, or not contaminated with Annex I constituents (e.g. cadmium, mercury, lead, polychlorinated biphenyl) or from which these have been removed, to an extent that they do not possess any of the characteristics contained in Annex III (note the related entry on list A, A1180); Electrical and electronic assemblies (including printed circuit boards, electronic components and wires) destined for direct re-use and not for recycling or final disposal"
+  },
+  {
+    "code": "B1115",
+    "description": "Waste metal cables coated or insulated with plastics, not included in list A1190, excluding those destined for Annex IVA operations or any other disposal operations involving, at any stage, uncontrolled thermal processes, such as open-burning"
+  },
+  {
+    "code": "B1120",
+    "description": "Spent catalysts excluding liquids used as catalysts, containing any of; Transition Metals, excluding waste catalysts (spent catalysts, Scandium Titanium liquid used catalysts or other catalysts) on list A Vanadium Chromium Manganese Iron Cobalt Nickel Copper Zinc Yttrium Zirconium Niobium Molybdenum Hafnium Tantalum Tungsten Rhenium; Lanthanides (rare earth metals): Lanthanum Cerium Praseodymium Neodym Samarium Europium Gadolinium Terbium Dysprosium Holmium Erbium Thulium Ytterbium Lutetium"
+  },
+  {
+    "code": "B1130",
+    "description": "Cleaned spent precious-metal-bearing catalysts"
+  },
+  {
+    "code": "B1140",
+    "description": "Precious-metal-bearing residues in solid form which contain traces of inorganic cyanides"
+  },
+  {
+    "code": "B1150",
+    "description": "Precious metals and alloy wastes (gold, silver, the platinum group, but not mercury) in a dispersible, non-liquid form with appropriate packaging and labelling"
+  },
+  {
+    "code": "B1160",
+    "description": "Precious-metal ash from the incineration of printed circuit boards (note the related entry on list A, A1150)"
+  },
+  {
+    "code": "B1170",
+    "description": "Precious-metal ash from the incineration of photographic film"
+  },
+  {
+    "code": "B1180",
+    "description": "Waste photographic film containing silver halides and metallic silver"
+  },
+  {
+    "code": "B1190",
+    "description": "Waste photographic paper containing silver halides and metallic silver"
+  },
+  {
+    "code": "B1200",
+    "description": "Granulated slag arising from the manufacture of iron and steel"
+  },
+  {
+    "code": "B1210",
+    "description": "Slag arising from the manufacture of iron and steel including slags as a source of TiO 2 and Vanadium"
+  },
+  {
+    "code": "B1220",
+    "description": "Slag from zinc production, chemically stabilised, having a high iron content (above 20 %) and processed according to industrial specifications (e.g. DIN 4301) mainly for construction"
+  },
+  {
+    "code": "B1230",
+    "description": "Mill scaling arising from the manufacture of iron and steel"
+  },
+  {
+    "code": "B1240",
+    "description": "Copper oxide mill-scale"
+  },
+  {
+    "code": "B1250",
+    "description": "Waste end-of-life motor vehicles, containing neither liquids nor other hazardous components ORGANIC MATERIALS"
+  },
+  {
+    "code": "B2010",
+    "description": "Wastes from mining operations in non-dispersible form; Natural graphite waste; Slate waste, whether or not roughly trimmed or merely cut, by sawing or otherwise; Mica waste; Leucite, nepheline and nepheline syenite waste; Feldspar waste; Fluorspar waste; Silica wastes in solid form excluding those used in foundry operations"
+  },
+  {
+    "code": "B2020",
+    "description": "Glass waste in non-dispersible form; Cullet and other waste and scrap of glass except for glass from cathode-ray tubes and other activated glasses"
+  },
+  {
+    "code": "B2030",
+    "description": "Ceramic wastes in non-dispersible form; Cermet wastes and scrap (metal ceramic composites); Ceramic based fibres not elsewhere specified or included"
+  },
+  {
+    "code": "B2040",
+    "description": "Other wastes containing principally inorganic constituents; Partially refined calcium sulphate produced from flue-gas desulphurisation (FGD); Waste gypsum wallboard or plasterboard arising from the demolition of buildings; Slag from copper production, chemically stabilised, having a high iron content (above 20 %) and processed according to industrial specifications (e.g. DIN 4301 and DIN 8201) mainly for construction and abrasive applications; Sulphur in solid form; Limestone from the production of calcium cyanamide (having a pH less than 9); Sodium, potassium, calcium chlorides; Carborundum (silicon carbide); Broken concrete; Lithium-Tantalum and Lithium-Niobium containing glass scraps"
+  },
+  {
+    "code": "B2050",
+    "description": "Coal-fired power plant fly-ash, not included on list A (note the related entry on list A, A2060)"
+  },
+  {
+    "code": "B2060",
+    "description": "Spent activated carbon not containing any Annex I constituents to an extent they exhibit Annex III characteristics, for example, carbon resulting from the treatment of potable water and processes of the food industry and vitamin production (note the related entry on list A A4160)"
+  },
+  {
+    "code": "B2070",
+    "description": "Calcium fluoride sludge"
+  },
+  {
+    "code": "B2080",
+    "description": "Waste gypsum arising from chemical industry processes not included on list A (note the related entry on list A, A2040)"
+  },
+  {
+    "code": "B2090",
+    "description": "Waste anode butts from steel or aluminium production made of petroleum coke or bitumen and cleaned to normal industry specifications (excluding anode butts from chlor alkali electrolyses and from metallurgical industry)"
+  },
+  {
+    "code": "B2100",
+    "description": "Waste hydrates of aluminium and waste alumina and residues from alumina production excluding such materials used for gas cleaning, flocculation or filtration processes"
+  },
+  {
+    "code": "B2110",
+    "description": "Bauxite residue (red mud) (pH moderated to less than 11,5)"
+  },
+  {
+    "code": "B2120",
+    "description": "Waste acidic or basic solutions with a pH greater than 2 and less than 11,5, which are not corrosive or otherwise hazardous (note the related entry on list A, A4090)"
+  },
+  {
+    "code": "B2130",
+    "description": "Bituminous material (asphalt waste) from road construction and maintenance, not containing tar (note the related entry on list A A3200) INORGANIC MATERIALS"
+  },
+  {
+    "code": "B3010",
+    "description": "Solid plastic waste: The following plastic or mixed plastic materials, provided they are not mixed with other wastes and are prepared to a specification; Scrap plastic of non-halogenated polymers and copolymers, including but not limited to the following ; ethylene; styrene; polypropylene; polyethylene terephthalate; acrylonitrile; butadiene; polyacetals; polyamides; polybutylene terephthalate; polycarbonates; polyethers; polyphenylene sulphides; acrylic polymers; alkanes C10-C13 (plasticiser); polyurethane (not containing CFCs); polysiloxanes; polymethyl methacrylate; polyvinyl alcohol; polyvinyl butyral; polyvinyl acetate; Cured waste resins or condensation products including the following; urea formaldehyde resins; phenol formaldehyde resins; melamine formaldehyde resins; expoxy resins; alkyd resins; polyamides; The following fluorinated polymer wastes ; Perfluoroethylene/propylene (FEP); Perfluoro alkoxyl alkane; Tetrafluoroethylene/per fluoro vinyl ether (PFA); Tetrafluoroethylene/per fluoro methylvinyl ether (MFA); Polyvinylfluoride (PVF); Polyvinylidenefluoride (PVDF)"
+  },
+  {
+    "code": "B3020",
+    "description": "Paper, paperboard and paper product wastes The following materials, provided they are not mixed with hazardous wastes: Waste and scrap of paper or paperboard of; unbleached paper or paperboard or of corrugated paper or paperboard; other paper or paperboard, made mainly of bleached chemical pulp, not coloured in the mass; paper or paperboard made mainly of mechanical pulp (for example, newspapers, journals and similar printed matter); other, including but not limited to; Wastes shall not be mixed.; Problems arising from open-burning practices to be considered."
+  },
+  {
+    "code": "B3030",
+    "description": "Textile wastes The following materials, provided they are not mixed with other wastes and are prepared to a specification; Silk waste (including cocoons unsuitable for reeling, yarn waste and garnetted stock); not carded or combed; other; Waste of wool or of fine or coarse animal hair, including yarn waste but excluding garnetted stock; noils of wool or of fine animal hair; other waste of wool or of fine animal hair; waste of coarse animal hair; Cotton waste (including yarn waste and garnetted stock); yarn waste (including thread waste); garnetted stock; other; Flax tow and waste; Tow and waste (including yarn waste and garnetted stock) of true hemp (Cannabis sativa L.); Tow and waste (including yarn waste and garnetted stock) of jute and other textile bast fibres (excluding flax, true hemp and ramie); Tow and waste (including yarn waste and garnetted stock) of sisal and other textile fibres of the genus Agave; Tow, noils and waste (including yarn waste and garnetted stock) of coconut; Tow, noils and waste (including yarn waste and garnetted stock) of abaca (Manila hemp or Musa textilis Nee); Tow, noils and waste (including yarn waste and garnetted stock) of ramie and other vegetable textile fibres, not elsewhere specified or included; Waste (including noils, yarn waste and garnetted stock) of man-made fibres; of synthetic fibres; of artificial fibres; Worn clothing and other worn textile articles; Used rags, scrap twine, cordage, rope and cables and worn out articles of twine, cordage, rope or cables of textile; sorted; other"
+  },
+  {
+    "code": "B3035",
+    "description": "Waste textile floor coverings, carpets"
+  },
+  {
+    "code": "B3040",
+    "description": "Rubber wastes The following materials, provided they are not mixed with other wastes; Waste and scrap of hard rubber (e.g. ebonite); Other rubber wastes (excluding such wastes specified elsewhere)"
+  },
+  {
+    "code": "B3050",
+    "description": "Untreated cork and wood waste; Wood waste and scrap, whether or not agglomerated in logs, briquettes, pellets or similar forms; Cork waste: crushed, granulated or ground cork"
+  },
+  {
+    "code": "B3060",
+    "description": "Wastes arising from agro-food industries provided it is not infectious; Wine lees; Dried and sterilised vegetable waste, residues and byproducts, whether or not in the form of pellets, or a kind used in animal feeding, not elsewhere specified or included; Degras: residues resulting from the treatment of fatty substances or animal or vegetable waxes; Waste of bones and horn-cores, unworked, defatted, simply prepared (but not cut to shape), treated with acid or degelatinised; Fish waste; Cocoa shells, husks, skins and other cocoa waste; Other wastes from the agro-food industry excluding by-products which meet national and international requirements and standards for human or animal consumption"
+  },
+  {
+    "code": "B3065",
+    "description": "Waste edible fats and oils of animal or vegetable origin (e.g. frying oils), provided they do not exhibit an Annex III characteristic"
+  },
+  {
+    "code": "B3070",
+    "description": "The following wastes; Waste of human hair; Waste straw; Deactivated fungus mycelium from penicillin production to be used as animal feed"
+  },
+  {
+    "code": "B3080",
+    "description": "Waste parings and scrap of rubber"
+  },
+  {
+    "code": "B3090",
+    "description": "Paring and other wastes of leather or of composition leather not suitable for the manufacture of leather articles, excluding leather sludges, not containing hexavalent chromium compounds and biocides (note the related entry on list A, A3100)"
+  },
+  {
+    "code": "B3100",
+    "description": "Leather dust, ash, sludges or flours not containing hexavalent chromium compounds or biocides (note the related entry on list A, A3090)"
+  },
+  {
+    "code": "B3110",
+    "description": "Fellmongery wastes not containing hexavalent chromium compounds or biocides or infectious substances (note the related entry on list A, A3110)"
+  },
+  {
+    "code": "B3120",
+    "description": "Wastes consisting of food dyes"
+  },
+  {
+    "code": "B3130",
+    "description": "Waste polymer ethers and waste non-hazardous monomer ethers incapable of forming peroxides"
+  },
+  {
+    "code": "B3140",
+    "description": "Waste pneumatic tyres, excluding those destined for Annex IVA operations"
+  },
+  {
+    "code": "B4010",
+    "description": "Wastes consisting mainly of water-based/latex paints, inks and hardened varnishes not containing organic solvents, heavy metals or biocides to an extent to render them hazardous (note the related entry on list A, A4070)"
+  },
+  {
+    "code": "B4020",
+    "description": "Wastes from production, formulation and use of resins, latex, plasticisers, glues/adhesives, not listed on list A, free of solvents and other contaminants to an extent that they do not exhibit Annex III characteristics, e.g. water based, or glues based on casein starch, dextrin, cellulose ethers, polyvinyl alcohols (note the related entry on list A, A3050)"
+  },
+  {
+    "code": "B4030",
+    "description": "Used single use cameras, with batteries not included on list A"
+  }
+]

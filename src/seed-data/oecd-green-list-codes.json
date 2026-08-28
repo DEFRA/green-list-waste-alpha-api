@@ -1,0 +1,54 @@
+[
+  {
+    "code": "GB040",
+    "description": "Slags from precious metals and copper processing for further refining"
+  },
+  {
+    "code": "GC010",
+    "description": "Electrical assemblies consisting only of metals or alloys"
+  },
+  {
+    "code": "GC020",
+    "description": "Electronic scrap (e.g. printed circuit boards, electronic components, wire, etc.) and reclaimed electronic components suitable for base and precious metal recovery"
+  },
+  {
+    "code": "GC030",
+    "description": "Vessels and other floating structures for breaking up, properly emptied of any cargo and other materials arising from the operation of the vessel which may have been classified as a dangerous substance or waste"
+  },
+  {
+    "code": "GC050",
+    "description": "Spent fluid catalytic cracking (FCC) catalysts (e.g. aluminium oxide, zeolites)"
+  },
+  {
+    "code": "GE020",
+    "description": "Glass fibre waste"
+  },
+  {
+    "code": "GF010",
+    "description": "Ceramic wastes which have been fired after shaping, including ceramic vessels (before and/or after use)"
+  },
+  {
+    "code": "GG030",
+    "description": "Bottom ash and slag tap from coal fired power plants"
+  },
+  {
+    "code": "GG040",
+    "description": "Coal fired power plants fly ash"
+  },
+  {
+    "code": "GH013",
+    "description": "Polymers of vinyl chloride"
+  },
+  {
+    "code": "GN010",
+    "description": "Waste of pigs', hogs' or boars' bristles and hair or of badger hair and other brush making hair"
+  },
+  {
+    "code": "GN020",
+    "description": "Horsehair waste, whether or not put up as a layer with or without supporting material"
+  },
+  {
+    "code": "GN030",
+    "description": "Waste of skins and other parts of birds, with their feathers or down, of feathers and parts of feathers (whether or not with trimmed edges) and down, not further worked than cleaned, disinfected or treated for preservation"
+  }
+]
