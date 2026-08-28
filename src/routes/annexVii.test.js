@@ -61,7 +61,7 @@ const validPayload = {
   },
   recoveryOperation: { rCodeDCode: 'R1' },
   usualDescriptionOfWaste: 'Description of the waste being shipped',
-  wasteIdentification: { baselAnnexIX: 'B1234', ecListOfWastes: '150101' },
+  wasteIdentification: { baselAnnexIX: 'B1010', ecListOfWastes: '150101' },
   countriesStatesConcerned: {
     exportDispatchCountry: 'GB',
     importDestinationCountry: 'DE',
@@ -107,6 +107,20 @@ describe('#annexVii', () => {
       method: 'POST',
       url: '/annexvii',
       payload: { annexVIIDocumentNo: 'AX-2024-000002' }
+    })
+
+    expect(statusCode).toBe(400)
+  })
+
+  test('POST /annexvii rejects an unrecognised waste code with 400', async () => {
+    const { statusCode } = await server.inject({
+      method: 'POST',
+      url: '/annexvii',
+      payload: {
+        ...validPayload,
+        annexVIIDocumentNo: 'AX-2024-000003',
+        wasteIdentification: { ecListOfWastes: '999999' }
+      }
     })
 
     expect(statusCode).toBe(400)
