@@ -94,8 +94,7 @@
   "recoveryOperation": { "rCodeDCode": "R1" },
   "usualDescriptionOfWaste": "Description of the waste being shipped",
   "wasteIdentification": {
-    "baselAnnexIX": "B1234",
-    "ecListOfWastes": "150101"
+    "ecListOfWastes": "15 01 01"
   },
   "countriesStatesConcerned": {
     "exportDispatchCountry": "GB",
