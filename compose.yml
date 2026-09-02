@@ -23,6 +23,7 @@ services:
 
   mongodb:
     image: mongo:7.0.28
+    user: '${UID}:${GID}'
     networks:
       - cdp-tenant
     ports:
@@ -31,7 +32,7 @@ services:
       - ./compose/mongo:/docker-entrypoint-initdb.d:ro
       - mongodb-data:/data
     healthcheck:
-      test: ["CMD", "mongosh", "--eval", "db.hello().ok"]
+      test: ['CMD', 'mongosh', '--eval', 'db.hello().ok']
       interval: 10s
       timeout: 5s
       retries: 3
@@ -45,12 +46,9 @@ services:
       target: development
     ports:
       - '3001:3001'
-    links:
-      - 'floci:floci'
-      - 'mongodb:mongodb'
     depends_on:
       floci:
-        condition: service_healthy
+        condition: service_started
       mongodb:
         condition: service_started
     env_file:
@@ -62,9 +60,9 @@ services:
     networks:
       - cdp-tenant
     volumes:
-      - ./src:/home/node/src
-      - ./package.json:/home/node/package.json
-      - ./.env:/home/node/.env
+      - ./src:/home/node/src:z
+      - ./package.json:/home/node/package.json:z
+      - ./.env:/home/node/.env:z
 
 ################################################################################
 
