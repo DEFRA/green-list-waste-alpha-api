@@ -1,0 +1,156 @@
+// Adapted from the spec pack's [Samples]/2. Operators/create_operator 3.xml
+const createOperatorXml = (eori) => `<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:v4="http://ec.europa.eu/sanco/tracesnt/base/v4" xmlns:oas="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:v2="http://ec.europa.eu/tracesnt/directory/operator/v2" xmlns:v1="http://ec.europa.eu/tracesnt/directory/operator/base/v1">
+   <soapenv:Header>
+      <v4:WebServiceClientId>wsr-system</v4:WebServiceClientId>
+   </soapenv:Header>
+   <soapenv:Body>
+      <v2:CreateOperatorRequest>
+         <v2:Operator>
+            <v1:Name>Green List Exports Ltd</v1:Name>
+            <v1:OperatorAddress main="true">
+               <v1:Address>
+                  <v1:Street>12 Harbour Road</v1:Street>
+                  <v1:City>
+                     <v1:Name>Southampton</v1:Name>
+                     <v1:PostalCode>SO14 3XB</v1:PostalCode>
+                     <v1:CountryID>GB</v1:CountryID>
+                  </v1:City>
+               </v1:Address>
+            </v1:OperatorAddress>
+            <v1:OperatorContactDetail>
+               <v1:ContactDetail type="phone">+441234567890</v1:ContactDetail>
+            </v1:OperatorContactDetail>
+            <v1:OperatorContactDetail>
+               <v1:ContactDetail type="contact_person_name">Jane Smith</v1:ContactDetail>
+            </v1:OperatorContactDetail>
+            <v1:OperatorContactDetail>
+               <v1:ContactDetail type="email">jane.smith@example.co.uk</v1:ContactDetail>
+            </v1:OperatorContactDetail>
+            <v1:Identifier type="eori" name="EORI" main="true">${eori}</v1:Identifier>
+            <v1:Activity>
+               <v1:ActivityType>
+                  <v1:Chapter name="Waste Shipment Regulation">wsr</v1:Chapter>
+                  <v1:Section name="Waste Shipment Regulation">WSR</v1:Section>
+                  <v1:Type name="WSR Operator">waste_operator</v1:Type>
+               </v1:ActivityType>
+               <v1:ResponsibleAuthorityActivityCode>DE002</v1:ResponsibleAuthorityActivityCode>
+            </v1:Activity>
+         </v2:Operator>
+      </v2:CreateOperatorRequest>
+   </soapenv:Body>
+</soapenv:Envelope>`
+
+const findOperatorXml = (eori) => `<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:v4="http://ec.europa.eu/sanco/tracesnt/base/v4" xmlns:v2="http://ec.europa.eu/tracesnt/directory/operator/v2" xmlns:v1="http://ec.europa.eu/tracesnt/directory/operator/base/v1">
+   <soapenv:Header>
+      <v4:WebServiceClientId>wsr-system</v4:WebServiceClientId>
+   </soapenv:Header>
+   <soapenv:Body>
+      <v2:FindOperatorRequest pageSize="100" offset="0">
+         <v1:CountryID>GB</v1:CountryID>
+         <v1:Identifier type="eori" name="EORI">${eori}</v1:Identifier>
+      </v2:FindOperatorRequest>
+   </soapenv:Body>
+</soapenv:Envelope>`
+
+describe('#diwassOperators', () => {
+  let server
+
+  beforeAll(async () => {
+    const { createServer } = await import('#/server.js')
+    server = await createServer()
+    await server.initialize()
+  })
+
+  afterAll(async () => {
+    await server.stop({ timeout: 1000 })
+  })
+
+  test('POST /diwass/operators creates an operator with status New', async () => {
+    const { statusCode, payload } = await server.inject({
+      method: 'POST',
+      url: '/diwass/operators',
+      headers: { 'content-type': 'text/xml' },
+      payload: createOperatorXml('GB999000001000')
+    })
+
+    expect(statusCode).toBe(200)
+    expect(payload).toContain('<v2:CreateOperatorResponse')
+    expect(payload).toMatch(
+      /<v2:OperatorInternalID>\d+<\/v2:OperatorInternalID>/
+    )
+  })
+
+  test('POST /diwass/operators rejects a duplicate EORI with a SOAP fault', async () => {
+    await server.inject({
+      method: 'POST',
+      url: '/diwass/operators',
+      headers: { 'content-type': 'text/xml' },
+      payload: createOperatorXml('GB999000002000')
+    })
+
+    const { statusCode, payload } = await server.inject({
+      method: 'POST',
+      url: '/diwass/operators',
+      headers: { 'content-type': 'text/xml' },
+      payload: createOperatorXml('GB999000002000')
+    })
+
+    expect(statusCode).toBe(409)
+    expect(payload).toContain('<soapenv:Fault>')
+    expect(payload).toContain('already registered')
+  })
+
+  test('POST /diwass/operators finds a previously created operator by EORI', async () => {
+    await server.inject({
+      method: 'POST',
+      url: '/diwass/operators',
+      headers: { 'content-type': 'text/xml' },
+      payload: createOperatorXml('GB999000003000')
+    })
+
+    const { statusCode, payload } = await server.inject({
+      method: 'POST',
+      url: '/diwass/operators',
+      headers: { 'content-type': 'text/xml' },
+      payload: findOperatorXml('GB999000003000')
+    })
+
+    expect(statusCode).toBe(200)
+    expect(payload).toContain('<v2:FindOperatorResponse')
+    expect(payload).toContain('Green List Exports Ltd')
+    expect(payload).toContain('GB999000003000')
+  })
+
+  test('an approved operator moves from New to Valid', async () => {
+    const created = await server.inject({
+      method: 'POST',
+      url: '/diwass/operators',
+      headers: { 'content-type': 'text/xml' },
+      payload: createOperatorXml('GB999000004000')
+    })
+    const [, operatorInternalId] = created.payload.match(
+      /<v2:OperatorInternalID>(\d+)<\/v2:OperatorInternalID>/
+    )
+
+    const approveXml = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:v4="http://ec.europa.eu/sanco/tracesnt/base/v4" xmlns:v2="http://ec.europa.eu/tracesnt/directory/operator/v2">
+      <soapenv:Header><v4:WebServiceClientId>wsr-system</v4:WebServiceClientId></soapenv:Header>
+      <soapenv:Body>
+        <v2:ApproveOperatorRequest>
+          <v2:OperatorInternalID>${operatorInternalId}</v2:OperatorInternalID>
+        </v2:ApproveOperatorRequest>
+      </soapenv:Body>
+    </soapenv:Envelope>`
+
+    const { statusCode, payload } = await server.inject({
+      method: 'POST',
+      url: '/diwass/operators',
+      headers: { 'content-type': 'text/xml' },
+      payload: approveXml
+    })
+
+    expect(statusCode).toBe(200)
+    expect(payload).toContain('<v2:Status>Valid</v2:Status>')
+  })
+})

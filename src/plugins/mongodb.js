@@ -47,4 +47,15 @@ async function createIndexes(db) {
   await db
     .collection('annex-vii')
     .createIndex({ annexVIIDocumentNo: 1 }, { unique: true })
+
+  await db
+    .collection('diwass-operators')
+    .createIndex({ operatorInternalId: 1 }, { unique: true })
+  await db
+    .collection('diwass-operators')
+    .createIndex({ 'identifiers.type': 1, 'identifiers.value': 1 })
+
+  await db
+    .collection('diwass-annex-vii')
+    .createIndex({ annexVIIDocumentNo: 1 }, { unique: true })
 }

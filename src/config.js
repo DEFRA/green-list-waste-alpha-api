@@ -119,6 +119,21 @@ export const config = convict({
     default: null,
     env: 'HTTP_PROXY'
   },
+  diwass: {
+    baseUrl: {
+      doc: "Base URL for the DIWASS SOAP endpoints. Unset by default so outbound calls fall back to this service's own address and hit the bundled emulator; set to point at a different emulator or at the real DIWASS gateway.",
+      format: String,
+      nullable: true,
+      default: null,
+      env: 'DIWASS_BASE_URL'
+    },
+    webServiceClientId: {
+      doc: 'WebServiceClientId SOAP header value sent on every DIWASS call',
+      format: String,
+      default: 'wsr-system',
+      env: 'DIWASS_WEB_SERVICE_CLIENT_ID'
+    }
+  },
   tracing: {
     header: {
       doc: 'CDP tracing header name',
