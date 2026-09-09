@@ -54,6 +54,32 @@ const findOperatorXml = (eori) => `<?xml version="1.0" encoding="UTF-8"?>
    </soapenv:Body>
 </soapenv:Envelope>`
 
+const getOperatorXml = (
+  operatorInternalId
+) => `<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:v4="http://ec.europa.eu/sanco/tracesnt/base/v4" xmlns:v2="http://ec.europa.eu/tracesnt/directory/operator/v2" xmlns:v1="http://ec.europa.eu/tracesnt/directory/operator/base/v1">
+   <soapenv:Header>
+      <v4:WebServiceClientId>wsr-system</v4:WebServiceClientId>
+   </soapenv:Header>
+   <soapenv:Body>
+      <v2:GetOperatorRequest>
+         <v1:ID>${operatorInternalId}</v1:ID>
+      </v2:GetOperatorRequest>
+   </soapenv:Body>
+</soapenv:Envelope>`
+
+const approveOperatorXml = (
+  operatorInternalId
+) => `<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:v4="http://ec.europa.eu/sanco/tracesnt/base/v4" xmlns:v2="http://ec.europa.eu/tracesnt/directory/operator/v2">
+   <soapenv:Header><v4:WebServiceClientId>wsr-system</v4:WebServiceClientId></soapenv:Header>
+   <soapenv:Body>
+      <v2:ApproveOperatorRequest>
+         <v2:OperatorInternalID>${operatorInternalId}</v2:OperatorInternalID>
+      </v2:ApproveOperatorRequest>
+   </soapenv:Body>
+</soapenv:Envelope>`
+
 describe('#diwassOperators', () => {
   let server
 
@@ -152,5 +178,108 @@ describe('#diwassOperators', () => {
 
     expect(statusCode).toBe(200)
     expect(payload).toContain('<v2:Status>Valid</v2:Status>')
+  })
+
+  test('POST /diwass/operators returns no matches when checking for an operator that was never registered', async () => {
+    const { statusCode, payload } = await server.inject({
+      method: 'POST',
+      url: '/diwass/operators',
+      headers: { 'content-type': 'text/xml' },
+      payload: findOperatorXml('GB999000009999')
+    })
+
+    expect(statusCode).toBe(200)
+    expect(payload).toContain('<v2:FindOperatorResponse')
+    expect(payload).not.toContain('<v2:Operator ')
+    expect(payload).not.toContain('GB999000009999')
+  })
+
+  test('POST /diwass/operators gets a previously created operator by OperatorInternalID', async () => {
+    const created = await server.inject({
+      method: 'POST',
+      url: '/diwass/operators',
+      headers: { 'content-type': 'text/xml' },
+      payload: createOperatorXml('GB999000005000')
+    })
+    const [, operatorInternalId] = created.payload.match(
+      /<v2:OperatorInternalID>(\d+)<\/v2:OperatorInternalID>/
+    )
+
+    const { statusCode, payload } = await server.inject({
+      method: 'POST',
+      url: '/diwass/operators',
+      headers: { 'content-type': 'text/xml' },
+      payload: getOperatorXml(operatorInternalId)
+    })
+
+    expect(statusCode).toBe(200)
+    expect(payload).toContain('<v2:GetOperatorResponse')
+    expect(payload).toContain('GB999000005000')
+  })
+
+  test('POST /diwass/operators returns no matches when getting an unknown OperatorInternalID', async () => {
+    const { statusCode, payload } = await server.inject({
+      method: 'POST',
+      url: '/diwass/operators',
+      headers: { 'content-type': 'text/xml' },
+      payload: getOperatorXml('999999999')
+    })
+
+    expect(statusCode).toBe(200)
+    expect(payload).toContain('<v2:GetOperatorResponse')
+    expect(payload).not.toContain('<v2:Operator ')
+  })
+
+  test('POST /diwass/operators rejects approving an operator that does not exist with a 404 SOAP fault', async () => {
+    const { statusCode, payload } = await server.inject({
+      method: 'POST',
+      url: '/diwass/operators',
+      headers: { 'content-type': 'text/xml' },
+      payload: approveOperatorXml('999999999')
+    })
+
+    expect(statusCode).toBe(404)
+    expect(payload).toContain('<soapenv:Fault>')
+    expect(payload).toContain(
+      'No operator found with OperatorInternalID 999999999'
+    )
+  })
+
+  test('POST /diwass/operators rejects an operation it does not implement with a 400 SOAP fault', async () => {
+    const deleteOperatorXml = `<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:v4="http://ec.europa.eu/sanco/tracesnt/base/v4" xmlns:v2="http://ec.europa.eu/tracesnt/directory/operator/v2">
+   <soapenv:Header><v4:WebServiceClientId>wsr-system</v4:WebServiceClientId></soapenv:Header>
+   <soapenv:Body>
+      <v2:DeleteOperatorRequest>
+         <v2:OperatorInternalID>238897</v2:OperatorInternalID>
+      </v2:DeleteOperatorRequest>
+   </soapenv:Body>
+</soapenv:Envelope>`
+
+    const { statusCode, payload } = await server.inject({
+      method: 'POST',
+      url: '/diwass/operators',
+      headers: { 'content-type': 'text/xml' },
+      payload: deleteOperatorXml
+    })
+
+    expect(statusCode).toBe(400)
+    expect(payload).toContain('<soapenv:Fault>')
+    expect(payload).toContain(
+      'Unsupported operation &quot;DeleteOperatorRequest&quot;'
+    )
+  })
+
+  test('POST /diwass/operators rejects a payload that is not a SOAP envelope with a 400 SOAP fault', async () => {
+    const { statusCode, payload } = await server.inject({
+      method: 'POST',
+      url: '/diwass/operators',
+      headers: { 'content-type': 'text/xml' },
+      payload: '<NotSoap>hello</NotSoap>'
+    })
+
+    expect(statusCode).toBe(400)
+    expect(payload).toContain('<soapenv:Fault>')
+    expect(payload).toContain('Not a SOAP envelope')
   })
 })

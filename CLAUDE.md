@@ -75,13 +75,13 @@ Two distinct surfaces, one deployed service.
 
 ### The alpha's own domain API (JSON)
 
-| Method | Path | Purpose |
-|---|---|---|
-| GET | `/health` | liveness check |
-| POST | `/annexvii` | Validate and persist an Annex VII document, then submit a SOAP payload built from it to DIWASS (see `src/services/DiwassAnnexViiClient.js`). The DIWASS submission is best-effort: a failure there doesn't undo the local write, it's surfaced as a `diwass: { status, error }` field on the response for the caller to see and retry. |
-| GET | `/waste-codes/ewc` | List EWC codes |
-| GET | `/waste-codes/basel-annex-ix` | List Basel Annex IX (List B) codes |
-| GET | `/waste-codes/oecd-green-list` | List OECD green list codes not already covered by Basel Annex IX |
+| Method | Path                           | Purpose                                                                                                                                                                                                                                                                                                                                |
+| ------ | ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| GET    | `/health`                      | liveness check                                                                                                                                                                                                                                                                                                                         |
+| POST   | `/annexvii`                    | Validate and persist an Annex VII document, then submit a SOAP payload built from it to DIWASS (see `src/services/DiwassAnnexViiClient.js`). The DIWASS submission is best-effort: a failure there doesn't undo the local write, it's surfaced as a `diwass: { status, error }` field on the response for the caller to see and retry. |
+| GET    | `/waste-codes/ewc`             | List EWC codes                                                                                                                                                                                                                                                                                                                         |
+| GET    | `/waste-codes/basel-annex-ix`  | List Basel Annex IX (List B) codes                                                                                                                                                                                                                                                                                                     |
+| GET    | `/waste-codes/oecd-green-list` | List OECD green list codes not already covered by Basel Annex IX                                                                                                                                                                                                                                                                       |
 
 ### The DIWASS emulator (SOAP/XML)
 
@@ -90,11 +90,11 @@ operations by the SOAP body's root element, not by URL - this emulator
 mirrors that (see `src/diwass-emulator/soapRoute.js`). An operation not
 listed below returns a proper SOAP fault (`soapenv:Fault`), not a 404.
 
-| Method | Path | Operations | Notes |
-|---|---|---|---|
-| POST | `/diwass/ping` | `IamAliveRequest` | Connectivity/auth check, mirrors `WasteV1` |
-| POST | `/diwass/operators` | `CreateOperatorRequest`, `FindOperatorRequest`, `GetOperatorRequest`, `ApproveOperatorRequest` | Mirrors `OperatorDirectoryServiceV2`. `ApproveOperatorRequest` is emulator-only (see Phase 1.5). Duplicate EORI/VAT is rejected with a 409 fault, matching DIWASS's own "cannot be two or more operators with the same VAT or EORI number" rule. |
-| POST | `/diwass/annex-vii` | `CreateAnnex7DocumentTypeRequest` | Mirrors `WasteAnnex7V1`. Validates that at least one carrier, one recovery facility, one waste classification code, and a mass or volume measure are present before accepting. |
+| Method | Path                | Operations                                                                                     | Notes                                                                                                                                                                                                                                            |
+| ------ | ------------------- | ---------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| POST   | `/diwass/ping`      | `IamAliveRequest`                                                                              | Connectivity/auth check, mirrors `WasteV1`                                                                                                                                                                                                       |
+| POST   | `/diwass/operators` | `CreateOperatorRequest`, `FindOperatorRequest`, `GetOperatorRequest`, `ApproveOperatorRequest` | Mirrors `OperatorDirectoryServiceV2`. `ApproveOperatorRequest` is emulator-only (see Phase 1.5). Duplicate EORI/VAT is rejected with a 409 fault, matching DIWASS's own "cannot be two or more operators with the same VAT or EORI number" rule. |
+| POST   | `/diwass/annex-vii` | `CreateAnnex7DocumentTypeRequest`                                                              | Mirrors `WasteAnnex7V1`. Validates that at least one carrier, one recovery facility, one waste classification code, and a mass or volume measure are present before accepting.                                                                   |
 
 ## Implementation notes worth knowing before touching this
 
@@ -106,7 +106,7 @@ listed below returns a proper SOAP fault (`soapenv:Fault`), not a 404.
   fallback DIWASS base URL for this reason.
 - **`vitest-fetch-mock` replaces `global.fetch` in every test file** (see
   `.vite/setup-files.js`). Tests using `server.inject()` are unaffected
-  (that bypasses the network entirely), but any test that wants a *real*
+  (that bypasses the network entirely), but any test that wants a _real_
   HTTP round trip - like `src/services/DiwassAnnexViiClient.test.js` - has
   to call `global.fetchMock.disableMocks()` in its own `beforeAll` and
   `global.fetchMock.enableMocks()` in `afterAll`.
