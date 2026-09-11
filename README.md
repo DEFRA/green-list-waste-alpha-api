@@ -27,6 +27,7 @@ choices were made, see **[CLAUDE.md](./CLAUDE.md)**.
   - [Production mode, locally](#production-mode-locally)
   - [Port clashes with other local Defra stacks](#port-clashes-with-other-local-defra-stacks)
 - [Configuration](#configuration)
+- [Calling the deployed API through the CDP Gateway](#calling-the-deployed-api-through-the-cdp-gateway)
 - [Testing](#testing)
   - [Other quality checks](#other-quality-checks)
 - [API endpoints](#api-endpoints)
@@ -140,6 +141,62 @@ required to get started - override only what you need to change.
 | `DIWASS_WEB_SERVICE_CLIENT_ID` | `wsr-system`                  | `WebServiceClientId` SOAP header value sent on every DIWASS call                                                                                                                                                                   |
 | `HTTP_PROXY`                   | _unset_                       | Outbound proxy, if required                                                                                                                                                                                                        |
 | `ENVIRONMENT`                  | `local`                       | Which CDP environment this is running in                                                                                                                                                                                           |
+
+## Calling the deployed API through the CDP Gateway
+
+The service is deployed on CDP across five environments - dev, test,
+perf-test, ext-test, and prod - each fronted by a CDP-provisioned API
+Gateway secured with Cognito client-credentials auth (see CDP's own docs:
+[`apis.md`](https://portal.cdp-int.defra.cloud/documentation/how-to/apis.md)).
+Swapping which environment you're testing against is just a case of
+pointing at a different gateway base URL and getting a token from that
+environment's Cognito pool - the app code itself has no knowledge of the
+gateway.
+
+Gateway base URLs are listed on the CDP portal's
+[service page](https://portal.cdp-int.defra.cloud/services/green-list-waste-alpha-api).
+Note that `ext-test` doesn't render there even though it exists - its URL
+just follows the same `https://green-list-waste-alpha-api.api.<env>.cdp-int.defra.cloud`
+pattern as the others.
+
+To call a deployed environment directly you need, per environment:
+
+- A Cognito **client ID + secret** - the CDP team provides these (ask in
+  Slack `#cdp-support`)
+- That environment's Cognito **token URL**
+
+CDP's credential emails only include a JWKS validation URL, not the
+`/oauth2/token` endpoint. The token URL can be read off the same Cognito
+user pool ID via its public OIDC discovery document - no AWS console
+access needed:
+
+```bash
+curl https://cognito-idp.eu-west-2.amazonaws.com/<user-pool-id>/.well-known/openid-configuration
+```
+
+The `token_endpoint` field in the response is the URL you need.
+
+Store whatever creds you get locally in `.env` (gitignored) - this repo
+uses `COGNITO_<ENV>_MAIN_CLIENT_ID` / `_SECRET`, `COGNITO_<ENV>_TOKEN_URL`,
+and `GATEWAY_<ENV>_BASE_URL` as the naming convention, e.g.
+`COGNITO_DEV_MAIN_CLIENT_ID`. None of this is read by the app itself
+(`src/config.js` has no knowledge of it) - it's purely for testing a
+deployed environment from your own machine.
+
+Get a token and call an endpoint:
+
+```bash
+TOKEN=$(curl -s -X POST "$COGNITO_DEV_TOKEN_URL" \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  -u "${COGNITO_DEV_MAIN_CLIENT_ID}:${COGNITO_DEV_MAIN_CLIENT_SECRET}" \
+  -d "grant_type=client_credentials" | python3 -c "import sys,json; print(json.load(sys.stdin)['access_token'])")
+
+curl "$GATEWAY_DEV_BASE_URL/health" -H "Authorization: Bearer $TOKEN"
+```
+
+The gateway actually enforces this - an unauthenticated request to any
+route other than `/documentation` gets back `401 Unauthorized`, not a
+pass-through to the service.
 
 ## Testing
 
