@@ -17,6 +17,12 @@ Run with docker:
 docker compose up
 ```
 
+To run docker with multiple sqs subscribers
+
+```bash
+  docker compose -f compose.yml -f compose-multiple.yml up
+```
+
 ## Running tests
 
 Run the full test suite with coverage:

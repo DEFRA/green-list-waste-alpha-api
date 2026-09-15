@@ -25,7 +25,7 @@ export const sendSqsMessage = async (
   try {
     const command = new SendMessageCommand(params)
     const result = await client.send(command)
-    logger?.info(`Job sent to queue: ${result.MessageId}`)
+    // logger?.info(`Job sent to queue: ${result.MessageId}`)
     return result.MessageId
   } catch (err) {
     logger?.error(`Error sending message: ${err}`)
@@ -34,9 +34,6 @@ export const sendSqsMessage = async (
 }
 
 export const scheduleProcessor = async (request, type, data) => {
-  console.log(
-    `backgroundProcessSqsQueueUrl URL ${request.backgroundProcessSqsQueueUrl} ++++++++++++++++++`
-  )
   return await sendSqsMessage(
     data,
     type,

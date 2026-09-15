@@ -23,7 +23,7 @@ export const deleteMessage = async (
   try {
     const command = new DeleteMessageCommand(params)
     await client.send(command)
-    logger.info(`Message deleted from queue with handle ${receiptHandle}`)
+    // logger.info(`Message deleted from queue with handle ${receiptHandle}`)
   } catch (err) {
     logger.error(`Error deleting message: ${err}`)
   }
@@ -57,7 +57,7 @@ export const pollQueue = async ({ sqsClient, QueueUrl, action }) => {
     const command = new ReceiveMessageCommand(params)
     const data = await sqsClient.send(command)
     if (data.Messages && data.Messages.length > 0) {
-      defaultLogger.info(`Received ${data.Messages.length} message(s)`)
+      // defaultLogger.info(`Received ${data.Messages.length} message(s)`)
       await processMessage(data.Messages[0], sqsClient, action, QueueUrl) // Assumes batch size is 1 - see MaxNumberOfMessages above
     } else {
       defaultLogger.debug('No messages in queue')
@@ -80,7 +80,7 @@ export const startWorker = async () => {
       sqsClient,
       QueueUrl,
       action: async (message) => {
-        defaultLogger.info('Message receved from queue ++++++++++++')
+        defaultLogger.info('Message receved from queue')
       }
     })
     await new Promise((resolve) => setTimeout(resolve, 1000))
