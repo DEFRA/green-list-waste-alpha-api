@@ -10,6 +10,7 @@ import { failAction } from '#/common/helpers/fail-action.js'
 import { pulse } from '#/plugins/pulse.js'
 import { requestTracing } from '#/plugins/request-tracing.js'
 import { metrics } from '@defra/cdp-metrics'
+import { sqsPlugin } from '#/plugins/sqs.js'
 
 export async function createServer() {
   const server = Hapi.server({
@@ -54,6 +55,15 @@ export async function createServer() {
     {
       plugin: mongoDb,
       options: config.get('mongo')
+    },
+    {
+      plugin: sqsPlugin,
+      options: {
+        region: config.get('aws.region'),
+        endpoint: config.get('aws.sqsEndpoint'),
+        queueKey: 'backgroundProcessSqsQueueUrl',
+        queueUrl: config.get('aws.backgroundProcessQueue')
+      }
     },
     router
   ])

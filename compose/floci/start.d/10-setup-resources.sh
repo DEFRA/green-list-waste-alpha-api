@@ -4,4 +4,10 @@
 #aws s3 mb s3://my-bucket
 
 # SQS queues
-#aws sqs create-queue --queue-name my-queue
+
+# waste receiver backend processing queue
+aws --endpoint-url=http://localhost:4566 sqs create-queue --queue-name glw-poc-background-process
+
+echo READY > /tmp/READY
+# end of copypasta
+
