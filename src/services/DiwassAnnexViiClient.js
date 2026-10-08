@@ -1,6 +1,10 @@
 import { config } from '#/config.js'
 import { buildSoapRequest } from '#/diwass-emulator/xml/build.js'
-import { parseSoapMessage, textOf } from '#/diwass-emulator/xml/parse.js'
+import {
+  asArray,
+  parseSoapMessage,
+  textOf
+} from '#/diwass-emulator/xml/parse.js'
 import {
   buildCreateAnnex7RequestBody,
   ANNEX_VII_REQUEST_NAMESPACES
@@ -65,7 +69,11 @@ export async function submitAnnexViiToDiwass(
   })
 
   const responseText = await response.text()
-  const { operation, payload: responsePayload } = parseSoapMessage(responseText)
+  const {
+    header,
+    operation,
+    payload: responsePayload
+  } = parseSoapMessage(responseText)
 
   if (operation !== 'Annex7DocumentTypeResponse') {
     throw new DiwassRequestError(
@@ -73,13 +81,31 @@ export async function submitAnnexViiToDiwass(
     )
   }
 
-  const statusCode = textOf(responsePayload.response?.statusCode)
-  if (statusCode !== 'OK') {
-    throw new DiwassRequestError(`DIWASS returned status "${statusCode}"`)
-  }
+  /*
+  A business rejection comes back as HTTP 200 with statusCode NOTOK, coded
+  errors, and annexVIIDocumentNo UNKNOWN. It is returned, not thrown, so the
+  caller can store DIWASS's own error codes against the record.
+  */
+  const status = textOf(responsePayload.response?.statusCode)
+  const documentNo = textOf(responsePayload.annexVIIDocumentNo)
 
   return {
-    status: statusCode,
-    annexViiDocumentNo: textOf(responsePayload.annexVIIDocumentNo)
+    status,
+    annexViiDocumentNo:
+      documentNo && documentNo !== 'UNKNOWN' ? documentNo : null,
+    requestId: requestIdOf(header),
+    errors: asArray(responsePayload.response?.errors).map((error) => ({
+      code: textOf(error.code),
+      description: textOf(error.description)
+    })),
+    target: security ? 'diwass' : 'emulator'
   }
+}
+
+// DIWASS echoes a tracing ID in a Message header: <ID>WS_REQUEST_ID</ID>.
+function requestIdOf(header) {
+  const message = asArray(header?.Message).find(
+    (entry) => textOf(entry.ID) === 'WS_REQUEST_ID'
+  )
+  return message ? (textOf(message.Message) ?? null) : null
 }

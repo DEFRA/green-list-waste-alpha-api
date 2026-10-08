@@ -44,9 +44,20 @@ export const mongoDb = {
 async function createIndexes(db) {
   await db.collection('mongo-locks').createIndex({ id: 1 })
 
-  await db
-    .collection('annex-vii')
-    .createIndex({ annexVIIDocumentNo: 1 }, { unique: true })
+  const annexVii = db.collection('annex-vii')
+  await annexVii.createIndex({ submissionId: 1 }, { unique: true })
+  // annexVIIDocumentNo is optional now that DIWASS assigns the real number,
+  // so uniqueness only applies where a caller supplied one. This replaces the
+  // earlier unconditional index of the same key.
+  await annexVii.dropIndex('annexVIIDocumentNo_1').catch(() => {})
+  await annexVii.createIndex(
+    { annexVIIDocumentNo: 1 },
+    {
+      unique: true,
+      partialFilterExpression: { annexVIIDocumentNo: { $type: 'string' } },
+      name: 'annexVIIDocumentNo_unique_when_set'
+    }
+  )
 
   await db
     .collection('diwass-operators')

@@ -125,7 +125,8 @@ const attachmentsSchema = Joi.array().items(Joi.any()).default([])
 The main schema for the Annex VII document, which includes all the required fields and nested objects for a complete shipment record.
 */
 export const annexViiSchema = Joi.object({
-  annexVIIDocumentNo: Joi.string().required(),
+  // Optional: DIWASS assigns the real number. Kept as the caller's reference.
+  annexVIIDocumentNo: Joi.string(),
 
   shipmentArranger: partySchema
     .keys({ isAlsoWasteProducer: Joi.boolean().required() })

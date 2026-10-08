@@ -108,6 +108,26 @@ describe('#annexVii', () => {
     expect(result.annexVIIDocumentNo).toBe(validPayload.annexVIIDocumentNo)
   })
 
+  test('POST /annexvii stores the DIWASS outcome on the record, with no caller document number needed', async () => {
+    const { annexVIIDocumentNo, ...withoutNumber } = validPayload
+    const { statusCode, result } = await server.inject({
+      method: 'POST',
+      url: '/annexvii',
+      payload: withoutNumber
+    })
+
+    expect(statusCode).toBe(201)
+    expect(result.submissionId).toMatch(/^[0-9a-f-]{36}$/)
+
+    const stored = await server.db
+      .collection('annex-vii')
+      .findOne({ submissionId: result.submissionId })
+    expect(stored.diwass.status).toBe(result.diwass.status)
+    expect(stored.diwass.status).not.toBe('PENDING')
+    expect(stored.diwass.submittedAt).toBeInstanceOf(Date)
+    expect(stored.diwass.respondedAt).toBeInstanceOf(Date)
+  })
+
   test('POST /annexvii rejects an invalid payload with 400', async () => {
     const { statusCode } = await server.inject({
       method: 'POST',

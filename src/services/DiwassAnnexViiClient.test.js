@@ -143,7 +143,7 @@ describe('#DiwassAnnexViiClient (live DIWASS settings)', () => {
 
   // Trimmed from the live acceptance environment's response to the first
   // accepted Annex VII (8 October 2026).
-  const liveOkResponse = `<?xml version='1.0' encoding='UTF-8'?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"><S:Body><ns3:Annex7DocumentTypeResponse xmlns:ns3="http://ec.europa.eu/tracesnt/waste/annex7/v1" xmlns:ns4="http://ec.europa.eu/tracesnt/waste/notification/v1"><ns3:response><ns4:statusCode>OK</ns4:statusCode></ns3:response><ns3:annexVIIDocumentNo>GLW.GB260000001490i</ns3:annexVIIDocumentNo></ns3:Annex7DocumentTypeResponse></S:Body></S:Envelope>`
+  const liveOkResponse = `<?xml version='1.0' encoding='UTF-8'?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"><S:Header><Message xmlns="http://ec.europa.eu/sanco/tracesnt/message/v1" severity="debugging"><ID>WS_REQUEST_ID</ID><Message>48eb8014-ef13-4a71-8c3a-a357f28f11d6</Message></Message></S:Header><S:Body><ns3:Annex7DocumentTypeResponse xmlns:ns3="http://ec.europa.eu/tracesnt/waste/annex7/v1" xmlns:ns4="http://ec.europa.eu/tracesnt/waste/notification/v1"><ns3:response><ns4:statusCode>OK</ns4:statusCode></ns3:response><ns3:annexVIIDocumentNo>GLW.GB260000001490i</ns3:annexVIIDocumentNo></ns3:Annex7DocumentTypeResponse></S:Body></S:Envelope>`
 
   beforeEach(() => {
     config.set('diwass.baseUrl', 'https://diwass.example/tracesnt-alpha/ws/')
@@ -171,7 +171,31 @@ describe('#DiwassAnnexViiClient (live DIWASS settings)', () => {
     expect(init.body).not.toContain('test-key')
     expect(result).toEqual({
       status: 'OK',
-      annexViiDocumentNo: 'GLW.GB260000001490i'
+      annexViiDocumentNo: 'GLW.GB260000001490i',
+      requestId: '48eb8014-ef13-4a71-8c3a-a357f28f11d6',
+      errors: [],
+      target: 'diwass'
+    })
+  })
+
+  test('Should return a NOTOK with DIWASS error codes rather than throw', async () => {
+    // Shape of the live response to a rejected customs code (8 October 2026).
+    const notOk = `<?xml version='1.0' encoding='UTF-8'?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"><S:Header><Message xmlns="http://ec.europa.eu/sanco/tracesnt/message/v1" severity="debugging"><ID>WS_REQUEST_ID</ID><Message>11111111-2222-3333-4444-555555555555</Message></Message></S:Header><S:Body><ns3:Annex7DocumentTypeResponse xmlns:ns3="http://ec.europa.eu/tracesnt/waste/annex7/v1" xmlns:ns4="http://ec.europa.eu/tracesnt/waste/notification/v1"><ns3:response><ns4:statusCode>NOTOK</ns4:statusCode><ns4:errors><ns4:code>WASTE-CUSTOMS-INVALID-CODE</ns4:code><ns4:description languageID="en">[en] waste.customs.invalid.code</ns4:description></ns4:errors></ns3:response><ns3:annexVIIDocumentNo>UNKNOWN</ns3:annexVIIDocumentNo></ns3:Annex7DocumentTypeResponse></S:Body></S:Envelope>`
+    const fetchImpl = vi.fn(async () => new Response(notOk))
+
+    const result = await submitAnnexViiToDiwass(validPayload, { fetchImpl })
+
+    expect(result).toEqual({
+      status: 'NOTOK',
+      annexViiDocumentNo: null,
+      requestId: '11111111-2222-3333-4444-555555555555',
+      errors: [
+        {
+          code: 'WASTE-CUSTOMS-INVALID-CODE',
+          description: '[en] waste.customs.invalid.code'
+        }
+      ],
+      target: 'diwass'
     })
   })
 

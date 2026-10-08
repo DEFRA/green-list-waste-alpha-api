@@ -1,6 +1,10 @@
+import { randomUUID } from 'node:crypto'
 import Boom from '@hapi/boom'
 import { annexViiSchema } from '#/schemas/annex-vii.js'
-import { createAnnexVii } from '#/services/AnnexViiCreate.js'
+import {
+  createAnnexVii,
+  recordDiwassResult
+} from '#/services/AnnexViiCreate.js'
 import { findInvalidWasteCodes } from '#/common/helpers/validate-waste-codes.js'
 import { submitAnnexViiToDiwass } from '#/services/DiwassAnnexViiClient.js'
 
@@ -30,7 +34,10 @@ export const annexVii = [
 
       let created
       try {
-        created = await createAnnexVii(request.db, request.payload)
+        created = await createAnnexVii(request.db, request.payload, {
+          submissionId: randomUUID(),
+          receivedAt: new Date()
+        })
       } catch (error) {
         if (error.code === 11000) {
           return Boom.conflict(
@@ -49,6 +56,7 @@ export const annexVii = [
        * local write; it's surfaced on the response for the caller to see
        * and, eventually, retry.
        */
+      const submittedAt = new Date()
       let diwass
       try {
         // server.info.uri reflects the configured bind address (0.0.0.0 by
@@ -61,6 +69,13 @@ export const annexVii = [
         request.log(['error', 'diwass'], error)
         diwass = { status: 'ERROR', error: error.message }
       }
+
+      // Stored on the record, so a NOTOK or ERROR can be seen and retried later.
+      await recordDiwassResult(request.db, created.submissionId, {
+        ...diwass,
+        submittedAt,
+        respondedAt: new Date()
+      })
 
       return h.response({ ...created, diwass }).code(201)
     }
