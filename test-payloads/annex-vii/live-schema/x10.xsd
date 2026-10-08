@@ -1,0 +1,461 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (https://github.com/eclipse-ee4j/metro-jax-ws). RI's version is JAX-WS RI 2.3.5 git-revision#7ddc91f. --><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:base="http://ec.europa.eu/sanco/tracesnt/base/v4" xmlns:model="http://ec.europa.eu/tracesnt/waste/model/v1" xmlns:notification="http://ec.europa.eu/tracesnt/waste/notification/v1" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" targetNamespace="http://ec.europa.eu/tracesnt/waste/notification/v1" elementFormDefault="qualified">
+
+    <xs:import schemaLocation="x1.xsd" namespace="http://ec.europa.eu/sanco/tracesnt/base/v4"/>
+    <xs:import schemaLocation="x12.xsd" namespace="http://www.w3.org/2000/09/xmldsig#"/>
+    <xs:import schemaLocation="x7.xsd" namespace="http://ec.europa.eu/tracesnt/waste/model/v1"/>
+
+
+    <!--  WSDL Messages element definitions -->
+    <xs:element name="WasteWebServiceFault" type="notification:WasteWebServiceFault"/>
+    <xs:element name="NotificationNotFoundException" type="notification:NotificationNotFoundExceptionType"/>
+    <xs:element name="IllegalDataException" type="xs:string"/>
+    <xs:element name="ReferenceInformationNotFoundException" type="xs:string"/>
+	<xs:element name="attachmentBeIncluded" type="xs:boolean"/>
+
+    <xs:complexType name="BaseSubmissionDocumentType">
+        <xs:sequence>
+        <!-- This is optional for case when called by notifier -->
+        <xs:element name="userCompetentAuthorityDomainID" type="notification:AuthorityDomainBodyIdentifier" minOccurs="0"/>
+        <xs:element name="notificationID" type="model:NotificationIdentifierType" minOccurs="0">
+            <xs:annotation>
+                <xs:documentation xml:lang="EN">The notification number assigned to the notification by the Competent Authority of Dispatch or an IT solution on its behalf.
+                    Example: "DE 030855"
+                    Note: By convention, the notification number is expected to start with the ISO 3166-1 alpha-2 country code, such as 'DE' or 'IT'.
+                    It can be empty, in the case of be the notifier pushing the data.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:element>
+        <xs:element name="takeBackIndication" type="xs:boolean" minOccurs="1">
+            <xs:annotation>
+                <xs:documentation xml:lang="EN">The flag indicates whether the notification involves a take-back action.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:element>
+        <xs:element name="illegalActivityIndication" type="xs:boolean" minOccurs="1">
+            <xs:annotation>
+                <xs:documentation xml:lang="EN">The flag indicates whether the notification pertains to the detection of illegal activity.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:element>
+        <xs:element name="referenceNotificationId" type="model:NotificationIdentifierType" minOccurs="0">
+            <xs:annotation>
+                <xs:documentation xml:lang="EN">The notification number assigned to the notification by the Competent Authority of Dispatch or an IT solution on its behalf. Example: "DE 030855".
+                    It can be empty if the notifier is pushing the data.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:element>
+        <xs:element name="onBehalfOfCA" type="notification:OnBehalfCAType" minOccurs="0" maxOccurs="1"/>
+
+        <xs:element name="Submission" type="model:SubmissionType" minOccurs="1">
+            <xs:annotation>
+                <xs:documentation xml:lang="EN">Data submitted by the notifier to competent authorities.
+                    Note: Corresponds to blocks 1 to 18 of Annex IA WSR.</xs:documentation>
+            </xs:annotation>
+        </xs:element>
+        <xs:element name="DeclarationExporter" type="model:DeclarationType" minOccurs="1">
+            <xs:annotation>
+                <xs:documentation xml:lang="EN">Notifier's declaration.
+                    Note: Corresponding to block 17 of Annex IA WSR.</xs:documentation>
+            </xs:annotation>
+        </xs:element>
+        <xs:element name="DeclarationProducer" type="model:DeclarationType" minOccurs="1" maxOccurs="unbounded">
+            <xs:annotation>
+                <xs:documentation xml:lang="EN">Waste producer's declaration.
+                    Note: Corresponding to block 17 of Annex IA WSR.</xs:documentation>
+            </xs:annotation>
+        </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+	<xs:complexType name="SubmissionDocumentType">
+        <xs:complexContent>
+            <xs:extension base="notification:BaseSubmissionDocumentType">
+                <xs:sequence>
+                    <xs:element name="linkedAttachments" type="model:LinkedAttachType" minOccurs="0"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+	<xs:complexType name="DecisionDocumentType">
+        <xs:annotation>
+            <xs:documentation xml:lang="EN">Decision document plus list of attachments</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+			<xs:element name="userCompetentAuthorityDomainID" type="notification:AuthorityDomainBodyIdentifier" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="onBehalfOfCA" type="notification:OnBehalfCAType" minOccurs="0" maxOccurs="1"/>
+        	<xs:element name="notificationDocumentId" type="notification:NotificationDocumentIdentifierType" minOccurs="1"/>
+            <xs:element name="decision" type="model:DecisionType" minOccurs="1"/>
+            <xs:element name="CompetentAuthority" type="model:CompetentAuthorityType" minOccurs="0"/>
+            <xs:element name="CompetentAuthoritySignature" type="model:SignatureType" minOccurs="0"/>
+			<xs:element name="linkedAttachments" type="model:LinkedAttachType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+	<xs:complexType name="AcknowledgementDocumentType">
+        <xs:annotation>
+            <xs:documentation xml:lang="EN">Acknowledgement document plus list of attachments</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+			<xs:element name="userCompetentAuthorityDomainID" type="notification:AuthorityDomainBodyIdentifier" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="onBehalfOfCA" type="notification:OnBehalfCAType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="notificationId" type="model:NotificationIdentifierType" minOccurs="1"/>
+            <xs:element name="acknowledgement" type="model:AcknowledgementType" minOccurs="1"/>
+            <xs:element name="CompetentAuthority" type="model:CompetentAuthorityType" minOccurs="0"/>
+            <xs:element name="CompetentAuthoritySignature" type="model:SignatureType" minOccurs="0"/>
+			<xs:element name="linkedAttachments" type="model:LinkedAttachType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+	<xs:complexType name="RequestInformationDocumentType">
+		<xs:sequence>
+			<xs:element name="requestInformationId" type="model:Token" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="userCompetentAuthorityDomainID" type="notification:AuthorityDomainBodyIdentifier" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="onBehalfOfCA" type="notification:OnBehalfCAType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="additionalDaysToReply" type="xs:integer" minOccurs="0"/>
+			<xs:element name="statement" type="model:StatementDocumentType" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="linkedAttachments" type="model:LinkedAttachType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="RequestForChangeAfterConsentDocumentType">
+        <xs:sequence>
+            <xs:element name="userCompetentAuthorityDomainID" type="notification:AuthorityDomainBodyIdentifier" minOccurs="0"/>
+            <xs:element name="notificationId" type="model:Token" minOccurs="1"/>
+            <xs:element name="changeRouteRequest" type="xs:boolean" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">Indicates whether the request covers a change of the route of the shipment. This is a boolean flag that will be used to flag the request explicitly.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="requestDescription" type="model:LanguageDescriptionType" minOccurs="1" maxOccurs="unbounded"/>
+			<xs:element name="signature" type="model:SignatureType" minOccurs="1"/>
+            <xs:element name="linkedAttachments" type="model:LinkedAttachType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+	<xs:complexType name="ReplyToRequestForChangeAfterConsentDocumentType">
+		<xs:sequence>
+			<xs:element name="userCompetentAuthorityDomainID" type="notification:AuthorityDomainBodyIdentifier" minOccurs="1"/>
+			<xs:element name="onBehalfOfCA" type="notification:OnBehalfCAType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="requestForChangeAfterConsentId" type="model:Token" minOccurs="1"/>
+			<xs:element name="agreementChangeRouteRequest" type="xs:boolean" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">Indicates whether the request covers a change of the route of the shipment. This is a boolean flag that will be used to flag the request explicitly.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="reasons" type="model:LanguageDescriptionType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="signature" type="model:SignatureType" minOccurs="1"/>
+			<xs:element name="linkedAttachments" type="model:LinkedAttachType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+    <xs:complexType name="FacilityCompletionUnderArticle15Type">
+        <xs:sequence>
+            <xs:element name="notificationId" type="model:Token" minOccurs="1"/>
+            <xs:element name="certificateId" type="model:Token" minOccurs="0"/>
+            <xs:element name="recoveryDisposalParty" type="model:WasteOperatorType" minOccurs="1"/>
+            <xs:element name="movementIdentifier" type="model:Token" minOccurs="1" maxOccurs="unbounded"/>
+
+            <xs:element name="wasteClassification" type="model:WasteClassificationType" minOccurs="1"/>
+            <xs:element name="completionDate" type="xs:date" minOccurs="1"/>
+            <xs:element name="acceptedQuantity" type="model:MassVolumeMeasureType" minOccurs="1"/>
+
+            <xs:element name="reusedOrRecycledQuantityArticle15" type="notification:QuantityArticle15Type" minOccurs="1"/>
+            <xs:element name="recoveredInOtherMannerQuantityArticle15" type="notification:QuantityArticle15Type" minOccurs="1"/>
+            <xs:element name="disposedQuantityArticle15" type="notification:QuantityArticle15Type" minOccurs="1"/>
+
+            <xs:element name="wasteDesignationDescription" type="model:DescriptionType" minOccurs="0"/>
+
+            <xs:element name="signature" type="model:SignatureType" minOccurs="1"/>
+            <xs:element name="linkedAttachments" type="model:LinkedAttachType" minOccurs="0"/>
+
+        </xs:sequence>
+    </xs:complexType>
+
+
+
+	<xs:complexType name="NotificationSignalDocumentType">
+		<xs:sequence>
+		    <xs:element name="userCompetentAuthorityDomainID" type="notification:AuthorityDomainBodyIdentifier" minOccurs="0"/>
+			<xs:element name="onBehalfOfCA" type="notification:OnBehalfCAType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="notificationId" type="model:NotificationIdentifierType" minOccurs="1"/>
+			<xs:element name="statement" type="notification:SignalStatementDocumentType" minOccurs="1" maxOccurs="1"/>
+			<!-- Keeping Attachments separate for better clarity -->
+            <xs:element name="linkedAttachments" type="model:LinkedAttachType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="SignalStatementDocumentType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Details on a statement for exchanging CA signals</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+	        <xs:element name="signal" type="notification:SignalStatementType" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="description" type="model:DescriptionType" minOccurs="0"/>
+			<xs:element name="signature" type="model:SignatureType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="SignalStatementType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Details on a statement, including the actual statement (free text message), as well as information on the statement type.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="typeCode" type="notification:SignalStatementTypeCodeType" minOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+
+    <xs:complexType name="QuantityArticle15Type">
+        <xs:sequence>
+            <xs:element name="quantity" type="model:MassVolumeMeasureType" minOccurs="1"/>
+            <xs:element name="recoveryDisposalTypeCode" type="model:RecoveryDisposalCodeType" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+	<xs:simpleType name="SignalStatementTypeCodeType">
+		<xs:restriction base="xs:token">
+			<!--TODO prefix all with notification-->
+			<xs:enumeration value="ProperlyCarriedOut"/>
+			<xs:enumeration value="ProperlyCompleted"/>
+			<xs:enumeration value="NotificationInvalid"/>
+			<xs:enumeration value="NotificationRevalidated"/>
+			<xs:enumeration value="NotificationCancelled"/>
+			<xs:enumeration value="NotificationCompleted"/>
+			<xs:enumeration value="NoPreConsentedFacilityTimeline"/>
+			<xs:enumeration value="RejectPreConsentedFacility"/>
+			<xs:enumeration value="MovementCancelled"/>
+			<xs:enumeration value="Annex7Cancelled"/>
+			<xs:enumeration value="NotificationWithdrawn"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="NonConnectedAuthorityId">
+		<xs:sequence>
+			<xs:element name="Code" type="model:PartyIdentifierType" minOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="NotificationNotFoundExceptionType">
+        <xs:sequence>
+            <xs:element name="notificationNumber" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="WasteNotificationStatus">
+        <xs:annotation>
+            <xs:documentation>Notification status</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="DRAFT"/>
+            <xs:enumeration value="SUBMITTED"/>
+            <xs:enumeration value="SATISFIED"/>
+            <xs:enumeration value="CONSENT"/>
+            <xs:enumeration value="INVALID"/>
+            <xs:enumeration value="WITHDRAWN"/>
+            <xs:enumeration value="OBJECTED"/>
+            <xs:enumeration value="CANCELLED"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+	<xs:complexType name="MovementDocumentIdentifierType">
+		<xs:annotation>
+			<xs:documentation>Unique combination for identifying a document in the scope of one movement announcement.
+				Example: Movement id 100 carrier transport 201, Movement id 100 carrier transport 202,.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="movementId" type="model:Token" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="documentId" type="model:DocumentIdentifierType" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="MovementCertificateIdentifierType">
+    		<xs:annotation>
+    			<xs:documentation>Unique combination for identifying a certificate in the scope of one movement announcement.
+    				Example: Movement id 24BE000102/MOV carrier transport 24BE000005/CARTRANSP, Movement id 24BE000102/MOV carrier transport 24BE000006/CARTRANSP,.
+    			</xs:documentation>
+    		</xs:annotation>
+    		<xs:sequence>
+    			<xs:element name="movementId" type="model:Token" minOccurs="1" maxOccurs="1"/>
+    			<xs:element name="certificateId" type="model:Token" minOccurs="0" maxOccurs="1"/>
+    		</xs:sequence>
+    	</xs:complexType>
+
+	<xs:complexType name="MovementIdentifierType">
+		<xs:annotation>
+			<xs:documentation>Movement announcement identifier</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="movementId" type="model:Token" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<xs:complexType name="DocumentIdentifierType">
+		<xs:annotation>
+			<xs:documentation>Document identifier type. Every operation has as input a document, the document identifier is part of the response of submitting a document in an operation.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="documentId" type="model:PositiveInteger8" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="NotificationDocumentIdentifierType">
+		<xs:annotation>
+			<xs:documentation>Unique combination for identifying a document in the scope of one notification.
+				Example: Notification id PT100000/NO, decision id 100.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="notificationId" type="model:NotificationIdentifierType" minOccurs="1"/>
+			<xs:element name="documentId" type="model:DocumentIdentifierType" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="AnyXMLType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Arbitrary XML content.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:any namespace="##any" processContents="lax"/>
+		</xs:sequence>
+		<xs:attribute name="URI" type="xs:anyURI" use="required"/>
+		<xs:attribute name="id" type="xs:ID" use="required"/>
+	</xs:complexType>
+
+	<xs:simpleType name="WasteStatusCode">
+		<xs:annotation>
+			<xs:documentation>Notification status</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="OK"/>
+			<xs:enumeration value="NOTOK"/>
+			<xs:enumeration value="WARNING"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="WasteWebServiceResponse">
+		<xs:sequence>
+			<xs:element name="statusCode" type="notification:WasteStatusCode" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="errors" type="notification:WasteMessageDescription" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="warnings" type="notification:WasteMessageDescription" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<xs:complexType name="DocumentTimestampType">
+		<xs:sequence>
+			<xs:element name="timestamp" type="xs:dateTime" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="serverUrl" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="name" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<xs:complexType name="WasteMessageDescription">
+		<xs:sequence>
+			<xs:element name="code" type="xs:string" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="description" type="model:LanguageDescriptionType" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<xs:complexType name="WasteWebServiceFault">
+		<xs:annotation>
+			<xs:documentation>
+				Default WASTE WS Response. Error Message.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="errorMessage" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>
+						Generated error message during process.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="OnBehalfCAType">
+		<xs:sequence>
+			<xs:element name="CompetentAuthorityID" type="model:Token64" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="CountryID" type="model:CountryCodeType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="EN">The ISO 3166-1 numeric 3 code specifying the country.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+			<xs:element name="CompetentAuthorityDomainID" type="notification:AuthorityDomainBodyIdentifier" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="OnBehalfOperatorType">
+		<xs:sequence>
+			<xs:element name="OperatorInternalID" type="xs:long" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="AuthorityDomainBodyIdentifier">
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="WSRDISP"/>
+			<xs:enumeration value="WSRTRAN"/>
+			<xs:enumeration value="WSRDEST"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="MovementTakeBackType">
+        <xs:annotation>
+            <xs:documentation xml:lang="EN">Movement take back document</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="quantity" type="model:MassVolumeMeasureType"/>
+            <xs:element name="reasons" type="model:DescriptionType" minOccurs="1"/>
+            <xs:element name="requirements" type="model:DescriptionType" minOccurs="0"/>
+            <xs:element name="takeBackDate" type="xs:date" minOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="FacilityConfidentialityType">
+        <xs:annotation>
+            <xs:documentation xml:lang="EN">
+                This operation is used by CAs to indicate, that the name of the waste receiving facility shall
+                not be published by the Commission in accordance with Article 21 of Regulation (EU)
+                2024/1157, as it is confidential in accordance with Union or national law.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="NotificationNumber" type="model:NotificationIdentifierType" minOccurs="1"/>
+            <xs:element name="OperatorId" type="xs:long" minOccurs="1"/>
+            <xs:element name="NameIsConfidential" type="xs:boolean" minOccurs="1">
+                <xs:annotation>
+                    <xs:documentation xml:lang="EN">
+                        Name of the waste receiving facility is confidential and shall not be publicly disclosed.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="Explanation" type="model:DescriptionType" minOccurs="1">
+                <xs:annotation>
+                    <xs:documentation xml:lang="EN">
+                        Explanation why the name of waste receiving facility is confidential under Union or national law.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="GetFacilityConfidentialityType">
+        <xs:annotation>
+            <xs:documentation xml:lang="EN">
+                This operation is used by CAs to indicate, that the name of the waste receiving facility shall
+                not be published by the Commission in accordance with Article 21 of Regulation (EU)
+                2024/1157, as it is confidential in accordance with Union or national law.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="NotificationNumber" type="model:NotificationIdentifierType" minOccurs="1"/>
+            <xs:element name="OperatorId" type="xs:long" minOccurs="0"/>
+            <xs:element name="NameIsConfidential" type="xs:boolean" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

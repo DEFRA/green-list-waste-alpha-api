@@ -1,0 +1,205 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (https://github.com/eclipse-ee4j/metro-jax-ws). RI's version is JAX-WS RI 2.3.5 git-revision#7ddc91f. --><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:model="http://ec.europa.eu/tracesnt/waste/model/v1" xmlns:annex7="http://ec.europa.eu/tracesnt/waste/annex7/v1" xmlns:notification="http://ec.europa.eu/tracesnt/waste/notification/v1" targetNamespace="http://ec.europa.eu/tracesnt/waste/annex7/v1" elementFormDefault="qualified">
+
+    <xs:import schemaLocation="x10.xsd" namespace="http://ec.europa.eu/tracesnt/waste/notification/v1"/>
+    <xs:import schemaLocation="x7.xsd" namespace="http://ec.europa.eu/tracesnt/waste/model/v1"/>
+    <xs:import schemaLocation="x12.xsd" namespace="http://www.w3.org/2000/09/xmldsig#"/>
+
+
+    <xs:element name="CreateAnnex7DocumentTypeRequest" type="annex7:WasteAnnex7DocumentType"/>
+    <xs:element name="UpdateAnnex7DocumentTypeRequest" type="annex7:WasteAnnex7DocumentType"/>
+
+    <xs:element name="CreateAnnex7TransportTypeRequest" type="annex7:WasteAnnex7TransportType"/>
+    <xs:element name="UpdateAnnex7TransportTypeRequest" type="annex7:WasteAnnex7TransportType"/>
+
+    <xs:element name="CreateAnnex7ConsigneeCertificateOfWasteReceiptTypeRequest" type="annex7:WasteAnnex7ConsigneeCertificateOfWasteReceiptType"/>
+    <xs:element name="UpdateAnnex7ConsigneeCertificateOfWasteReceiptTypeRequest" type="annex7:WasteAnnex7ConsigneeCertificateOfWasteReceiptType"/>
+
+    <xs:element name="CreateAnnex7FacilityCertificateOfWasteReceiptTypeRequest" type="annex7:WasteAnnex7CertificateOfWasteReceiptType"/>
+    <xs:element name="UpdateAnnex7FacilityCertificateOfWasteReceiptTypeRequest" type="annex7:WasteAnnex7CertificateOfWasteReceiptType"/>
+
+    <xs:element name="CreateAnnex7CertificateOfWasteCompletionTypeRequest" type="annex7:WasteAnnex7CertificateOfWasteCompletionType"/>
+    <xs:element name="UpdateAnnex7CertificateOfWasteCompletionTypeRequest" type="annex7:WasteAnnex7CertificateOfWasteCompletionType"/>
+
+    <xs:element name="CreateAnnex7TakeBackTypeRequest" type="annex7:WasteAnnex7TakeBackType"/>
+    <xs:element name="UpdateAnnex7TakeBackTypeRequest" type="annex7:WasteAnnex7TakeBackType"/>
+
+    <xs:element name="CreateAnnex7SignalTypeRequest" type="annex7:Annex7SignalDocumentType"/>
+
+    <xs:element name="Annex7DocumentTypeResponse" type="annex7:Annex7DocumentResponseType"/>
+    <xs:element name="Annex7MovementDocumentTypeResponse" type="annex7:Annex7MovementDocumentResponseType"/>
+    <xs:element name="WasteAnnex7ServiceFault" type="annex7:WasteAnnex7ServiceFault"/>
+
+    <xs:complexType name="WasteAnnex7DocumentType">
+        <xs:annotation>
+            <xs:documentation xml:lang="EN">Announcement Document</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="currentUserPartyUUID" type="model:UuidType" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="userCompetentAuthorityDomainID" type="notification:AuthorityDomainBodyIdentifier" minOccurs="0"/>
+            <xs:element name="onBehalfOperator" type="notification:OnBehalfOperatorType" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="annexVIIDocumentNo" type="model:DocumentIdentifierType" minOccurs="0"/>
+            <xs:element name="takeBackIndication" type="xs:boolean" minOccurs="1">
+                <xs:annotation>
+                    <xs:documentation xml:lang="EN">The flag indicates whether the Annex VII document created due to take-back.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="illegalActivityIndication" type="xs:boolean" minOccurs="1">
+                <xs:annotation>
+                    <xs:documentation xml:lang="EN">The flag indicates whether the Annex VII document created due to detection of illegal activity.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="referenceNotificationNo" type="model:DocumentIdentifierType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="EN">The notification number assigned to the notification by the Competent Authority of Dispatch or an IT solution on its behalf. Example: "DE 030855".
+                        It can be empty if the notifier is pushing the data.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="referenceMovementNo" type="model:DocumentIdentifierType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="EN">The movement number assigned to the movement.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="referenceAnnexVIIDocumentNo" type="model:DocumentIdentifierType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="EN">The movement number assigned to the movement.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="arrangerIsProducer" type="xs:boolean" minOccurs="1">
+                <xs:annotation>
+                    <xs:documentation xml:lang="EN">The flag indicates whether the person who arranges the shipment also the original waste producer, waste collector or new waste producer?.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="shipmentDestination" type="model:Annex7FacilityTypeCode" minOccurs="1">
+                <xs:annotation>
+                    <xs:documentation xml:lang="EN">Indicates whether the shipment is destined for Recovery (R) or Laboratory (L).
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="transportAnnouncement" type="model:Annex7TransportAnnouncementType"/>
+            <!-- section 12 -->
+            <xs:element name="declarationArranger" type="model:DeclarationType" minOccurs="1">
+                <xs:annotation>
+                    <xs:documentation xml:lang="EN">Arranger's declaration.
+                        Note: Corresponding to block 12 of Annex VII WSR.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <!-- section 12 -->
+            <xs:element name="declarationProducer" type="model:DeclarationType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation xml:lang="EN">Waste producer's declaration.
+                        Note: Corresponding to block 12 of Annex VII WSR.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="linkedAttachments" type="model:LinkedAttachType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="WasteAnnex7TransportType">
+        <xs:annotation>
+            <xs:documentation xml:lang="EN">Carrier Transport Document</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="onBehalfOperator" type="notification:OnBehalfOperatorType" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="movement" type="model:Annex7MovementDocumentIdentifierType"/>
+            <xs:element name="transport" type="model:TransportAnnex7Type"/>
+            <xs:element name="linkedAttachments" type="model:LinkedAttachType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="WasteAnnex7CertificateOfWasteReceiptType">
+        <xs:annotation>
+            <xs:documentation xml:lang="EN">Certificate of the waste receipt document</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="onBehalfOperator" type="notification:OnBehalfOperatorType" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="movement" type="model:Annex7MovementDocumentIdentifierType"/>
+            <xs:element name="certificateOfWasteReceipt" type="model:Annex7CertificateOfWasteReceiptType"/>
+            <xs:element name="linkedAttachments" type="model:LinkedAttachType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="WasteAnnex7ConsigneeCertificateOfWasteReceiptType">
+            <xs:annotation>
+                <xs:documentation xml:lang="EN">Certificate of the waste receipt document</xs:documentation>
+            </xs:annotation>
+            <xs:sequence>
+                <xs:element name="onBehalfOperator" type="notification:OnBehalfOperatorType" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="movement" type="model:Annex7MovementDocumentIdentifierType"/>
+                 <xs:element name="certificateOfWasteReceipt" type="model:CertificateOfWasteReceiptBase"/>
+                <xs:element name="linkedAttachments" type="model:LinkedAttachType" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+
+    <xs:complexType name="WasteAnnex7CertificateOfWasteCompletionType">
+        <xs:annotation>
+            <xs:documentation xml:lang="EN">Certificate of the waste completion document</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="onBehalfOperator" type="notification:OnBehalfOperatorType" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="movement" type="model:Annex7MovementDocumentIdentifierType"/>
+            <xs:element name="certificateOfWasteCompletion" type="model:Annex7CertificateOfCompletionType"/>
+            <xs:element name="linkedAttachments" type="model:LinkedAttachType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="WasteAnnex7TakeBackType">
+        <xs:annotation>
+            <xs:documentation xml:lang="EN">Moment take back Document</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="userCompetentAuthorityDomainID" type="notification:AuthorityDomainBodyIdentifier" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="onBehalfCA" type="notification:OnBehalfCAType" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="movement" type="model:Annex7MovementDocumentIdentifierType"/>
+            <xs:element name="takeBack" type="notification:MovementTakeBackType"/>
+            <xs:element name="competentAuthoritySignature" type="model:SignatureType" minOccurs="1"/>
+            <xs:element name="linkedAttachments" type="model:LinkedAttachType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Annex7SignalDocumentType">
+        <xs:sequence>
+            <xs:element name="annexVIIDocumentNo" type="model:DocumentIdentifierType" minOccurs="1"/>
+            <xs:element name="statement" type="notification:SignalStatementDocumentType" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="linkedAttachments" type="model:LinkedAttachType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Annex7DocumentResponseType">
+        <xs:sequence>
+            <xs:element name="response" type="notification:WasteWebServiceResponse" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="annexVIIDocumentNo" type="model:DocumentIdentifierType" minOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Annex7MovementDocumentResponseType">
+        <xs:sequence>
+            <xs:element name="response" type="notification:WasteWebServiceResponse" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="movement" type="model:Annex7MovementDocumentIdentifierType" minOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="WasteAnnex7ServiceFault">
+        <xs:annotation>
+            <xs:documentation>
+                Default WASTE WS Response. Error Message.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="errorMessage" type="xs:string" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>
+                        Generated error message during process.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

@@ -1,0 +1,475 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (https://github.com/eclipse-ee4j/metro-jax-ws). RI's version is JAX-WS RI 2.3.5 git-revision#7ddc91f. --><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:model="http://ec.europa.eu/tracesnt/waste/model/v1" targetNamespace="http://ec.europa.eu/tracesnt/waste/model/v1" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="x6.xsd"/>
+	<xs:include schemaLocation="x5.xsd"/>
+	<xs:include schemaLocation="x8.xsd"/>
+	<xs:include schemaLocation="x9.xsd"/>
+	<xs:include schemaLocation="x4.xsd"/>
+
+    <!--
+	<xs:element name="NotificationDocument" type="model:NotificationDocumentType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Details on a notification document as defined in Annex IA WSR.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="NotificationDocumentType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Details on a notification document as defined in Annex IA WSR.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="NotificationID" type="model:NotificationIdentifierType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">The notification number assigned to the notification by the Competent Authority of Dispatch or an IT solution on its behalf.
+Example: "DE 030855"
+Note: By convention, the notification number is expected to start with the ISO 3166-1 alpha-2 country code, such as 'DE' or 'IT'.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Submission" type="model:SubmissionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">Data submitted by the notifier to competent authorities.
+Note: Corresponds to blocks 1 to 18 of Annex IA WSR.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DeclarationExporter" type="model:DeclarationType" minOccurs="1" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">Notifier's declaration.
+Note: Corresponding to block 17 of Annex IA WSR.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DeclarationProducer" type="model:DeclarationType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">Waste producer's declaration.
+Note: Corresponding to block 17 of Annex IA WSR.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Acknowledgement" type="model:AcknowledgementType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">A competent authority's (CA) acknowledgement of the receipt of a properly completed notification.
+Note 1: A separate Acknowledgement element is used for each CA's acknowledgement.
+Note 2: Corresponds to Article 8(2) and block 19 of Annex IA WSR. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Decision" type="model:DecisionType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">A competent authority's (CA) decision on a submitted notification: consent, consent with conditions or objection.
+Note 1: A separate Decision element is used for each CA's acknowledgement.
+Note 2: Corresponds to block 20 of Annex IA WSR, except for objection.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+    -->
+
+	<xs:complexType name="SubmissionType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Details on a shipment of waste submitted by the notifier to competent authorities.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<!-- section 1 -->
+			<xs:element name="Notifier" type="model:WasteOperatorType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">ID, name, address and contact of the notifier.
+Note: Corresponds to block 1 of Annex IA WSR.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<!-- section 2 -->
+			<xs:element name="Consignee" type="model:WasteOperatorType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">ID, name, address and contact of the consignee.
+Note: Corresponds to block 2 of Annex IA WSR.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<!-- section 3 -->
+            <xs:element name="IndividualShipmentIndicator" type="xs:boolean" minOccurs="1">
+                <xs:annotation>
+                    <xs:documentation xml:lang="EN"> Indicates whether the notification relates to an individual shipment.
+                      A value of 'true' means it is a single (individual) shipment.
+                      A value of 'false' means it is part of multiple shipments under a general notification.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="DestinedForRecoveryDisposal" type="model:FacilityTypeCode" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation xml:lang="EN"> A code specifying a type of facility. Either a Recovery or Disposal.
+                        Example: R
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+			<xs:element name="PreConsentIndicator" type="xs:boolean" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">An indication of whether or not the notification is for a pre-consented recovery or disposal facility.
+                    Note: Corresponds to block 3C of Annex IA WSR.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+
+			<!-- section 4 -->
+			<xs:element name="ShipmentQuantity" type="model:PositiveInteger8" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">The total intended number of shipments under this notification.
+Note: Corresponds to block 4 of Annex IA WSR.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<!-- section 5 -->
+			<xs:element name="TotalWasteMeasurement" type="model:NotificationMassVolumeMeasureType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">The total intended quantity of waste intended to be shipped under this notification.
+Note: Corresponds to block 5 of Annex IA WSR.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<!-- section 6 -->
+			<xs:element name="ShipmentPeriod" type="model:ShipmentPeriodType" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">The intended period of time for shipments under this notification.
+Note: Corresponds to block 6 of Annex IA WSR.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<!-- section 7 -->
+			<xs:element name="Packaging" type="model:PackagingType" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">The packaging types intended under this notification.
+Note: Corresponds to block 7 of Annex IA WSR.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<!-- NOTE: This will be updated!!! -->
+			<xs:element name="CustomsCodes_HS" type="model:CustomsCodesType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="EN">https://ec.europa.eu/taxation_customs/dds2/taric/help/index.jsp?Lang=en</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+			<xs:element name="ShipmentOriginAddress" type="model:ShipmentOriginAddressType">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">The address from which the shipment starts.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<!-- section 8 -->
+			<xs:element name="Carrier" type="model:CarrierType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">ID, name, address and contact of parties intended to carry the waste.
+Note 1: Corresponds to block 8 of Annex IA WSR.
+Note 2: If there are two or more Carrier element instances within a message, this corresponds to an “attached list”, whereby the order of Carrier element instances is open (e.g. alphabetical order) and reflects the order of the attached list.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<!-- section 9 -->
+			<xs:element name="WasteProducer" type="model:WasteProducerType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">ID, name, address and contact of producers of the waste intended to be carried.
+Note 1: Corresponds to block 9 of Annex IA WSR.
+Note 2: If there are two or more WasteProducer element instances within a message, this corresponds to an “attached list”, whereby the order of WasteProducer element instances is open (e.g. alphabetical order; if appropriate, a new producer could be listed first and the original producers thereafter) and reflects the order of the attached list.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+
+			<!-- section 10 -->
+			<xs:element name="RecoveryDisposalFacility" type="model:RecoveryDisposalFacilityType" minOccurs="1" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">ID, name, address, contact and site of the first interim recovery or disposal facility.
+Note 1: Corresponds to Annex II Part 1 point 5 WSR.
+Note 2: This element is omitted if there is no interim recovery or disposal.
+Note 3: If there is interim recovery or disposal, then this element corresponds to blocks 10 and 11 of Annex IA WSR.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+
+			<!-- section 11 -->
+			<xs:element name="DisposalRecoveryOperations" type="model:DisposalRecoveryOperations" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">Disposal Recovery details </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+
+			<!-- section 12 -->
+			<xs:element name="WasteDesignationDescription" type="model:DescriptionType" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">Designation of the waste intended to be shipped.
+Note 1: Corresponds to block 12 of Annex IA WSR
+Note 2: In case of additional information that would facilitate the identification of the waste would be needed corresponding to block 14 (vi) this element can be used to respect Annex IC para. 25(e).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<!-- section 13-->
+			<xs:element name="PhysicalCharacteristicTypeCode" type="model:PhysicalCharacteristicCodeType" minOccurs="1" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">Code specifying the physical characteristic of the waste intended to be shipped.
+Note: Corresponds to block 13 of Annex IA WSR.
+Example: "4" for "sludgy".</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PhysicalCharacteristicDescription" type="model:DescriptionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">Description of the physical characteristics of the waste intended to be shipped.
+Note 1: Corresponds to block 13 of Annex IA WSR.
+Note 2: A description is expected if none of the physical characteristics 1 to 6 of Annex IA and Annex IB applies, and can also be provided in addition to physical characteristics 1 to 6</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<!-- section 14 -->
+			<xs:element name="WasteClassification" type="model:WasteClassificationType" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">Identification of the waste intended to be shipped.
+Note 1: Corresponds to block 14 of Annex IA WSR.
+Note 2: In case additional information that would facilitate the identification of the waste needs to be provided corresponding to block 14 (vi) and Annex IC para. 25(e), such information can be provided under WasteDesignationDescription.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<!-- section 15 -->
+			<xs:element name="ExportState" type="model:ExportStateType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">Country of dispatch with competent authority and point of exit.
+Note: Corresponds to block 15 left column of Annex IA WSR.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ImportState" type="model:ImportStateType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">Country of destination with competent authority and point of entry.
+Note: Corresponds to block 15 right column of Annex IA WSR.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TransitState" type="model:TransitStateType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">Country of transit with competent authority and points of entry and exit.
+Note 1: Corresponds to block 15 middle columns of Annex IA WSR.
+Note 2: Countries of transit are expected to be provided in the order in which they are crossed from the point of dispatch to the point of destination.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<!-- 16 -->
+			<xs:element name="CustomsOfficeEntryName" type="model:NameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">The name of the customs office of entry into the Community for shipments of waste under this notification.
+Note: Corresponds to block 16 of Annex IA WSR.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CustomsOfficeExitName" type="model:NameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">The name of the customs office of exit from the Community for shipments of waste under this notification.
+Note: Corresponds to block 16 of Annex IA WSR.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CustomsOfficeExportName" type="model:NameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">The name of the customs office of export from the Community for shipments of waste under this notification.
+Note: Corresponds to block 16 of Annex IA WSR.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+
+			<xs:element name="AltRouteCustomsOfficeEntryName" type="model:NameType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="EN">The Alternative routing name of the customs office of entry into the Community for shipments of waste under this notification.
+Note: Corresponds to block 16 of Annex IA WSR.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="AltRouteCustomsOfficeExitName" type="model:NameType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="EN">The Alternative routing name of the customs office of exit from the Community for shipments of waste under this notification.
+Note: Corresponds to block 16 of Annex IA WSR.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="AltRouteCustomsOfficeExportName" type="model:NameType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="EN">The Alternative routing name of the customs office of export from the Community for shipments of waste under this notification.
+Note: Corresponds to block 16 of Annex IA WSR.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+			<!-- 18 -->
+			<xs:element name="AnnexQuantity" type="model:NonNegativeInteger8" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">The number of annexes to this notification.
+Note: IT systems may automatically pre-fill this element with the number of actual electronic annexes, but should also support manual entry of the number of annexes.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- 19 -->
+	<xs:complexType name="AcknowledgementType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Details on a competent authority's acknowledgement of the receipt of a properly completed notification.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ReceiptDate" type="xs:date" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">The date at which the competent authority received the notification submission.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SentDate" type="xs:date" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">The date at which the competent authority sent the acknowledgement.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- 20 & 21 -->
+	<xs:complexType name="DecisionType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Details on a competent authority's decision on a notification (consent, consent with conditions or objection).</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DecisionDate" type="xs:date" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">The date at which the competent authority decided over the notification.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ValidFromDate" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">The date from which the consent is valid.
+Note: This element must not be used with objections, i.e. it must not be used in combination with the ConsentGrantedIndicator set to false.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ValidToDate" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">The date up to which the consent is valid.
+Note: This element must not be used with objections, i.e. it must not be used in combination with the ConsentGrantedIndicator set to false.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+
+            <xs:element name="DecisionType" type="model:DecisionTypeEnum"/>
+
+            <xs:element name="SpecificConditions" type="model:SpecificConditionsType" minOccurs="0"/>
+
+			<xs:element name="ObjectionDescription" type="model:DescriptionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">The description and explanation of the competent authority's objection to the notified shipments of waste.
+Note: The objection description is expected if and only if there is a ConsentGrantedIndicator set to false.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DecisionJustification" type="model:DescriptionType" minOccurs="1">
+            <xs:annotation>
+                <xs:documentation xml:lang="EN">The description and explanation of the competent authority's duly reasoned justification of the decision</xs:documentation>
+            </xs:annotation>
+        </xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ExportStateType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Details on the export state, such as competent authority and point of exit.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="model:ConcernedCountryType">
+				<xs:sequence>
+					<xs:element name="ExitPointName" type="model:NameType" minOccurs="1">
+						<xs:annotation>
+							<xs:documentation xml:lang="EN">The name of the point of exit in the country of dispatch.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="ImportStateType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Details on the import state, such as competent authority and point of entry.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="model:ConcernedCountryType">
+				<xs:sequence>
+					<xs:element name="EntryPointName" type="model:NameType" minOccurs="1">
+						<xs:annotation>
+							<xs:documentation xml:lang="EN">The name of the point of entry in the country of destination.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="TransitStateType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Details on a transit state, such as competent authority and points of entry and exit.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="model:ConcernedCountryType">
+				<xs:sequence>
+					<xs:element name="EntryPointName" type="model:NameType" minOccurs="1">
+						<xs:annotation>
+							<xs:documentation xml:lang="EN">The name of the point of entry in the country of transit.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ExitPointName" type="model:NameType" minOccurs="1">
+						<xs:annotation>
+							<xs:documentation xml:lang="EN">The name of the point of exit in the country of transit.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="ShipmentPeriodType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Details on the period of time during which waste is intended to be shipped.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="FirstStartDate" type="xs:date" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">The start date of the first intended shipment of waste under this notification.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LastStartDate" type="xs:date" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">The start date of the last intended shipment of waste under this notification.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="DecisionTypeEnum">
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="CONSENT"/>
+			<xs:enumeration value="OBJECTED"/>
+			<xs:enumeration value="WITHDRAWN"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="SpecificConditionsType">
+        <xs:sequence>
+            <!-- Specific Condition Description Element -->
+            <xs:element name="SpecificConditionDescription" type="model:DescriptionType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="EN">The description of the specific conditions under which the consent is granted. Note: The description is expected only if SpecificConditionIndicator is true.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="ConsentValidMass" type="model:MassMeasureType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="EN">
+                        Specifies the waste quantity mass (in tonnes) for which consent is valid.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ConsentValidVolume" type="model:VolumeMeasureType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="EN">
+                        Specifies the waste quantity volume (in cubic meters) for which consent is valid.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <!-- Consent Valid Shipment Count Element -->
+            <xs:element name="ConsentValidShipmentCount" type="model:NonNegativeInteger8" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation xml:lang="EN">Specifies the maximum number of shipments allowed under the consent.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ShipmentOriginAddressType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Custom starting point of the shipment</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:sequence>
+				<!-- automatically generated id -->
+				<xs:element name="PartyUUID" type="model:UuidType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="EN">Universally Unique ID (UUID) of the party</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="AddressDetails" type="model:NonStructuredAddressType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="EN">
+							Free-text description of the shipment origin address (e.g., "the carrier stuck at a highway").
+						</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:choice>
+    </xs:complexType>
+
+
+</xs:schema>

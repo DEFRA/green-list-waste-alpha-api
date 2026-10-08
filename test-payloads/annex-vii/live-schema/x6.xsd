@@ -1,0 +1,270 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (https://github.com/eclipse-ee4j/metro-jax-ws). RI's version is JAX-WS RI 2.3.5 git-revision#7ddc91f. --><!-- this schema contains base-types for all documents --><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:model="http://ec.europa.eu/tracesnt/waste/model/v1" targetNamespace="http://ec.europa.eu/tracesnt/waste/model/v1" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<!-- PackageType -->
+	<xs:simpleType name="PackageCodeType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">A code specifying a type of package.
+Examples: "4" for box, "6" for composite packaging.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+			<xs:enumeration value="3"/>
+			<xs:enumeration value="4"/>
+			<xs:enumeration value="5"/>
+			<xs:enumeration value="6"/>
+			<xs:enumeration value="7"/>
+			<xs:enumeration value="8"/>
+			<xs:enumeration value="9"/>
+			<xs:enumeration value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Physical Characteristics -->
+	<xs:simpleType name="PhysicalCharacteristicCodeType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">A code specifying a physical characteristic.
+Examples: "2" for solid, "5" for liquid.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+			<xs:enumeration value="3"/>
+			<xs:enumeration value="4"/>
+			<xs:enumeration value="5"/>
+			<xs:enumeration value="6"/>
+			<xs:enumeration value="7"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Means of transport offical codes -->
+	<xs:simpleType name="MeansOfTransportCodeType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">A code specifying a means of transport.
+Examples: "R" for road, "T" for train, "S" for sea.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="A"/>
+			<xs:enumeration value="R"/>
+			<xs:enumeration value="S"/>
+			<xs:enumeration value="T"/>
+			<xs:enumeration value="W"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- possible values for party identification -->
+	<xs:simpleType name="PartyIdentificationSchemeIdentifierType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">A code specifying a party identification scheme, such as a register from which a party ID is taken.
+Examples: "VAT" for Value Added Tax number, "NTR" for National Trade Register number, "GLN" for Global Location Number.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="VAT"/>
+			<xs:enumeration value="NTR"/>
+			<xs:enumeration value="GLN"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- possible values for site identification -->
+	<xs:simpleType name="SiteIdentificationSchemeIdentifierType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">A code specifying a site identification scheme, such as a register from which a site ID is taken.
+Example: "GLN" for Global Location Number.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="GLN"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- possible rd-codes -->
+	<xs:simpleType name="RecoveryDisposalCodeType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">A code specifying a type of recovery or disposal operation.
+Example: "R6" for regeneration of acids or bases.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="R1"/>
+			<xs:enumeration value="R2"/>
+			<xs:enumeration value="R3"/>
+			<xs:enumeration value="R4"/>
+			<xs:enumeration value="R5"/>
+			<xs:enumeration value="R6"/>
+			<xs:enumeration value="R7"/>
+			<xs:enumeration value="R8"/>
+			<xs:enumeration value="R9"/>
+			<xs:enumeration value="R10"/>
+			<xs:enumeration value="R11"/>
+			<xs:enumeration value="R12"/>
+			<xs:enumeration value="R13"/>
+			<xs:enumeration value="D1"/>
+			<xs:enumeration value="D2"/>
+			<xs:enumeration value="D3"/>
+			<xs:enumeration value="D4"/>
+			<xs:enumeration value="D5"/>
+			<xs:enumeration value="D6"/>
+			<xs:enumeration value="D7"/>
+			<xs:enumeration value="D8"/>
+			<xs:enumeration value="D9"/>
+			<xs:enumeration value="D10"/>
+			<xs:enumeration value="D11"/>
+			<xs:enumeration value="D12"/>
+			<xs:enumeration value="D13"/>
+			<xs:enumeration value="D14"/>
+			<xs:enumeration value="D15"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="LaboratoryCodeType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Laboratory</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="L1"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="RecoveryDisposalLaboratoryCodeType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">A code specifying a type of recovery or disposal operation.
+				Example: "R6" for regeneration of acids or bases.</xs:documentation>
+		</xs:annotation>
+		<xs:union memberTypes="model:RecoveryDisposalCodeType model:LaboratoryCodeType"/>
+	</xs:simpleType>
+
+	<!-- possible values to define the waste lists -->
+	<xs:simpleType name="WasteClassificationSchemeIdentifierType">
+        <xs:annotation>
+            <xs:documentation xml:lang="EN">
+                A code specifying a waste list.
+                Common values include: basel_a, basel_b, oecd, low, nat_exp, etc.
+                This is now a loose token to allow for national or new classification schemes.
+            </xs:documentation>
+        </xs:annotation>
+
+        <xs:restriction base="xs:token">
+            </xs:restriction>
+    </xs:simpleType>
+	<xs:simpleType name="CountryRoleIDType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">A code specifying the role of a country.
+Note: "E" for country of dispatch/export, "I" for country of destination/import, or "T" for country of transit.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="I"/>
+			<xs:enumeration value="E"/>
+			<xs:enumeration value="T"/>
+			<!-- import -->
+			<!-- export -->
+			<!-- transit -->
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- codes for RejectionIndicator Section 18 of wastemovement document -->
+	<xs:simpleType name="RejectionIndicatorType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">A code specifying whether or not something is rejected.
+Note: "A" for accepted, "R" for fully rejected.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="R"/>
+			<xs:enumeration value="A"/>
+			<!-- fully rejected -->
+			<!-- fully accepted -->
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- genders (following ISO 5218) -->
+	<xs:simpleType name="GenderCodeType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">A code specifying gender, following ISO 5218.
+Note: "1" for male, "2" for female.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+			<!-- 1 - male -->
+			<!-- 2 - female -->
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- message categories -->
+	<xs:simpleType name="MessageCategoryCodeType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">A code specifying a message category.
+Note: "inform" (messages meant for information only) or "request" (messages meant to be reacted upon).</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="inform"/>
+			<xs:enumeration value="request"/>
+			<!-- inform - for information. follow up actions and/or replies may not be needed -->
+			<!-- request - typically follow up actions and/or replies are expected (note: a request may also be shared with parties from whom no follow up actions or replies are expected)  -->
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- statement types -->
+	<xs:simpleType name="StatementTypeCodeType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">A code specifying the type of Statement message, such as "RequestForNotificationInformation" 
+			(a competent authority's request for notification information and documentation pursuant to Articles 4, 7 and 8 WSR).</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="RequestForNotificationInformation"/>
+			<xs:enumeration value="PreConsentInformation"/>
+			<!-- request for information and documentation pursuant to Articles 4, 7 and 8 -->
+			<!-- information on decisions to issue pre-consents to specific recovery facilities pursuant to Article 14(3); -->
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- priority codes for generic messages, based on UN/CEFACT code list 4037 “Priority description code” -->
+	<xs:simpleType name="PriorityCodeType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">A code specifying a message priority.
+Note: "1" for Immediate (to be dealt with immediately), "2" for Urgent (to be dealt with before any non-urgent task) or "3" for Normal (to be dealt with as routine work).</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+			<xs:enumeration value="3"/>
+			<!-- 1 - Immediate - To be dealt with immediately -->
+			<!-- 2 - Urgent - To be dealt with before any non-urgent task -->
+			<!-- 3 - Normal - To be dealt with as routine work -->
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- classification of binary attachments -->
+	<xs:simpleType name="BinaryAttachmentClassificationCodeType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">A code specifying a type of binary attachment.
+Examples: "DealerBrokerContract", "LiabilityInsurance", "FinancialGuarantee".</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="AuditReport"/>
+            <xs:enumeration value="BrokerRegistration"/>
+            <xs:enumeration value="CarrierRegistration"/>
+			<xs:enumeration value="ContractNotifierProducer"/>
+            <xs:enumeration value="Decision"/>
+            <xs:enumeration value="DeclarationOfNotifier"/>
+            <xs:enumeration value="InformationOnMeetingConditions"/>
+            <xs:enumeration value="InformationOnIllegalActivities"/>
+            <xs:enumeration value="FacilityPermit"/>
+            <xs:enumeration value="FinancialGuarantee"/>
+            <xs:enumeration value="HandlingRequirements"/>
+            <xs:enumeration value="IntendedRoute"/>
+            <xs:enumeration value="InterimFacilitiesInfo"/>
+            <xs:enumeration value="LiabilityInsurance"/>
+            <xs:enumeration value="OtherAnnex"/>
+			<xs:enumeration value="PowerOfAttorney"/>
+            <xs:enumeration value="PreConsent"/>
+            <xs:enumeration value="StandardContract"/>
+            <xs:enumeration value="TakebackInformation"/>
+            <xs:enumeration value="TechnologyEmployed"/>
+            <xs:enumeration value="TreatmentCertificate"/>
+            <xs:enumeration value="TreatmentCertificateInfo"/>
+            <xs:enumeration value="TreatmentProcess"/>
+            <xs:enumeration value="WasteAnalysis"/>
+            <xs:enumeration value="WasteComposition"/>
+			<xs:enumeration value="WasteProductionProcess"/>
+			<xs:enumeration value="WasteTreatmentInformation"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="FacilityTypeCode">
+        <xs:annotation>
+            <xs:documentation xml:lang="EN">A code specifying a type of facility. Either a Recovery or Disposal or Laboratory
+                Example:Recovery.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="R"/>
+            <xs:enumeration value="D"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

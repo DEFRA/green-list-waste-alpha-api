@@ -9,13 +9,100 @@ export class Annex7ValidationError extends Error {
   }
 }
 
+/*
+[Waste code list IDs]
+The "Name in API" column of the spec pack's DIWASS - lists waste codes.xlsx.
+The live acceptance environment rejects the BASEL list ID used in the pack's
+sample XML and accepts Basel_B (Basel Annex IX is Basel list B). A UK
+national code is the export country's, so nationalCode maps to nat_exp.
+*/
 const WASTE_CODE_LIST_IDS = {
-  baselAnnexIX: 'BASEL',
+  baselAnnexIX: 'Basel_B',
   oecd: 'OECD',
-  annexIIIA: 'ANNEX_IIIA',
-  annexIIIB: 'ANNEX_IIIB',
-  ecListOfWastes: 'EC_LIST',
-  nationalCode: 'NATIONAL'
+  annexIIIA: 'wsr_a3a',
+  annexIIIB: 'wsr_a3b',
+  ecListOfWastes: 'LoW',
+  nationalCode: 'nat_exp'
+}
+
+/*
+[Facility type codes]
+The live schema's Annex7FacilityTypeCode: R for a recovery facility, L for a
+laboratory. Used for both facilityLaboratoryTypeCode and shipmentDestination.
+*/
+const FACILITY_TYPE_CODES = {
+  recoveryFacility: 'R',
+  laboratory: 'L',
+  R: 'R',
+  L: 'L'
+}
+
+/*
+[Country codes]
+The alpha's JSON uses ISO 3166-1 alpha-2 codes, but the live schema's
+Annex7ConcernedCountryType.countryID only accepts three-digit ISO 3166-1
+numeric codes. Covers the EU, EEA, Switzerland and the UK, which is every
+country a Green List export from the UK dispatches to or transits. XI
+(Northern Ireland) has no numeric code of its own, so it shares the UK's 826;
+how DIWASS tells the two apart is open (OR-01 G14). Numeric codes pass through.
+*/
+const COUNTRY_NUMERIC_CODES = {
+  AT: '040',
+  BE: '056',
+  BG: '100',
+  CH: '756',
+  CY: '196',
+  CZ: '203',
+  DE: '276',
+  DK: '208',
+  EE: '233',
+  ES: '724',
+  FI: '246',
+  FR: '250',
+  GB: '826',
+  GR: '300',
+  HR: '191',
+  HU: '348',
+  IE: '372',
+  IS: '352',
+  IT: '380',
+  LI: '438',
+  LT: '440',
+  LU: '442',
+  LV: '428',
+  MT: '470',
+  NL: '528',
+  NO: '578',
+  PL: '616',
+  PT: '620',
+  RO: '642',
+  SE: '752',
+  SI: '705',
+  SK: '703',
+  XI: '826'
+}
+
+function countryNumericCode(code) {
+  if (/^\d{3}$/.test(code)) {
+    return code
+  }
+  const numeric = COUNTRY_NUMERIC_CODES[code?.toUpperCase()]
+  if (!numeric) {
+    throw new Error(`No DIWASS numeric country code for "${code}"`)
+  }
+  return numeric
+}
+
+function countryXml(tag, code) {
+  return `<v11:${tag}><v11:countryID>${countryNumericCode(code)}</v11:countryID></v11:${tag}>`
+}
+
+function facilityTypeCode(facilityType) {
+  const code = FACILITY_TYPE_CODES[facilityType]
+  if (!code) {
+    throw new Error(`Unknown recovery facility type "${facilityType}"`)
+  }
+  return code
 }
 
 // --- outbound: alpha JSON -> DIWASS request XML -------------------------
@@ -46,6 +133,7 @@ function declarationPartyXml(tag, uuid, declaration) {
       <v11:name>${escapeXml(authenticatedBy.name)}</v11:name>
       <v11:organizationRole>${escapeXml(authenticatedBy.roleInOrganisation)}</v11:organizationRole>
       <v11:timestamp>${new Date(authenticatedBy.authenticationTimestamp).toISOString()}</v11:timestamp>
+      ${authenticatedBy.email ? `<v11:emailURI>${escapeXml(authenticatedBy.email)}</v11:emailURI>` : ''}
     </v11:Signature>
   </v1:${tag}>`
 }
@@ -87,10 +175,17 @@ function shipmentLocationResponsiblePersonXml(person) {
   </v11:shipmentLocationResponsiblePerson>`
 }
 
+// The live schema wraps the codes: commodityCode > commodityCodes (1..n).
 function commodityCodeXml(commodityCodes) {
-  return (commodityCodes ?? [])
-    .map((code) => `<v11:commodityCode>${escapeXml(code)}</v11:commodityCode>`)
+  if (!commodityCodes?.length) {
+    return ''
+  }
+  const codes = commodityCodes
+    .map(
+      (code) => `<v11:commodityCodes>${escapeXml(code)}</v11:commodityCodes>`
+    )
     .join('')
+  return `<v11:commodityCode>${codes}</v11:commodityCode>`
 }
 
 export function buildCreateAnnex7RequestBody(payload) {
@@ -116,6 +211,13 @@ export function buildCreateAnnex7RequestBody(payload) {
     ? partyXml('wasteProducer', wasteProducer)
     : ''
 
+  const destinationCode = facilityTypeCode(recoveryFacility.facilityType)
+  const confidentialityXml =
+    recoveryFacility.nameIsConfidential &&
+    recoveryFacility.confidentialityExplanation
+      ? `<v11:confidentialityLegalExplanation><v11:Description languageID="en">${escapeXml(recoveryFacility.confidentialityExplanation)}</v11:Description></v11:confidentialityLegalExplanation>`
+      : ''
+
   const facilityXml = `<v11:recoveryLaboratoryFacility>
     <v11:PartyUUID>${escapeXml(recoveryFacility.uuid)}</v11:PartyUUID>
     <v11:Contact>
@@ -124,14 +226,16 @@ export function buildCreateAnnex7RequestBody(payload) {
       <v11:EmailURI>${escapeXml(recoveryFacility.contactDetails.email)}</v11:EmailURI>
     </v11:Contact>
     <v11:OperatorInternalID>${escapeXml(recoveryFacility.operatorId)}</v11:OperatorInternalID>
+    <v11:operationalIndicators>
+      <v11:InterimFacility>${Boolean(recoveryFacility.isInterimFacility)}</v11:InterimFacility>
+    </v11:operationalIndicators>
     <v11:wasteFacilityNameConfidential>${Boolean(recoveryFacility.nameIsConfidential)}</v11:wasteFacilityNameConfidential>
+    ${confidentialityXml}
+    <v11:facilityLaboratoryTypeCode>${destinationCode}</v11:facilityLaboratoryTypeCode>
   </v11:recoveryLaboratoryFacility>`
 
   const transitCountryXml = (countriesStatesConcerned.transitCountries ?? [])
-    .map(
-      (code) =>
-        `<v11:transitCountry><v11:countryID>${escapeXml(code)}</v11:countryID></v11:transitCountry>`
-    )
+    .map((code) => countryXml('transitCountry', code))
     .join('')
 
   const referenceXml = shipment.relatedToAnnexVIIDocumentNo
@@ -150,7 +254,8 @@ export function buildCreateAnnex7RequestBody(payload) {
     <v1:takeBackIndication>${Boolean(shipment.createdDueToTakeBack)}</v1:takeBackIndication>
     <v1:illegalActivityIndication>${Boolean(shipment.createdDueToIllegalActivity)}</v1:illegalActivityIndication>
     ${referenceXml}
-    <v1:shipmentArrangerIsAlsoProducerOrCollector>${Boolean(shipmentArranger.isAlsoWasteProducer)}</v1:shipmentArrangerIsAlsoProducerOrCollector>
+    <v1:arrangerIsProducer>${Boolean(shipmentArranger.isAlsoWasteProducer)}</v1:arrangerIsProducer>
+    <v1:shipmentDestination>${destinationCode}</v1:shipmentDestination>
     <v1:transportAnnouncement>
       ${partyXml('arranger', shipmentArranger)}
       ${partyXml('consignee', importerConsignee)}
@@ -168,8 +273,8 @@ export function buildCreateAnnex7RequestBody(payload) {
       </v11:usualDescriptionOfTheWaste>
       <v11:wasteClassification>${wasteClassificationXml(wasteIdentification)}</v11:wasteClassification>
       ${commodityCodeXml(shipment.commodityCodes)}
-      <v11:exportCountry><v11:countryID>${escapeXml(countriesStatesConcerned.exportDispatchCountry)}</v11:countryID></v11:exportCountry>
-      <v11:importCountry><v11:countryID>${escapeXml(countriesStatesConcerned.importDestinationCountry)}</v11:countryID></v11:importCountry>
+      ${countryXml('exportCountry', countriesStatesConcerned.exportDispatchCountry)}
+      ${countryXml('importCountry', countriesStatesConcerned.importDestinationCountry)}
       ${transitCountryXml}
     </v1:transportAnnouncement>
     ${declarationPartyXml('declarationArranger', shipmentArranger.uuid, declarationOfShipmentArranger)}

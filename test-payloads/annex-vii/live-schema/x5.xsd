@@ -1,0 +1,1221 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (https://github.com/eclipse-ee4j/metro-jax-ws). RI's version is JAX-WS RI 2.3.5 git-revision#7ddc91f. --><!-- this schema contains base-types for all documents --><xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:model="http://ec.europa.eu/tracesnt/waste/model/v1" targetNamespace="http://ec.europa.eu/tracesnt/waste/model/v1" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="x6.xsd"/>
+	<!-- resemble the structure of an uuid used for technical IDs -->
+	<xs:simpleType name="UuidType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Universally Unique ID (UUID) following IETF RFC 4122.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(\d|[a-f]){8}\-((\d|[a-f]){4}\-){3}(\d|[a-f]){12}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- redefine normalizedString type with minimum length 1 -->
+	<xs:simpleType name="NormalizedString">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">A normalized string, i.e., a string not containing carriage return (#xD), line feed (#xA) and tab (#x9), with a minimum length of 1 character.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:normalizedString">
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- non negative integers with at most 8 decimal digits -->
+	<xs:simpleType name="NonNegativeInteger8">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">A non-negative integer with at most 8 decimal digits.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:totalDigits value="8"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- positive integers with at most 8 decimal digits -->
+	<xs:simpleType name="PositiveInteger8">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">A positive integer with at most 8 decimal digits.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:positiveInteger">
+			<xs:totalDigits value="8"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- redefine token type with minimum length 1 -->
+	<xs:simpleType name="Token">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">A token, i.e., a string not containing carriage return (#xD), line feed (#xA) nor tab (#x9) characters, not containing leading or trailing spaces (#x20) and not containing internal sequences of two or more spaces, with a minimum length of 1 character.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- redefine string type with minimum length 1 -->
+	<xs:simpleType name="String">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">A string with a minimum length of 1 character.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Type for all email -->
+	<xs:simpleType name="String256">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">A string with a maximum length of 256 characters and a minimum length of 1 character.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="model:String">
+			<xs:maxLength value="256"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Type for all descriptions -->
+	<xs:simpleType name="String1024">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">A string with a maximum length of 1024 characters and a minimum length of 1 character.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="model:String">
+			<xs:maxLength value="1024"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Type for all email -->
+	<xs:simpleType name="URIType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">A Uniform Resource Identifier (URI) following RFC 3986 with a maximum length of 200 characters and a minimum length of 1 character.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="model:Token">
+			<xs:maxLength value="200"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Type for all name fields -->
+	<xs:simpleType name="NameType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">A name, such as the name of an organization.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="model:NormalizedString">
+			<xs:maxLength value="256"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Type for all Person related name fields -->
+	<xs:simpleType name="PersonNameType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">A name of a person, such as given name or family name.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="model:NormalizedString">
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Type for languageID conforming to iso 639-1 -->
+	<xs:simpleType name="LanguageIdentifierType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">An ISO 639-1 code specifying a language.
+Examples: "en" for English, "de" for German, "lt" for Lithuanian.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="model:String">
+			<xs:pattern value="[a-z][a-z]"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Type for all descriptions -->
+	<xs:complexType name="LanguageDescriptionType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">A textual description provided in a specific language.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:annotation>
+				<xs:documentation xml:lang="EN">A description text taking a languageID into account.</xs:documentation>
+			</xs:annotation>
+			<xs:extension base="model:String1024">
+				<xs:attribute name="languageID" type="model:LanguageIdentifierType">
+					<xs:annotation>
+						<xs:documentation xml:lang="EN">The ISO 639-1 code of the language the textual description is provided in.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:complexType name="LinkedAttachType">
+		<xs:sequence>
+			<xs:element name="attachmentIdentifier" type="model:Token" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- provide means to define several descriptions-->
+	<xs:complexType name="DescriptionType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">A textual description which may be provided in multiple languages.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Description" type="model:LanguageDescriptionType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">A textual description in a specific language, together with an ISO 639-1 language code in the languageID attribute.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Type for Telephone/Fax Numbers -->
+	<xs:simpleType name="PhoneType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">A telephone number.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="model:String">
+			<xs:maxLength value="48"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- CountryCode define pattern only for ISO-3316-1 numeric, actual values from codelist -->
+	<xs:simpleType name="CountryCodeType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">An ISO 3316-1 numeric country code.
+Example: "428" for Latvia.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="model:String">
+			<xs:pattern value="\d\d\d"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Definition of an Address for all Parties involved -->
+	<xs:complexType name="AddressType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Details on an address, such as city name, street name, and building number.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CountryID" type="model:CountryCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">The ISO 3166-1 numeric 3 code specifying the country of this address.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Postcode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">The post code.
+Note: The post code is expected to not include a country identifier.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="model:Token">
+						<xs:maxLength value="10"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="CityName" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">The city name (name of a city, town or village).</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="model:Token">
+						<xs:maxLength value="200"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="AddressDetails" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">The street name.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="model:Token">
+						<xs:maxLength value="300"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Latitude" minOccurs="0" maxOccurs="1" nillable="false">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">Latitude coordinates.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:double">
+						<xs:minInclusive value="-90"/>
+						<xs:maxInclusive value="90"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Longitude" minOccurs="0" maxOccurs="1" nillable="false">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">Longitude coordinates.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:double">
+						<xs:minInclusive value="-180"/>
+						<xs:maxInclusive value="180"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- natural person -->
+	<xs:complexType name="PersonType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Details on a person, such as name and gender.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Name" type="model:PersonNameType" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">The person's given name.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- contact person for a party-->
+	<xs:complexType name="ContactType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Details on a contact, such as contact person, telephone number and email address.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="model:PersonType">
+				<xs:sequence>
+					<xs:element name="TelephoneCompleteNumber" type="model:PhoneType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="EN">The complete contact phone number.
+Examples: +49 1 234 5678, 0049 1 234 5678</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="FaxCompleteNumber" type="model:PhoneType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="EN">The complete contact fax number.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="EmailURI" type="model:URIType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="EN">The contact email address.
+Example: "office@example.com"</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="WebsiteURI" type="model:URIType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="EN">The contact website.
+Example: "https://www.example.com"</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="PartyTypeBase">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Details on a party (company, other type of legal person, or natural person), such as name, address and contact.
+				Note 1: parameters like Organization name, Person, Address and Contact are not used in the current version of the API, they represent an extension of the current model, to facilitate future features
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<!-- automatically generated id -->
+			<xs:element name="PartyUUID" type="model:UuidType">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">Universally Unique ID (UUID) automatically assigned by an IT system to a party (Notifier, Consignee, CompetentAuthority, …).
+						Note 1: In case of a waste producer or facility, every combination of a party and site must have a different UUID to distinguish the individual sites of the same waste producer or facility.
+						Note 2: New UUIDs are assigned per operation, including for references to the same party.
+						Example 1: For two notifications with the same notifier, a new notifier UUID is expected to be assigned in each of the notifications.
+						Note 3: New UUIDs are assigned per party, including for references to the same party within one notification.
+						Example 2: For a notification where the same party acts as consignee and recovery or disposal facility, the UUID assigned to the notification’s consignee entry is expected to be different from the UUID assigned to the recovery or disposal facility entry.
+						Example 3: For a notification where there are multiple production sites under the same waste producer party, each of the WasteProducer entries is expected to be assigned a unique UUID.
+						Note 4: In subsequent messages under the same operation, the same party must have the same PartyUUID assigned.
+						Example 4: In a WasteMovementDocument message, each party entry must carry the same UUID as the corresponding party entry in a previous Notification Document message.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="PartyType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Details on a party (company, other type of legal person, or natural person), such as name, address and contact.
+			Note 1: parameters like Organization name, Person, Address and Contact are not used in the current version of the API, they represent an extension of the current model, to facilitate future features
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="model:PartyTypeBase">
+				<xs:sequence>
+					<xs:element name="Contact" type="model:ContactType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="EN">Contact information for this party, such as a contact person, a contact phone number or an email address.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- partyID -->
+	<xs:complexType name="PartyIdentifierType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Identification of a party, such as VAT number (Value Added Tax) or GLN (Global Location Number).</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="model:Token64">
+				<xs:attribute name="identificationSchemeID" type="model:PartyIdentificationSchemeOrCountryIdentifierType" use="required">
+					<xs:annotation>
+						<xs:documentation xml:lang="EN">The code specifying the identification scheme.
+Examples: "VAT", "GLN".</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<!--siteID -->
+	<xs:complexType name="SiteIdentifierType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Identification of a site, such as GLN (Global Location Number).</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="model:Token64">
+				<xs:attribute name="identificationSchemeID" type="model:SiteIdentificationSchemeIdentifierType" use="required">
+					<xs:annotation>
+						<xs:documentation xml:lang="EN">The code specifying the identification scheme.
+Example: "GLN".</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:simpleType name="TracesPartyIdentificationSchemeIdentifierType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">EORI stands for Economic Operators Registration and Identification number.
+				It's a unique identifier assigned by a customs authority within the European Union (EU) to businesses and individuals engaging in customs activities.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="EORI"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="PartyIdentificationSchemeOrCountryIdentifierType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">A code specifying a party identification scheme.
+Note: Numeric ISO 3166-1 country codes are used to represent national identifiers.
+Examples: "VAT" for Value Added Tax number, "NTR" for National Trade Register number, "GLN" for Global Location Number, or "428" for a Latvian national identifier.</xs:documentation>
+		</xs:annotation>
+		<xs:union memberTypes="model:PartyIdentificationSchemeIdentifierType model:TracesPartyIdentificationSchemeIdentifierType model:CountryCodeType"/>
+	</xs:simpleType>
+
+	<xs:complexType name="CompetentAuthorityType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Details on a competent authority, such as name, address and contact.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="model:PartyTypeBase">
+				<xs:sequence>
+					<xs:element name="CompetentAuthorityID" type="model:Token64" minOccurs="1">
+						<xs:annotation>
+							<xs:documentation xml:lang="EN">Competent authority identifier.
+								Note: Where available, identifiers are taken from the following list: http://ec.europa.eu/environment/waste/shipments/pdf/list_competent_authorities.pdf</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<!-- token64-->
+	<xs:simpleType name="Token64">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">A token, i.e., a string not containing carriage return (#xD), line feed (#xA) nor tab (#x9) characters, not containing leading or trailing spaces (#x20) and not containing internal sequences of two or more spaces, with a maximum length of 64 characters and a minimum length of 1 character.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="model:Token">
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- special token 64 which allows empty content for waste codes not defined in mandatory catalogs -->
+	<xs:simpleType name="Token64OrEmpty">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">A token, i.e., a string not containing carriage return (#xD), line feed (#xA) nor tab (#x9) characters, not containing leading or trailing spaces (#x20) and not containing internal sequences of two or more spaces, with a maximum length of 64 characters.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- NotificationID (NF, WM)-->
+	<xs:simpleType name="NotificationIdentifierType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">The number/identifier assigned to a notification of shipments of waste.
+Example: "LT001209"
+Note: By convention, a notification identifier is expected to start with the ISO 3166-1 alpha-2 identifier of the country of dispatch, such as "LT" for "Lithuania".</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="model:Token">
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- NotificationID (NF, WM)-->
+    	<xs:simpleType name="DocumentIdentifierType">
+    		<xs:annotation>
+    			<xs:documentation xml:lang="EN">The number/identifier assigned to a document of shipments of waste.
+    Example: "LT001209"
+    Note: By convention, an identifier is expected to start with the ISO 3166-1 alpha-2 identifier of the country of dispatch, such as "LT" for "Lithuania".</xs:documentation>
+    		</xs:annotation>
+    		<xs:restriction base="model:Token">
+    			<xs:maxLength value="100"/>
+    		</xs:restriction>
+    	</xs:simpleType>
+	<!-- Packaging type only used in notification, wastemovement adds field quantity -->
+	<xs:complexType name="PackagingTypeBase">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Details on packaging, such as packaging type and description.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PackageTypeCode" type="model:PackageCodeType" minOccurs="1" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">A code specifying the type of package.
+						Example: "6" for "composite packaging".</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<!-- UN03000251 -->
+			<xs:element name="PackageDescription" type="model:DescriptionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">Description of the type of packaging.
+						Note: A description is expected if none of the packaging types 1 to 8 of Annex IA and Annex IB applies, and can also be provided in addition to packaging types 1 to 8.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SpecialHandlingRequirementIndicator" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">An indication of whether or not special handling is required for the packages.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PackagingType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Details on packaging, such as packaging type and description.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:restriction base="model:PackagingTypeBase">
+				<xs:sequence>
+					<xs:element name="PackageTypeCode" type="model:PackageCodeType" minOccurs="1" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation xml:lang="EN">A code specifying the type of package.
+		Example: "6" for "composite packaging".</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<!-- UN03000251 -->
+					<xs:element name="PackageDescription" type="model:DescriptionType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="EN">Description of the type of packaging.
+		Note: A description is expected if none of the packaging types 1 to 8 of Annex IA and Annex IB applies, and can also be provided in addition to packaging types 1 to 8.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SpecialHandlingRequirementIndicator" type="xs:boolean" minOccurs="1">
+						<xs:annotation>
+							<xs:documentation xml:lang="EN">An indication of whether or not special handling is required for the packages.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- Declaration type consisting of name, date and indicator and a signaturetext -->
+	<xs:complexType name="DeclarationType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Details on a declaration, such as declarator's name and declaration date.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+            <!-- automatically generated id -->
+            <xs:element name="PartyUUID" type="model:UuidType" minOccurs="1">
+                <xs:annotation>
+                    <xs:documentation xml:lang="EN">Universally Unique ID (UUID) automatically assigned by an IT system to a party (Notifier, Consignee, CompetentAuthority, …).
+    Note 1: In case of a waste producer or facility, every combination of a party and site must have a different UUID to distinguish the individual sites of the same waste producer or facility.
+    Note 2: New UUIDs are assigned per operation, including for references to the same party.
+    Example 1: For two notifications with the same notifier, a new notifier UUID is expected to be assigned in each of the notifications.
+    Note 3: New UUIDs are assigned per party, including for references to the same party within one notification.
+    Example 2: For a notification where the same party acts as consignee and recovery or disposal facility, the UUID assigned to the notification’s consignee entry is expected to be different from the UUID assigned to the recovery or disposal facility entry.
+    Example 3: For a notification where there are multiple production sites under the same waste producer party, each of the WasteProducer entries is expected to be assigned a unique UUID.
+    Note 4: In subsequent messages under the same operation, the same party must have the same PartyUUID assigned.
+    Example 4: In a WasteMovementDocument message, each party entry must carry the same UUID as the corresponding party entry in a previous Notification Document message.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+			<xs:element name="Signature" type="model:SignatureType"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- disposal recovery structure for final, initial interim, subsequent interim facilities-->
+	<xs:complexType name="FacilityType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Details on a recovery or disposal process, such as facility (party), site and type of operation.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="model:WasteOperatorType">
+				<xs:sequence>
+				    <!-- Incorporating the new FacilityOperationalIndicatorsType -->
+                    <xs:element name="OperationalIndicators" type="model:FacilityOperationalIndicatorsType"/>
+					<xs:element name="SiteDescription" type="model:DescriptionType" minOccurs="1">
+						<xs:annotation>
+							<xs:documentation xml:lang="EN">The description of the site of disposal or recovery such as name and address.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="RecoveryDisposalFacilityType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Details on a recovery or disposal process, such as facility (party), site and type of operation.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+		<xs:extension base="model:FacilityType">
+			<xs:sequence>
+			    <xs:element name="FacilityTypeCode" type="model:FacilityTypeCode" minOccurs="1" maxOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="EN"> A code specifying a type of facility. Either a Recovery or Disposal.
+                            Example: R
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+			</xs:sequence>
+		</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="RecoveryDisposalLaboratoryFacilityType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Details on a recovery or disposal process, such as facility (party), site and type of operation.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="model:FacilityType">
+				<xs:sequence>
+					<xs:element name="RecoveryDisposalLaboratoryTypeCode" type="model:RecoveryDisposalLaboratoryCodeType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation xml:lang="EN">A code specifying the type of recovery or disposal conducted at the facility.
+								Example: "R2" for "Solvent reclamation/regeneration".</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="RecoveryDisposalLaboratoryDescription" type="model:DescriptionType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="EN">The description of the recovery or disposal operation.
+								Note: A description may be provided in cases in which the recovery or disposal operation is not sufficiently described by the code in RecoveryDisposalTypeCode.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="DisposalRecoveryOperations">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Disposal Recovery Operations</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TechnologyDescription" type="model:DescriptionType" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">The description of the facility's recovery or disposal technology.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ReasonForExportDescription" type="model:DescriptionType" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">The description of the reason for export to this facility where required by a competent authority outside the OECD.
+						Duly motivated request from the country of dispatch in case of imports into the EU of wastes destined for disposal (Annex IA block 11 and Annex IC para. 22);
+						Note: Binary attachments can provide further information in addition to this description</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RecoveryDisposalTypeCode" type="model:RecoveryDisposalCodeType" minOccurs="1" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">A code specifying the type of recovery or disposal conducted at the facility.
+						Example: "R2" for "Solvent reclamation/regeneration".</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- numerical definition of wheights and volumes-->
+	<xs:simpleType name="Decimal25Fraction5Type">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">A decimal number with a maximum length of 25 decimal digits, and at most 5 fractional digits.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal">
+			<xs:totalDigits value="25"/>
+			<xs:fractionDigits value="5"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- to add an attribute we need to extend the type. the restriction of decimal needs another type -->
+	<xs:complexType name="MeasureType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">The numeric value of a measure, in combination with a unit of measurement specified in the unitCode attribute.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="model:Decimal25Fraction5Type">
+				<xs:attribute name="unitCode" type="model:Token64" use="required">
+					<xs:annotation>
+						<xs:documentation xml:lang="EN">The case sensitive (c/s) Unified Code for Units of Measure (UCUM) for this measurement.
+Example: "t" for tonnes, "kg" for kilograms, "m3" for cubic meters or "l" for liters.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+    <!-- Define TonnesType -->
+    <xs:complexType name="CubicMetersType">
+        <xs:simpleContent>
+            <xs:extension base="model:Decimal25Fraction5Type">
+                <!-- Additional elements or attributes -->
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <!-- Define CubicMetersType -->
+    <xs:complexType name="TonnesType">
+        <xs:simpleContent>
+            <xs:extension base="model:Decimal25Fraction5Type">
+                <!-- Additional elements or attributes -->
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <!-- Define MassMeasureType -->
+    <xs:complexType name="MassMeasureType">
+        <xs:annotation>
+            <xs:documentation xml:lang="EN">Mass of waste in tonnes (t).</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="tonnes" type="model:TonnesType"/>
+            <!-- Additional elements as needed -->
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Define VolumeMeasureType -->
+    <xs:complexType name="VolumeMeasureType">
+        <xs:annotation>
+            <xs:documentation xml:lang="EN">Volume of waste in cubic meters (m³).</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="volume" type="model:CubicMetersType"/>
+            <!-- Additional elements as needed -->
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Define MassVolumeMeasureType -->
+    <xs:complexType name="MassVolumeMeasureType">
+        <xs:annotation>
+            <xs:documentation xml:lang="EN">Mass and/or volume measures.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="MassMeasure" type="model:MassMeasureType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="EN">Mass of waste in tonnes (t).
+                    Note: Within the EU, the mass of waste must be specified in tonnes.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="VolumeMeasure" type="model:VolumeMeasureType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="EN">Volume of waste in cubic meters (m³).
+                    Note: Within the EU, only the mass of waste in tonnes is expected; volume is typically not specified.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+	<!-- the notification can also define a range of the mass, only one option is allowed -->
+	<xs:complexType name="NotificationMassVolumeMeasureType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Details on the amount of waste intended to be shipped under one notification.</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<!-- cannot be derived from MassVolumeMeasureType -->
+			<xs:sequence>
+				<xs:element name="MassMeasure" type="model:MassMeasureType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="EN">The mass of waste together with the unit of measurement, such as "t" for tonnes.
+Note: Within the EU the mass of waste must be specified with unit "t" for tonnes.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="VolumeMeasure" type="model:VolumeMeasureType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="EN">The volume of waste together with the unit of measurement, such as "m3" for cubic meters or "l" for liters.
+Note: Within the EU, only the mass of waste in tonnes ("t") is expected, whereas the volume of waste is not expected to be specified.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:choice>
+	</xs:complexType>
+
+	<!-- WasteClassification-->
+	<xs:complexType name="WasteCodeType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">A code specifying a type of waste, in combination with a listID or listName attribute specifying the list from which the waste type code is taken.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="model:Token64OrEmpty">
+				<xs:attribute name="listID" type="model:WasteClassificationSchemeOrCountryIdentifierType">
+					<xs:annotation>
+						<xs:documentation xml:lang="EN">The code specifying the waste list.
+Example: "EWL" for European Waste List.
+Note: Instead of referencing one of the enumerated waste lists such as European Waste List this can alternatively be set to a country code for a national waste classification.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:simpleType name="WasteClassificationSchemeOrCountryIdentifierType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">A code specifying a waste list (a classification of wastes).
+Note: A numeric ISO 3166-1 code can be used for national waste lists.
+Examples: "BASEL" for Basel Convention Annex VIII Codes such as A1010, "EWL" for European Waste List, "YCODE" for Basel Convention Y-Codes, "233" for the national waste classification of Estonia.</xs:documentation>
+		</xs:annotation>
+		<xs:union memberTypes="model:WasteClassificationSchemeIdentifierType model:CountryCodeType"/>
+	</xs:simpleType>
+
+	<!-- ConcernedCountries-->
+	<xs:complexType name="ConcernedCountryType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Details on the countries and competent authorities involved in a shipment of waste.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CountryID" type="model:CountryCodeType" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">The ISO 3166-1 numeric 3 code specifying the country.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CompetentAuthority" type="model:CompetentAuthorityType" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">The competent authority for shipment of waste under this notification in the specified country.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- definition of carrier derived from party-->
+	<xs:complexType name="CarrierType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Details on a carrier.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="model:WasteOperatorType">
+				<xs:sequence>
+					<xs:element name="MeansOfTransportCode" type="model:MeansOfTransportCodeType">
+						<xs:annotation>
+							<xs:documentation xml:lang="EN">A code specifying the means of transport for this carrier.
+Example: "R" for road, "T" for train.
+Note: The WSR may define different codes in its various translations. In the electronic data interchange the codes from the English version of the regulation MUST be used, independent of the countries involved and independent of the language used in the document.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<!-- definition of waste producer derived from party-->
+	<xs:complexType name="WasteProducerType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Details on a waste producer, such as name, address and waste production site.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="model:WasteOperatorType">
+				<xs:sequence>
+					<xs:element name="SiteDescription" type="model:DescriptionType" minOccurs="1">
+						<xs:annotation>
+							<xs:documentation xml:lang="EN">The description of the waste production site, such as name and address.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ProcessDescription" type="model:DescriptionType" minOccurs="1">
+						<xs:annotation>
+							<xs:documentation xml:lang="EN">The description of the waste production process.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+    <!-- transport used in annex vii document-->
+    <xs:complexType name="TransportAnnex7Type">
+        <xs:annotation>
+            <xs:documentation xml:lang="EN">Details on a transport, such as means of transport and transfer date.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="Operator" type="model:WasteOperatorType"/>
+            <xs:element name="MeansOfTransportCode" type="model:MeansOfTransportCodeType" minOccurs="1">
+                <xs:annotation>
+                    <xs:documentation xml:lang="EN">The code specifying the means of transport.
+                        Example: "R" for road, "T" for train.
+                        Note: The WSR may define different codes in its various translations. In the electronic data interchange the codes from the English version of the regulation MUST be used, independent of the countries involved and independent of the language used in the document.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="VehicleID" type="model:Token64" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation xml:lang="EN">An identification of the vehicle with which the transport is carried out, such as a license plate number.
+                        Note: The WSR does not require vehicle IDs to be specified.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="TransferDate" type="xs:date" minOccurs="1">
+                <xs:annotation>
+                    <xs:documentation xml:lang="EN">The date of waste transfer.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="DeclarationCarrierTransfer" type="model:DeclarationType" minOccurs="1">
+                <xs:annotation>
+                    <xs:documentation xml:lang="EN">CarrierTransfer's declaration.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+	<!-- transport used in movement document-->
+	<xs:complexType name="TransportType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Details on a transport, such as means of transport and transfer date.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="model:WasteOperatorType">
+				<xs:sequence>
+					<xs:element name="MeansOfTransportCode" type="model:MeansOfTransportCodeType" minOccurs="1">
+						<xs:annotation>
+							<xs:documentation xml:lang="EN">The code specifying the means of transport.
+Example: "R" for road, "T" for train.
+Note: The WSR may define different codes in its various translations. In the electronic data interchange the codes from the English version of the regulation MUST be used, independent of the countries involved and independent of the language used in the document.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="VehicleID" type="model:Token64" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation xml:lang="EN">An identification of the vehicle with which the transport is carried out, such as a license plate number.
+Note: The WSR does not require vehicle IDs to be specified.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="TransferDate" type="xs:date" minOccurs="1">
+						<xs:annotation>
+							<xs:documentation xml:lang="EN">The date of waste transfer.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<!-- section 16 -->
+                    <xs:element name="AdditionalInformation" type="model:DescriptionType" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="EN">Additional information on the shipment of waste.
+                                Note: Corresponds to block 16 of Annex IB WSR.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+					<xs:element name="DeclarationCarrierTransfer" type="model:DeclarationType" minOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="EN">CarrierTransfer's declaration.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<!-- type used in movement and annex vii document -->
+	<xs:complexType name="WasteClassificationType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Waste classifications.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="WasteTypeCode" type="model:WasteCodeType" nillable="true" minOccurs="1" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">The code specifying the type of waste, together with a listID or listName attribute specifying the waste list from which the code is taken.
+Example: "A 1050" for "Galvanic sludges" in combination with listID set to "BASEL" (Basel Annex VIII).
+Note: According to the second subparagraph, point 6 of Article 4 of the WSR, only one waste code is expected, with two exceptions (see also the chapeau of para. 25 in Annex IC WSR).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+    <xs:complexType name="CustomsCodesType">
+        <xs:annotation>
+            <xs:documentation xml:lang="EN">Waste TARIC goods classification.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="commodityCodes" type="xs:string" nillable="true" minOccurs="1" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation xml:lang="EN">The code specifying the type of waste good</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- type used in movement and annex vii document -->
+    <xs:complexType name="CertificateOfWasteReceiptBase">
+        <xs:annotation>
+            <xs:documentation xml:lang="EN">Details on the receipt of waste, such as date of receipt, recipient and amount of waste received.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="model:DeclarationType">
+                <xs:sequence>
+                    <!-- Section 18 -->
+                    <!--<xs:element name="RecipientPartyUUID" type="model:UuidType"/>-->
+                    <xs:element name="RecipientParty" type="model:WasteOperatorType" minOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="EN">The party confirming the receipt of a shipment of waste.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="ReceiptDate" type="xs:date" minOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="EN">The date of waste receipt.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+	<xs:complexType name="CertificateOfWasteReceiptBaseType">
+        <xs:annotation>
+            <xs:documentation xml:lang="EN">Details on the receipt of waste, such as date of receipt, recipient and amount of waste received.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="model:CertificateOfWasteReceiptBase">
+                <xs:sequence>
+                    <!-- section 16 -->
+                    <xs:element name="AdditionalInformation" type="model:DescriptionType" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="EN">Additional information on the shipment of waste.
+                                Note: Corresponds to block 16 of Annex IB WSR.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="CertificateOfWasteReceiptType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Details on the receipt of waste, such as date of receipt, recipient and amount of waste received.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="model:CertificateOfWasteReceiptBaseType">
+				<xs:sequence>
+					<xs:element name="ActualSiteOfDisposalOrRecovery" type="model:Token" minOccurs="1"/>
+					<xs:element name="InterimFacility" type="xs:boolean" minOccurs="1"/>
+					<xs:element name="FacilityTypeCode" type="model:FacilityTypeCode" minOccurs="1"/>
+                    <xs:element name="WasteClassification" type="model:WasteClassificationType" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="EN">Identification of the waste to be shipped.
+        Note 1: Corresponds to block 14 of Annex IB WSR.
+        Note 2: In case additional information that would facilitate the identification of the waste needs to be provided corresponding to block 14 (vi) and Annex IC para. 25(e), such information can be provided under WasteDesignationDescription.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+					<xs:element name="AcceptedQuantity" type="model:MassVolumeMeasureType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="EN">The quantity of waste received.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="RejectedQuantity" type="model:MassVolumeMeasureType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="EN">The quantity of waste received.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="RejectionDescription" type="model:DescriptionType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="EN">Only filled in case of partial rejection.
+								Note: The description will be needed in cases in which the waste was rejected partially.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="RecoveryDisposalApproximateDate" type="xs:date" minOccurs="1">
+						<xs:annotation>
+							<xs:documentation xml:lang="EN">The approximate date of recovery or disposal.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="RecoveryDisposalTypeCode" type="model:RecoveryDisposalCodeType" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation xml:lang="EN">A code specifying the type of recovery or disposal conducted at the facility.
+Example: "R2" for "Solvent reclamation/regeneration".</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="RecoveryDisposalDescription" type="model:DescriptionType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="EN">The description of the recovery or disposal operation.
+Note: A description may be provided in cases in which the recovery or disposal operation is not sufficiently described by the code in RecoveryDisposalTypeCode.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<!-- type used in movement and annex vii document -->
+	<xs:complexType name="CertificateOfCompletionType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Details on the completion of waste recovery or disposal.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="model:DeclarationType">
+				<xs:sequence>
+					<xs:element name="ActualSiteOfDisposalOrRecovery" type="model:Token" minOccurs="1"/>
+					<xs:element name="InterimFacility" type="xs:boolean" minOccurs="1"/>
+					<xs:element name="FacilityTypeCode" type="model:FacilityTypeCode" minOccurs="1"/>
+					<xs:element name="RecoveryDisposalParty" type="model:WasteOperatorType" minOccurs="1">
+						<xs:annotation>
+							<xs:documentation xml:lang="EN">The party confirming the completion of a recovery or disposal operation.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CompletionDate" type="xs:date" minOccurs="1"/>
+
+                    <xs:element name="ReusedQuantity" type="model:MassVolumeMeasureType" minOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="EN">The quantity of waste received.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="RecoveredQuantity" type="model:MassVolumeMeasureType" minOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="EN">The quantity of waste received.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="DisposedQuantity" type="model:MassVolumeMeasureType" minOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="EN">The quantity of waste received.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="WasteClassification" type="model:WasteClassificationType" minOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="EN">Identification of the waste to be shipped.
+        Note 1: Corresponds to block 14 of Annex IB WSR.
+        Note 2: In case additional information that would facilitate the identification of the waste needs to be provided corresponding to block 14 (vi) and Annex IC para. 25(e), such information can be provided under WasteDesignationDescription.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <!-- section 16 -->
+                    <xs:element name="AdditionalInformation" type="model:DescriptionType" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="EN">Additional information on the shipment of waste.
+                                Note: Corresponds to block 16 of Annex IB WSR.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+    <xs:complexType name="Article15Certificate">
+        <xs:annotation>
+            <xs:documentation xml:lang="EN">Details on the article 15 certificate.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="model:DeclarationType">
+                <xs:sequence>
+                    <xs:element name="CertificateIdentifier" type="model:Token"/>
+                    <xs:element name="MovementIdentifiers" type="model:Token" maxOccurs="unbounded"/>
+                    <xs:element name="WasteClassification" type="model:WasteClassificationType">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="EN">Identification of the waste to be shipped.
+                                Note 1: Corresponds to block 14 of Annex IB WSR.
+                                Note 2: In case additional information that would facilitate the identification of the waste needs to be provided corresponding to block 14 (vi) and Annex IC para. 25(e), such information can be provided under WasteDesignationDescription.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="ReceptionDate" type="xs:date"/>
+                    <xs:element name="AcceptedQuantity" type="model:MassVolumeMeasureType">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="EN">The quantity of waste accepted.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="DesignationAndComposition" type="model:DescriptionType"/>
+                    <xs:element name="QuantityPreparedForReuseRecycle" type="model:MassVolumeMeasureType"/>
+                    <xs:element name="RCodePreparedForReuseRecycle" type="model:RecoveryDisposalCodeType" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="EN">A code specifying the type of recovery conducted at the facility.
+                                Example: "R2" for "Solvent reclamation/regeneration".</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="QuantityRecovered" type="model:MassVolumeMeasureType"/>
+                    <xs:element name="RCodeRecovered" type="model:RecoveryDisposalCodeType" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="EN">A code specifying the type of recovery conducted at the facility.
+                                Example: "R2" for "Solvent reclamation/regeneration".</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="QuantityDisposed" type="model:MassVolumeMeasureType">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="EN">The quantity of waste recovered.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="DCode" type="model:RecoveryDisposalCodeType" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="EN">A code specifying the type of disposal conducted at the facility.
+                                Example: "D2".</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+	<xs:complexType name="AttachmentBinaryObject">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">A binary object in base64 representation.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="xs:base64Binary">
+				<xs:attribute name="typeID" type="model:BinaryAttachmentClassificationCodeType" use="required">
+					<xs:annotation>
+						<xs:documentation xml:lang="EN">A code specifying the type of binary object.
+Examples: "DealerBrokerContract", "LiabilityInsurance", "FinancialGuarantee".</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="mimeCode" type="model:Token64" use="required">
+					<xs:annotation>
+						<xs:documentation xml:lang="EN">A Multipurpose Internet Mail Extension (MIME) Content-Type code providing information about the content and format of the binary object, such as "image/png" for images in “Portable Network Graphics" (PNG) format.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="filename" type="model:NameType" use="required">
+					<xs:annotation>
+						<xs:documentation xml:lang="EN">A file name associated with the binary object.
+Example: "contract.pdf"</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="containsPersonalData" type="xs:boolean" use="required">
+					<xs:annotation>
+						<xs:documentation xml:lang="EN">True if the attachment contains personal data.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:complexType name="SignatureType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Text to be printed/displayed at the signature element of a declaration following the Annex IA/IB/VII layouts of the WSR.
+				Plus some other complementary metadata</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="name" type="model:String256"/>
+			<xs:element name="organizationRole" type="xs:string"/>
+			<xs:element name="timestamp" type="xs:dateTime"/>
+			<xs:element name="emailURI" type="model:URIType" minOccurs="0"/>
+			<xs:element name="signature" type="model:String256" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+    <xs:complexType name="WasteOperatorType">
+        <xs:annotation>
+            <xs:documentation xml:lang="EN">
+                Represents a waste operator, extending PartyType, with options for internal identifiers or party registration details.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="model:PartyType">
+				<xs:sequence>
+					<!-- Internal Identifier ID -->
+					<xs:element name="OperatorInternalID" type="xs:long">
+						<xs:annotation>
+							<xs:documentation xml:lang="EN">
+								A unique internal identifier for the waste operator.
+							</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="BaseFacilityOperationalIndicatorsType">
+        <xs:sequence>
+            <xs:element name="InterimFacility" type="xs:boolean"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="FacilityOperationalIndicatorsType">
+        <xs:complexContent>
+            <xs:extension base="model:BaseFacilityOperationalIndicatorsType">
+                <xs:sequence>
+                    <xs:element name="NextSubsequentInterimOrNonInterimFacilityInAnotherCountry" type="xs:boolean"/>
+                    <xs:element name="NextSubsequentInterimOrNonInterimFacilityInSameCountry" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:simpleType name="NonStructuredAddressType">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="250"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="EuLoginType">
+        <xs:annotation>
+            <xs:documentation xml:lang="EN">A name, such as the name of an organization.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="model:NormalizedString">
+            <xs:maxLength value="50"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+
+    <xs:complexType name="EmptyRequestType">
+        <xs:sequence/>
+    </xs:complexType>
+
+</xs:schema>

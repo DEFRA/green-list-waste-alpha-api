@@ -1,0 +1,113 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (https://github.com/eclipse-ee4j/metro-jax-ws). RI's version is JAX-WS RI 2.3.5 git-revision#7ddc91f. --><xs:schema xmlns:model="http://ec.europa.eu/tracesnt/waste/model/v1" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ec.europa.eu/tracesnt/waste/model/v1" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="x6.xsd"/>
+	<xs:include schemaLocation="x5.xsd"/>
+	<xs:complexType name="TransportAnnouncementType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Details on the announcement of an individual shipment of waste.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<!-- section 5 -->
+			<xs:element name="ActualQuantity" type="model:MassVolumeMeasureType" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">The actual quantity of waste to be shipped.
+Note: Corresponds to block 5 of Annex IB WSR.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<!-- section 6 -->
+			<xs:element name="StartDate" type="xs:date" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">The start date of this shipment of waste.
+Note: Corresponds to block 6 of Annex IB WSR.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<!-- section 7 packaging type not equal to PackagingType from notification -->
+			<xs:element name="Packaging" type="model:MovementPackagingType" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">Types of packaging and number of packages for this shipment of waste.
+Note: Corresponds to block 7 of Annex IB WSR.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<!-- section 8 -->
+			<!-- from notification's carriers -->
+			<xs:element name="Carrier" type="model:CarrierType" minOccurs="1" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">Carriers conducting this shipment of waste.
+Note 1: Corresponds to block 8 of Annex IB WSR, without the part marked as "to be completed by the carrier's representative".
+Note 2: Each of the carriers must be a carrier named in the notification under which this shipment of waste has been consented.
+Note 3: If there are more than three Carrier element instances within a message, this corresponds to an “attached list”, whereby the order of Carrier element instances is open (e.g. alphabetical order) and reflects the order of the attached list.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+
+			<!-- section 16 -->
+			<xs:element name="AdditionalInformation" type="model:DescriptionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">Additional information on the shipment of waste.
+Note: Corresponds to block 16 of Annex IB WSR.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- the final package type with PackageTypeCode extended by PackageQuantity -->
+	<xs:complexType name="MovementPackagingType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Details on the packaging of an individual shipment of waste.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="model:PackagingTypeBase">
+				<xs:sequence>
+					<xs:element name="PackageQuantity" type="model:PositiveInteger8" minOccurs="1">
+						<xs:annotation>
+							<xs:documentation xml:lang="EN">The number of packages in this shipment of waste.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- customs types -->
+	<xs:complexType name="CustomsDeclarationType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Details on a customs declaration.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CustomsParty" type="model:WasteOperatorType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">The customs office providing the declaration.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Date" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">The date of the declaration.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DeclarationSignatureText" type="model:String256" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">Text to be printed/displayed at the signature element of a declaration following the Annex IB layout of the WSR.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TransitCustomsDeclarationType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Details on a customs declaration in a country of transit.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CountryID" type="model:CountryCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">The ISO 3166-1 numeric 3 code specifying the country of the competent authority providing the acknowledgement.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Entry" type="model:CustomsDeclarationType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">Customs declaration provided by customs office of entry in a country of transit.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Exit" type="model:CustomsDeclarationType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">Customs declaration provided by customs office of exit in a country of transit.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

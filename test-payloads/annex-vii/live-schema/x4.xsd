@@ -1,0 +1,361 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (https://github.com/eclipse-ee4j/metro-jax-ws). RI's version is JAX-WS RI 2.3.5 git-revision#7ddc91f. --><xs:schema xmlns:model="http://ec.europa.eu/tracesnt/waste/model/v1" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://ec.europa.eu/tracesnt/waste/model/v1" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="x6.xsd"/>
+	<xs:include schemaLocation="x5.xsd"/>
+
+	<xs:element name="Annex7Document" type="model:Annex7DocumentType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Consignment information as defined in Annex VII WSR.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+
+	<xs:complexType name="Annex7DocumentType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Consignment information as defined in Annex VII WSR.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="transportAnnouncement" type="model:Annex7TransportAnnouncementType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">Information on a shipment of waste provided by the person who arranges the shipment.
+Note: Corresponds to blocks 1 to 12 of Annex VII WSR, with the exception of the parts of block 5 to be completed by carriers.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<!-- actual carrier involved in the movement -->
+			<xs:element name="transport" type="model:TransportType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">Waste shipment information provided by carriers.
+Note: Corresponds to the parts of block 5 in Annex VII WSR to be completed by carriers.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="certificateOfWasteReceipt" type="model:CertificateOfWasteReceiptType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">Waste receipt related information typically provided by a recovery or disposal facility or a laboratory.
+Note: Corresponds to blocks 13 and 14 of Annex VII WSR.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="Annex7TransportAnnouncementType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Details on an individual shipment of waste (as referred to in Article 3(2) and (4) WSR).</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<!-- section 1 -->
+			<xs:element name="arranger" type="model:WasteOperatorType" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">The party arranging this shipment of waste.
+                    Note: Corresponds to block 1 of Annex VII WSR.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<!-- section 2 -->
+			<xs:element name="consignee" type="model:WasteOperatorType" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">The consignee of this shipment of waste.
+                    Note 2: Corresponds to block 2 of Annex VII WSR.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<!-- section 3a -->
+			<xs:element name="actualQuantity" type="model:NotificationMassVolumeMeasureType" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">The actual quantity of waste to be shipped.
+                    Note: Corresponds to block 3 of Annex VII WSR.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<!-- section 4 -->
+			<xs:element name="actualDateOfShipment" type="xs:date" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">The start date of this shipment of waste.
+                    Note: Corresponds to block 4 of Annex VII WSR.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<!-- section 4a -->
+            <xs:element name="containerIdentification" type="model:Token" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="EN">Container identification number, if applicable.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+			<!-- section 6a -->
+			<xs:element name="shipmentOriginLocation" type="model:ShipmentOriginAddressType" minOccurs="1">
+                <xs:annotation>
+                    <xs:documentation xml:lang="EN">The address from which the shipment starts.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <!-- section 6a -->
+            <xs:element name="shipmentLocationResponsiblePerson" type="model:ContactType" minOccurs="1">
+              <xs:annotation>
+                <xs:documentation>
+                  Name of the person responsible for this shipment location.
+                </xs:documentation>
+              </xs:annotation>
+
+            </xs:element>
+			<!-- section 5 -->
+			<!-- provided by person which initiates the shipment -->
+			<xs:element name="carrier" type="model:CarrierType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">Carriers conducting this shipment of waste.
+                    Note 1: Corresponds to block 5 of Annex VII WSR, without the parts to be completed by carriers (the latter are provided under Annex7Document/Transport).
+                    Note 2: If there are more than three Carrier element instances within a message, this corresponds to an “attached list”, whereby the order of Carrier element instances is open (e.g. alphabetical order) and reflects the order of the attached list.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<!-- section 6 -->
+			<xs:element name="wasteProducer" type="model:WasteOperatorType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">Producers of the shipped waste.
+                    Note 1: Corresponds to block 6 of Annex VII WSR.
+                    Note 2: If there are two or more WasteProducer element instances within a message, this corresponds to an “attached list”, whereby the order of WasteProducer element instances in the message is open (e.g. alphabetical order) and reflects the order of the attached list.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+
+            <!-- section 7 -->
+            <xs:element name="recoveryLaboratoryFacility" type="model:RecoveryLaboratoryFacilityType" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation xml:lang="EN">ID, name, address, contact and site of the first interim recovery or Laboratory facility.
+                    Note 1: Corresponds to Annex II Part 1 point 5 WSR.
+                    Note 2: This element is omitted if there is no interim recovery or disposal.
+                    Note 3: If there is interim recovery or disposal, then this element corresponds to blocks 10 and 11 of Annex IA WSR.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <!-- section 8 -->
+			<xs:element name="recoveryDisposalTypeCode" type="model:RecoveryDisposalCodeType" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation xml:lang="EN">A code specifying the type of recovery or disposal conducted at the facility.
+                        Example: "R2" for "Solvent reclamation/regeneration".</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <!-- section 9 -->
+            <xs:element name="usualDescriptionOfTheWaste" type="model:DescriptionType" minOccurs="1">
+                <xs:annotation>
+                    <xs:documentation xml:lang="EN">Designation of the waste intended to be shipped. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <!-- section 10a -->
+            <xs:element name="wasteClassification" type="model:WasteClassificationType" minOccurs="1">
+                <xs:annotation>
+                    <xs:documentation xml:lang="EN">Identification of the waste intended to be shipped.
+                    Note 1: Corresponds to block 10 of Annex VII WSR. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <!-- section 10b -->
+            <xs:element name="commodityCode" type="model:CustomsCodesType" minOccurs="0"/>
+
+            <!-- section 11 -->
+			<xs:element name="exportCountry" type="model:Annex7ConcernedCountryType" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">Countries concerned by this shipment of waste (dispatch, transit, destination).
+                    Note: Corresponds to block 11 of Annex VII WSR.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+
+			<!-- section 11 -->
+			<xs:element name="importCountry" type="model:Annex7ConcernedCountryType" minOccurs="1">
+                <xs:annotation>
+                    <xs:documentation xml:lang="EN">Countries concerned by this shipment of waste (dispatch, transit, destination).
+                    Note: Corresponds to block 11 of Annex VII WSR.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <!-- section 11 -->
+            <xs:element name="transitCountry" type="model:Annex7ConcernedCountryType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation xml:lang="EN">Countries concerned by this shipment of waste (dispatch, transit, destination).
+                    Note: Corresponds to block 11 of Annex VII WSR.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+       </xs:sequence>
+	</xs:complexType>
+
+	<!-- list of countries with indicator of type (import,export,transit)-->
+	<xs:complexType name="Annex7ConcernedCountryType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Details on the countries involved in a shipment of waste.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="countryID" type="model:CountryCodeType" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation xml:lang="EN">The ISO 3166-1 numeric 3 code specifying the country.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="LocationPartyType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Details on a party (company, other type of legal person, or natural person), such as name, address and contact.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="model:WasteOperatorType">
+				<xs:sequence>
+					<xs:element name="locationAddress" type="model:AddressType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="EN">Location from which the shipment starts (should have same values like box 1 or 6) </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+    <xs:complexType name="RecoveryLaboratoryFacilityType">
+        <xs:annotation>
+            <xs:documentation xml:lang="EN">Details on a recovery or disposal process, such as facility (party), site and type of operation.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+        <xs:extension base="model:Annex7FacilityType">
+            <xs:sequence>
+                <xs:element name="facilityLaboratoryTypeCode" type="model:Annex7FacilityTypeCode" minOccurs="1" maxOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="EN"> A code specifying a type of facility. Either a Recovery or Disposal.
+                            Example: Recovery
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+        </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Annex7FacilityType">
+        <xs:annotation>
+            <xs:documentation xml:lang="EN">Details on a recovery or disposal process, such as facility (party), site and type of operation.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="model:WasteOperatorType">
+                <xs:sequence>
+                    <!-- Incorporating the new FacilityOperationalIndicatorsType -->
+                    <xs:element name="operationalIndicators" type="model:BaseFacilityOperationalIndicatorsType"/>
+                    <xs:element name="wasteFacilityNameConfidential" type="xs:boolean">
+                      <xs:annotation>
+                        <xs:documentation>
+                          Indicates whether the name of the waste receiving facility is confidential and shall not be publicly disclosed.
+                        </xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                    <xs:element name="confidentialityLegalExplanation" type="model:DescriptionType" minOccurs="0">
+                      <xs:annotation>
+                        <xs:documentation>
+                          Explanation why the name of the waste receiving facility is confidential under Union or national law.
+                        </xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:simpleType name="Annex7FacilityTypeCode">
+        <xs:annotation>
+            <xs:documentation xml:lang="EN">A code specifying a type of facility. Either a Recovery or Disposal or Laboratory
+                Example:Recovery.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="R"/>
+            <xs:enumeration value="L"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="Annex7MovementDocumentIdentifierType">
+		<xs:annotation>
+			<xs:documentation>Unique combination for identifying a document in the scope of one annex VII.
+				Example: Notification id PT100000/GLW, take back id 100.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="annexVIIDocumentNo" type="model:DocumentIdentifierType" minOccurs="0"/>
+			<xs:element name="documentNo" type="model:DocumentIdentifierType" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+
+    <xs:complexType name="Annex7CertificateOfCompletionType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Details on the completion of waste recovery or disposal.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="model:DeclarationType">
+				<xs:sequence>
+					<xs:element name="interimFacility" type="xs:boolean" minOccurs="1"/>
+					<xs:element name="facilityTypeCode" type="model:Annex7FacilityTypeCode" minOccurs="1"/>
+					<xs:element name="recoveryLaboratoryParty" type="model:WasteOperatorType" minOccurs="1">
+						<xs:annotation>
+							<xs:documentation xml:lang="EN">The party confirming the completion of a recovery or disposal operation.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="completionDate" type="xs:date" minOccurs="1"/>
+                    <xs:element name="reusedQuantity" type="model:MassVolumeMeasureType" minOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="EN">The quantity of waste received.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="recoveredQuantity" type="model:MassVolumeMeasureType" minOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="EN">The quantity of waste received.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="wasteDesignationCompositionDescription" type="model:DescriptionType" minOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="EN">Designation of the waste intended to be shipped.
+        Note 1: Corresponds to block 12 of Annex IA WSR
+        Note 2: In case of additional information that would facilitate the identification of the waste would be needed corresponding to block 14 (vi) this element can be used to respect Annex IC para. 25(e).</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="wasteClassification" type="model:WasteClassificationType" minOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="EN">Identification of the waste to be shipped.
+        Note 1: Corresponds to block 14 of Annex IB WSR.
+        Note 2: In case additional information that would facilitate the identification of the waste needs to be provided corresponding to block 14 (vi) and Annex IC para. 25(e), such information can be provided under WasteDesignationDescription.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+    <xs:complexType name="Annex7CertificateOfWasteReceiptType">
+		<xs:annotation>
+			<xs:documentation xml:lang="EN">Details on the receipt of waste, such as date of receipt, recipient and amount of waste received.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="model:CertificateOfWasteReceiptBase">
+				<xs:sequence>
+					<xs:element name="InterimFacility" type="xs:boolean" minOccurs="1"/>
+					<xs:element name="FacilityTypeCode" type="model:Annex7FacilityTypeCode" minOccurs="1"/>
+					<xs:element name="WasteDesignationCompositionDescription" type="model:DescriptionType" minOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="EN">Designation of the waste intended to be shipped.
+        Note 1: Corresponds to block 12 of Annex IA WSR
+        Note 2: In case of additional information that would facilitate the identification of the waste would be needed corresponding to block 14 (vi) this element can be used to respect Annex IC para. 25(e).</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="WasteClassification" type="model:WasteClassificationType" minOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="EN">Identification of the waste to be shipped.
+        Note 1: Corresponds to block 14 of Annex IB WSR.
+        Note 2: In case additional information that would facilitate the identification of the waste needs to be provided corresponding to block 14 (vi) and Annex IC para. 25(e), such information can be provided under WasteDesignationDescription.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+					<xs:element name="AcceptedQuantity" type="model:MassVolumeMeasureType" minOccurs="1">
+						<xs:annotation>
+							<xs:documentation xml:lang="EN">The quantity of waste received.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="RejectedQuantity" type="model:MassVolumeMeasureType" minOccurs="1">
+						<xs:annotation>
+							<xs:documentation xml:lang="EN">The quantity of waste received.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="RejectionDescription" type="model:DescriptionType" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation xml:lang="EN">Only filled in case of partial rejection.
+								Note: The description will be needed in cases in which the waste was rejected partially.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>
