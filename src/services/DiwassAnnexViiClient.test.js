@@ -129,3 +129,62 @@ describe('#DiwassAnnexViiClient (end-to-end via the bundled emulator)', () => {
     expect(result.diwass.annexViiDocumentNo).toMatch(/^GLW\.GB\d+i$/)
   })
 })
+
+describe('#DiwassAnnexViiClient (live DIWASS settings)', () => {
+  // Imported here, not at the top, so PORT is set before config loads.
+  let config
+  let submitAnnexViiToDiwass
+
+  beforeAll(async () => {
+    ;({ config } = await import('#/config.js'))
+    ;({ submitAnnexViiToDiwass } =
+      await import('#/services/DiwassAnnexViiClient.js'))
+  })
+
+  // Trimmed from the live acceptance environment's response to the first
+  // accepted Annex VII (8 October 2026).
+  const liveOkResponse = `<?xml version='1.0' encoding='UTF-8'?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"><S:Body><ns3:Annex7DocumentTypeResponse xmlns:ns3="http://ec.europa.eu/tracesnt/waste/annex7/v1" xmlns:ns4="http://ec.europa.eu/tracesnt/waste/notification/v1"><ns3:response><ns4:statusCode>OK</ns4:statusCode></ns3:response><ns3:annexVIIDocumentNo>GLW.GB260000001490i</ns3:annexVIIDocumentNo></ns3:Annex7DocumentTypeResponse></S:Body></S:Envelope>`
+
+  beforeEach(() => {
+    config.set('diwass.baseUrl', 'https://diwass.example/tracesnt-alpha/ws/')
+    config.set('diwass.username', 'n00test1')
+    config.set('diwass.authKey', 'test-key')
+  })
+
+  afterEach(() => {
+    config.set('diwass.baseUrl', null)
+    config.set('diwass.username', null)
+    config.set('diwass.authKey', null)
+  })
+
+  test('Should post to the WSDL service path with WS-Security, acting as the arranger', async () => {
+    const fetchImpl = vi.fn(async () => new Response(liveOkResponse))
+
+    const result = await submitAnnexViiToDiwass(validPayload, { fetchImpl })
+
+    const [url, init] = fetchImpl.mock.calls[0]
+    expect(url).toBe('https://diwass.example/tracesnt-alpha/ws/WasteAnnex7V1')
+    expect(init.body).toContain('<wsse:Username>n00test1</wsse:Username>')
+    expect(init.body).toContain(
+      `<v3:OperatorAccessIdentifier>${validPayload.shipmentArranger.operatorId}</v3:OperatorAccessIdentifier>`
+    )
+    expect(init.body).not.toContain('test-key')
+    expect(result).toEqual({
+      status: 'OK',
+      annexViiDocumentNo: 'GLW.GB260000001490i'
+    })
+  })
+
+  test('Should go to the emulator route when no credentials are set', async () => {
+    config.set('diwass.authKey', null)
+    const fetchImpl = vi.fn(async () => new Response(liveOkResponse))
+
+    await submitAnnexViiToDiwass(validPayload, { fetchImpl })
+
+    const [url, init] = fetchImpl.mock.calls[0]
+    expect(url).toBe(
+      'https://diwass.example/tracesnt-alpha/ws/diwass/annex-vii'
+    )
+    expect(init.body).not.toContain('wsse:Security')
+  })
+})

@@ -132,6 +132,27 @@ export const config = convict({
       format: String,
       default: 'wsr-system',
       env: 'DIWASS_WEB_SERVICE_CLIENT_ID'
+    },
+    username: {
+      doc: 'EU Login username of the DIWASS web services user. With authKey set, calls go to the real DIWASS service paths with a WS-Security header; unset, they go to the bundled emulator.',
+      format: String,
+      nullable: true,
+      default: null,
+      env: 'DIWASS_USERNAME'
+    },
+    authKey: {
+      doc: "The DIWASS user's web services authentication key, from their TRACES profile",
+      format: String,
+      nullable: true,
+      sensitive: true,
+      default: null,
+      env: 'DIWASS_AUTH_KEY'
+    },
+    timeoutMs: {
+      doc: 'Timeout for each outbound DIWASS call, in milliseconds',
+      format: 'nat',
+      default: 30000,
+      env: 'DIWASS_TIMEOUT_MS'
     }
   },
   tracing: {
