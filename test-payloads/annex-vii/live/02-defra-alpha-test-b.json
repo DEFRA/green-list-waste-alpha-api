@@ -1,0 +1,93 @@
+{
+  "shipmentArranger": {
+    "operatorId": "248540",
+    "uuid": "79054f08-6618-4c8a-a845-68e0e4e8cb08",
+    "contactDetails": {
+      "contactPerson": "Craig Taylor",
+      "phone": "+442078878888",
+      "email": "craig.taylor@equalexperts.com"
+    },
+    "isAlsoWasteProducer": true
+  },
+  "importerConsignee": {
+    "operatorId": "248482",
+    "uuid": "0125ddd5-9ee5-48ac-bc9a-c18a768396cb",
+    "contactDetails": {
+      "contactPerson": "Craig Taylor",
+      "phone": "+442078878888",
+      "email": "craig.taylor@equalexperts.com"
+    }
+  },
+  "shipment": {
+    "actualQuantity": {
+      "tonnes": 1.0,
+      "metersCubed": null
+    },
+    "actualDateOfShipment": "2026-10-15",
+    "createdDueToTakeBack": false,
+    "createdDueToIllegalActivity": false,
+    "shipmentOriginLocation": {
+      "addressDetails": "Tate Modern, Bankside, London SE1 9TG (DEFRA-ALPHA-TEST-B)"
+    },
+    "shipmentLocationResponsiblePerson": {
+      "name": "Craig Taylor",
+      "phone": "+442078878888",
+      "email": "craig.taylor@equalexperts.com"
+    }
+  },
+  "carriers": [
+    {
+      "operatorId": "248626",
+      "uuid": "e505a09f-fdec-48dc-9a37-e9a189993b67",
+      "contactDetails": {
+        "contactPerson": "Craig Taylor",
+        "phone": "+442078878888",
+        "email": "craig.taylor@equalexperts.com"
+      },
+      "meansOfTransportCode": "R",
+      "transferDate": "2026-10-15",
+      "declaration": {
+        "authenticatedBy": {
+          "name": "Test Carrier Signatory",
+          "email": "craig.taylor@equalexperts.com",
+          "roleInOrganisation": "Logistics (test)",
+          "authenticationTimestamp": "2026-10-08T21:00:00Z",
+          "uuid": "6fc608ea-cf14-47ea-83a9-e79e304a7119"
+        }
+      }
+    }
+  ],
+  "recoveryFacility": {
+    "operatorId": "248482",
+    "uuid": "be4fb83f-9e66-49f4-8581-4250f9bbfcac",
+    "contactDetails": {
+      "contactPerson": "Craig Taylor",
+      "phone": "+442078878888",
+      "email": "craig.taylor@equalexperts.com"
+    },
+    "facilityType": "recoveryFacility",
+    "isInterimFacility": false,
+    "nameIsConfidential": false
+  },
+  "recoveryOperation": {
+    "rCodeDCode": "R3"
+  },
+  "usualDescriptionOfWaste": "TEST ONLY - DEFRA-ALPHA-TEST-B end-to-end test through the alpha API. Paper and cardboard waste.",
+  "wasteIdentification": {
+    "baselAnnexIX": "B3020"
+  },
+  "countriesStatesConcerned": {
+    "exportDispatchCountry": "GB",
+    "importDestinationCountry": "GB",
+    "transitCountries": []
+  },
+  "declarationOfShipmentArranger": {
+    "authenticatedBy": {
+      "name": "Test Signatory (DEFRA-ALPHA-TEST-B)",
+      "email": "craig.taylor@equalexperts.com",
+      "roleInOrganisation": "Director (test)",
+      "authenticationTimestamp": "2026-10-08T21:00:00Z",
+      "uuid": "c63ed00c-f8d3-4bb9-a1f7-68f287e0826e"
+    }
+  }
+}
