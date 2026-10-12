@@ -120,7 +120,7 @@ at a time, sending the whole document each time
 | Update GLW.GB260000001552i (arranger 248540) acting as 248482 | OK. Not conclusive: the one DIWASS user holds authorisations for both operators |
 | Update a number that does not exist | NOTOK, GREEN-LISTED-DOCUMENT-NOT-FOUND (no description) |
 | Annex7Cancelled signal | OK, answered with Annex7MovementDocumentTypeResponse |
-| Update after the cancel | OK. DIWASS does not lock a cancelled Annex VII against updates, or the signal did not change its status; to check in the web UI |
+| Update after the cancel | OK. DIWASS does not lock a cancelled Annex VII against updates: the same signal did cancel GLW.GB260000001576i (confirmed in the web UI, 12 October 2026) |
 
 So everything on an announced Annex VII can change, including its parties and
 waste code. The API now follows this lifecycle (draft, announce, update,

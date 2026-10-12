@@ -16,6 +16,6 @@ digest and nonce redacted). Payload: `live/01-defra-alpha-test.json`.
 | 6 | `POST /annexvii/{id2}/cancel` | `4-cancel-second` (CreateAnnex7SignalTypeRequest, Annex7Cancelled, signed by the arranger's declared signatory) | `CANCELLED`, OK, request 37552759-1379-48a0-a590-a854f68fe227. DIWASS answers with Annex7MovementDocumentTypeResponse naming the document |
 | 7 | `PUT /annexvii/{id2}` after cancelling | none | 409, "Annex VII has been cancelled" (DWT refuses, though DIWASS itself accepted an update after a cancel in the probes) |
 
-Four DIWASS calls in all, each at the step that needed one. To check in the
-DIWASS web UI: GLW.GB260000001575i should show Announced with 1.42 tonnes,
-and GLW.GB260000001576i should show as cancelled.
+Four DIWASS calls in all, each at the step that needed one. Confirmed in the
+DIWASS web UI on 12 October 2026: GLW.GB260000001575i shows Announced with
+1.42 tonnes, and GLW.GB260000001576i shows as cancelled.

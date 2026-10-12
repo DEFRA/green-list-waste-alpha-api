@@ -7,7 +7,8 @@
  * the live XSD with xmllint before it is sent. Calls are one at a time.
  *
  * The cancel probe withdraws the test document, so it runs last but one; the
- * final probe checks an update is refused after cancelling.
+ * final probe checks whether an update is refused after cancelling (live
+ * DIWASS accepted it on 12 October 2026).
  *
  * Usage, from the repo root:
  *   node --env-file=.env test-payloads/annex-vii/scripts/probe-update-live.mjs
