@@ -66,8 +66,9 @@ were accepted first time.
 3. **DIWASS rejects in two different ways.** Anything that breaks the XSD
    (missing carrier or waste classification, alpha-2 country, malformed XML)
    is an HTTP 500 SOAP Fault with a validator message. Business rule failures
-   are HTTP 200 with statusCode NOTOK and coded errors. The API's client must
-   handle both; today it records a fault as ERROR without the fault text.
+   are HTTP 200 with statusCode NOTOK and coded errors. The API's client
+   already handles both: a fault is stored as ERROR with the fault text, a
+   NOTOK with DIWASS's error codes.
 4. **DIWASS checks operator IDs exist** (err-soap-07), which the emulator does not.
 5. **DIWASS does not enforce the waste producer rule** (err-soap-08): it
    accepted an Annex VII with arrangerIsProducer false and no producer at all.
