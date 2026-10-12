@@ -16,9 +16,11 @@ offline against the live XSD first. Sent by the operator user acting as
 Result: HTTP 200, statusCode OK, annexVIIDocumentNo GLW.GB260000001574i
 (unchanged), WS request ID fba7c553-027d-4f39-8400-4f14484cdfcb.
 
-The Annex VII service has no read operation, so the stored values and the
-document's status (for example "announced") can only be checked in the
-DIWASS web UI.
+The Annex VII service has no read operation, so the result was checked in
+the DIWASS web UI by the team the same day: the document's status is
+**Announced**, it shows **1.35 tonnes** (the updated quantity) and "last
+updated 12/10/2026". The shipment date is not shown on that screen, so the
+date change is not yet confirmed there.
 
 | File | |
 | --- | --- |
