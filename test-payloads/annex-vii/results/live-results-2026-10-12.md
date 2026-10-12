@@ -80,3 +80,20 @@ were accepted first time.
    (err-soap-06): the duplicate EORI may or may not be why.
 8. **Shipment dates in the past are accepted** (hp-01 to hp-07 were dated
    25 September to 10 October 2026).
+
+## After the fixes (same day)
+
+The API's JSON schema now enforces the two rules DIWASS showed it must:
+`shipment.actualQuantity` needs tonnes, metersCubed or both, and
+`wasteProducer` is required when the arranger is not the producer. Re-run
+through the live-configured API (`live-results-2026-10-12-api-validation.json`),
+both now stop at the API with a 400 and never reach DIWASS:
+
+| ID | Result |
+| --- | --- |
+| err-json-05 | 400: "shipment.actualQuantity" must give tonnes, metersCubed or both |
+| err-json-07 (new) | 400: "wasteProducer" is required |
+
+The emulator was also changed to reject the way live DIWASS does (schema
+faults as HTTP 500, business rules as NOTOK, unknown operator IDs refused).
+The pack, now 22 cases, matches 22 of 22 against it (`validation-results.md`).

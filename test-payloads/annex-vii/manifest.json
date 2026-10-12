@@ -123,9 +123,8 @@
       "type": "json",
       "description": "actualQuantity.tonnes and actualQuantity.metersCubed are both null - valid per the alpha's own JSON schema (quantitySchema has no .or() constraint), but DIWASS's own contract requires exactly one of mass or volume.",
       "expected": {
-        "httpStatus": 201,
-        "diwassStatus": "NOTOK",
-        "note": "Local write succeeds (the JSON schema doesn't enforce mass-or-volume), then the emulator answers NOTOK with MASS-VOLUME-NOT-FOUND, as live DIWASS does (A1 confirmed)."
+        "httpStatus": 400,
+        "note": "Caught by the alpha's JSON schema since 12 October 2026: shipment.actualQuantity must give tonnes, metersCubed or both. Before that the API stored it and DIWASS answered NOTOK, MASS-VOLUME-NOT-FOUND (A1, confirmed live)."
       },
       "assumption": "A1"
     },
@@ -138,6 +137,17 @@
       "expected": {
         "httpStatus": 409,
         "note": "Mongo duplicate key (E11000) on annexVIIDocumentNo maps to Boom.conflict"
+      }
+    },
+    {
+      "id": "err-json-07",
+      "file": "error-cases/json-07-missing-waste-producer.json",
+      "target": "annexvii",
+      "type": "json",
+      "description": "isAlsoWasteProducer is false but no wasteProducer is given (hp-03 with the producer removed).",
+      "expected": {
+        "httpStatus": 400,
+        "note": "The alpha's JSON schema requires wasteProducer when the arranger is not the producer. Live DIWASS does not enforce this rule (err-soap-08, 12 October 2026), so DWT must."
       }
     },
     {

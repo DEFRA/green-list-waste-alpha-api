@@ -152,6 +152,42 @@ describe('#annexVii', () => {
     expect(statusCode).toBe(400)
   })
 
+  test('POST /annexvii rejects a shipment with neither tonnes nor metersCubed with 400', async () => {
+    const { statusCode, result } = await server.inject({
+      method: 'POST',
+      url: '/annexvii',
+      payload: {
+        ...validPayload,
+        annexVIIDocumentNo: 'AX-2024-000004',
+        shipment: {
+          ...validPayload.shipment,
+          actualQuantity: { tonnes: null, metersCubed: null }
+        }
+      }
+    })
+
+    expect(statusCode).toBe(400)
+    expect(result.message).toContain('must give tonnes, metersCubed or both')
+  })
+
+  test('POST /annexvii requires a waste producer when the arranger is not the producer', async () => {
+    const { statusCode, result } = await server.inject({
+      method: 'POST',
+      url: '/annexvii',
+      payload: {
+        ...validPayload,
+        annexVIIDocumentNo: 'AX-2024-000005',
+        shipmentArranger: {
+          ...validPayload.shipmentArranger,
+          isAlsoWasteProducer: false
+        }
+      }
+    })
+
+    expect(statusCode).toBe(400)
+    expect(result.message).toContain('"wasteProducer" is required')
+  })
+
   test('POST /annexvii rejects a duplicate annexVIIDocumentNo with 409', async () => {
     const { statusCode } = await server.inject({
       method: 'POST',

@@ -13,7 +13,7 @@ const validPayload = {
       phone: '+1234567890',
       email: 'john.doe@somecompany.co.uk'
     },
-    isAlsoWasteProducer: false
+    isAlsoWasteProducer: true
   },
   importerConsignee: {
     operatorId: '237238',

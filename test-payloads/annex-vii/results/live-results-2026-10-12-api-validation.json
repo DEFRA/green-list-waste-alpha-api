@@ -1,0 +1,52 @@
+{
+  "ranAt": "2026-10-12T10:47:12.178Z",
+  "diwassBase": "https://webgate.acceptance.ec.europa.eu/tracesnt-alpha/ws",
+  "actingAs": "248482",
+  "operatorMap": {
+    "200001": "248482",
+    "200002": "248540",
+    "200003": "248626",
+    "200004": "248625",
+    "200005": "248625",
+    "200006": "248540",
+    "200007": "248540"
+  },
+  "stripCommodity": false,
+  "docSuffix": "",
+  "results": [
+    {
+      "id": "err-json-05",
+      "description": "actualQuantity.tonnes and actualQuantity.metersCubed are both null - valid per the alpha's own JSON schema (quantitySchema has no .or() constraint), but DIWASS's own contract requires exactly one of mass or volume.",
+      "expected": {
+        "httpStatus": 400,
+        "note": "Caught by the alpha's JSON schema since 12 October 2026: shipment.actualQuantity must give tonnes, metersCubed or both. Before that the API stored it and DIWASS answered NOTOK, MASS-VOLUME-NOT-FOUND (A1, confirmed live)."
+      },
+      "actual": {
+        "httpStatus": 400,
+        "diwassStatus": null,
+        "documentNo": null,
+        "requestId": null,
+        "errors": [],
+        "message": "\"shipment.actualQuantity\" must give tonnes, metersCubed or both",
+        "ms": 19
+      }
+    },
+    {
+      "id": "err-json-07",
+      "description": "isAlsoWasteProducer is false but no wasteProducer is given (hp-03 with the producer removed).",
+      "expected": {
+        "httpStatus": 400,
+        "note": "The alpha's JSON schema requires wasteProducer when the arranger is not the producer. Live DIWASS does not enforce this rule (err-soap-08, 12 October 2026), so DWT must."
+      },
+      "actual": {
+        "httpStatus": 400,
+        "diwassStatus": null,
+        "documentNo": null,
+        "requestId": null,
+        "errors": [],
+        "message": "\"wasteProducer\" is required",
+        "ms": 4
+      }
+    }
+  ]
+}

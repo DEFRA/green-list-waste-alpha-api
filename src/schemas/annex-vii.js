@@ -28,6 +28,24 @@ const quantitySchema = Joi.object({
 })
 
 /*
+[Shipment Quantity]
+The quantity actually shipped must give tonnes, cubic metres or both. The
+shared quantitySchema allows both to be null (certificates can report a
+zero side), but DIWASS rejects an Annex VII with neither
+(MASS-VOLUME-NOT-FOUND, live run of 12 October 2026). Checking here stops
+the API storing a record DIWASS will never accept.
+*/
+const shipmentQuantitySchema = quantitySchema
+  .custom((value, helpers) =>
+    value.tonnes == null && value.metersCubed == null
+      ? helpers.error('quantity.missing')
+      : value
+  )
+  .messages({
+    'quantity.missing': '{{#label}} must give tonnes, metersCubed or both'
+  })
+
+/*
 [Authenticated By]
 authenticating person for various declarations in the annexvii schema
 is used in [Declaration]
@@ -135,7 +153,7 @@ export const annexViiSchema = Joi.object({
   importerConsignee: partySchema.required(),
 
   shipment: Joi.object({
-    actualQuantity: quantitySchema.required(),
+    actualQuantity: shipmentQuantitySchema.required(),
     actualDateOfShipment: Joi.date().iso().required(),
     containerIdentificationNo: Joi.string().allow(null, ''),
     createdDueToTakeBack: Joi.boolean().required(),
@@ -180,6 +198,13 @@ export const annexViiSchema = Joi.object({
     .min(1)
     .required(),
 
+  /*
+  [Waste Producer]
+  Required when the arranger is not also the producer. DIWASS's parameter
+  mapping says so, but live DIWASS does not enforce it: it accepted an Annex
+  VII with arrangerIsProducer false and no producer (12 October 2026). So
+  DWT has to.
+  */
   wasteProducer: partySchema.keys({
     shipmentStartLocation: Joi.object({
       description: Joi.string(),
@@ -197,6 +222,9 @@ export const annexViiSchema = Joi.object({
       }).required()
     }).required(),
     declaration: declarationSchema.required()
+  }).when('shipmentArranger.isAlsoWasteProducer', {
+    is: false,
+    then: Joi.required()
   }),
 
   recoveryFacility: facilitySchema.required(),
