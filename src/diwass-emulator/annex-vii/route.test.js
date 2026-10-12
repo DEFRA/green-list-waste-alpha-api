@@ -156,21 +156,105 @@ describe('#diwassAnnexVii', () => {
     )
   })
 
-  test('POST /diwass/annex-vii rejects a request missing a carrier with a SOAP fault', async () => {
-    const withoutCarrier = submitAnnex7RequestXml.replace(
-      /<v11:carrier>[\s\S]*?<\/v11:carrier>/,
-      ''
-    )
-
-    const { statusCode, payload } = await server.inject({
+  function submit(xml) {
+    return server.inject({
       method: 'POST',
       url: '/diwass/annex-vii',
       headers: { 'content-type': 'text/xml' },
-      payload: withoutCarrier
+      payload: xml
     })
+  }
 
-    expect(statusCode).toBe(400)
+  test('POST /diwass/annex-vii rejects a request missing a carrier with a schema SOAP fault, as live DIWASS does', async () => {
+    const { statusCode, payload } = await submit(
+      submitAnnex7RequestXml.replace(/<v11:carrier>[\s\S]*?<\/v11:carrier>/, '')
+    )
+
+    expect(statusCode).toBe(500)
     expect(payload).toContain('<soapenv:Fault>')
-    expect(payload).toContain('At least one carrier is required')
+    expect(payload).toContain('cvc-complex-type.2.4.a')
+    expect(payload).toContain(':carrier}')
+  })
+
+  test('POST /diwass/annex-vii rejects a missing waste classification with a schema SOAP fault', async () => {
+    const { statusCode, payload } = await submit(
+      submitAnnex7RequestXml.replace(
+        /<v11:wasteClassification>[\s\S]*?<\/v11:wasteClassification>/,
+        ''
+      )
+    )
+
+    expect(statusCode).toBe(500)
+    expect(payload).toContain(':wasteClassification}')
+  })
+
+  test('POST /diwass/annex-vii rejects an alpha-2 country code with a schema SOAP fault', async () => {
+    const { statusCode, payload } = await submit(
+      submitAnnex7RequestXml.replace(
+        /(<v11:exportCountry>\s*<v11:countryID>)\d+/,
+        '$1GB'
+      )
+    )
+
+    expect(statusCode).toBe(500)
+    expect(payload).toContain('is not facet-valid')
+    expect(payload).toContain('CountryCodeType')
+  })
+
+  test('POST /diwass/annex-vii rejects malformed XML with a SOAP fault', async () => {
+    const { statusCode, payload } = await submit(
+      submitAnnex7RequestXml.replace(
+        '<v1:illegalActivityIndication>false</v1:illegalActivityIndication>',
+        '<v1:illegalActivityIndication>false'
+      )
+    )
+
+    expect(statusCode).toBe(500)
+    expect(payload).toContain('Failed to copy a message')
+  })
+
+  test('POST /diwass/annex-vii answers a missing mass and volume with NOTOK, not a fault', async () => {
+    const { statusCode, payload } = await submit(
+      submitAnnex7RequestXml.replace(
+        /<v11:actualQuantity>[\s\S]*?<\/v11:actualQuantity>/,
+        '<v11:actualQuantity></v11:actualQuantity>'
+      )
+    )
+
+    expect(statusCode).toBe(200)
+    expect(payload).toContain('<ns5:statusCode>NOTOK</ns5:statusCode>')
+    expect(payload).toContain('<ns5:code>MASS-VOLUME-NOT-FOUND</ns5:code>')
+    expect(payload).toContain(
+      '<ns4:annexVIIDocumentNo>UNKNOWN</ns4:annexVIIDocumentNo>'
+    )
+  })
+
+  test('POST /diwass/annex-vii answers an unknown operator with NOTOK, as live DIWASS does', async () => {
+    const { statusCode, payload } = await submit(
+      submitAnnex7RequestXml.replace(
+        /(<v11:consignee>[\s\S]*?<v11:OperatorInternalID>)\d+/,
+        '$1999999'
+      )
+    )
+
+    expect(statusCode).toBe(200)
+    expect(payload).toContain('<ns5:statusCode>NOTOK</ns5:statusCode>')
+    expect(payload).toContain(
+      '<ns5:code>CONSIGNEE-OPERATOR-IS-REQUIRED</ns5:code>'
+    )
+    expect(payload).toContain('<ns5:code>OPERATOR-ID-NOT-FOUND</ns5:code>')
+    expect(payload).toContain('Operator 999999 not found')
+  })
+
+  test('POST /diwass/annex-vii accepts a missing waste producer, as live DIWASS does', async () => {
+    const { statusCode, payload } = await submit(
+      submitAnnex7RequestXml.replace(
+        /<v1:declarationProducer>[\s\S]*?<\/v1:declarationProducer>/,
+        ''
+      )
+    )
+
+    expect(statusCode).toBe(200)
+    expect(payload).toContain('<ns5:statusCode>OK</ns5:statusCode>')
   })
 })

@@ -1,12 +1,38 @@
 import { asArray, textOf } from '#/diwass-emulator/xml/parse.js'
 import { escapeXml } from '#/diwass-emulator/xml/build.js'
 
-export class Annex7ValidationError extends Error {
+/*
+[How DIWASS rejects an Annex VII]
+Two different ways, as the live payload pack run showed (12 October 2026):
+- Anything the WasteAnnex7V1 XSD forbids (a missing carrier or waste
+  classification, a country that is not three digits) is a SOAP Fault, HTTP
+  500, carrying the schema validator's message. Annex7SchemaError mirrors that;
+  the messages follow the validator's wording but are not byte-for-byte copies.
+- A business rule is HTTP 200 with statusCode NOTOK, coded errors and
+  annexVIIDocumentNo UNKNOWN. Annex7RejectedError carries those codes for the
+  route to return.
+*/
+const MODEL_NS = 'http://ec.europa.eu/tracesnt/waste/model/v1'
+
+export class Annex7SchemaError extends Error {
   constructor(message) {
     super(message)
-    this.faultCode = 'soapenv:Client'
-    this.httpStatus = 400
+    this.faultCode = 'soapenv:Server'
+    this.httpStatus = 500
   }
+}
+
+export class Annex7RejectedError extends Error {
+  constructor(errors) {
+    super(errors.map((error) => error.code).join(', '))
+    this.errors = errors
+  }
+}
+
+function missingElement(element) {
+  return new Annex7SchemaError(
+    `cvc-complex-type.2.4.a: Invalid content was found. One of '{"${MODEL_NS}":${element}}' is expected.`
+  )
 }
 
 /*
@@ -291,11 +317,21 @@ export const ANNEX_VII_REQUEST_NAMESPACES = {
 
 // --- inbound: DIWASS request XML -> stored record ------------------------
 
-function requireField(value, fieldName) {
+function requireField(value, element) {
   if (value === undefined || value === null || value === '') {
-    throw new Annex7ValidationError(`Missing required field: ${fieldName}`)
+    throw missingElement(element)
   }
   return value
+}
+
+function requireCountry(node, element) {
+  const countryId = textOf(requireField(node?.countryID, element))
+  if (!/^\d\d\d$/.test(String(countryId))) {
+    throw new Annex7SchemaError(
+      `cvc-pattern-valid: Value '${countryId}' is not facet-valid with respect to pattern '\\d\\d\\d' for type 'CountryCodeType'.`
+    )
+  }
+  return String(countryId)
 }
 
 export function annex7DocumentFromXml(requestXml) {
@@ -305,23 +341,36 @@ export function annex7DocumentFromXml(requestXml) {
   const wasteCodes = asArray(announcement.wasteClassification?.WasteTypeCode)
   const quantity = announcement.actualQuantity ?? {}
 
-  if (!quantity.MassMeasure && !quantity.VolumeMeasure) {
-    throw new Annex7ValidationError(
-      'transportAnnouncement.actualQuantity must carry a MassMeasure or a VolumeMeasure'
-    )
-  }
+  // Schema first: DIWASS rejects these before any business rule runs.
   if (carriers.length === 0) {
-    throw new Annex7ValidationError('At least one carrier is required')
+    throw missingElement('carrier')
   }
   if (facilities.length === 0) {
-    throw new Annex7ValidationError(
-      'At least one recoveryLaboratoryFacility is required'
-    )
+    throw missingElement('recoveryLaboratoryFacility')
   }
   if (wasteCodes.length === 0) {
-    throw new Annex7ValidationError(
-      'At least one wasteClassification code is required'
-    )
+    throw missingElement('wasteClassification')
+  }
+  const exportCountryId = requireCountry(
+    announcement.exportCountry,
+    'exportCountry'
+  )
+  const importCountryId = requireCountry(
+    announcement.importCountry,
+    'importCountry'
+  )
+  asArray(announcement.transitCountry).forEach((transit) =>
+    requireCountry(transit, 'transitCountry')
+  )
+
+  // Business rules: an empty actualQuantity passes the schema but not these.
+  if (!quantity.MassMeasure && !quantity.VolumeMeasure) {
+    throw new Annex7RejectedError([
+      {
+        code: 'MASS-VOLUME-NOT-FOUND',
+        description: 'Mass or volume is mandatory'
+      }
+    ])
   }
 
   return {
@@ -351,18 +400,8 @@ export function annex7DocumentFromXml(requestXml) {
         'recoveryDisposalTypeCode'
       )
     ),
-    exportCountryId: textOf(
-      requireField(
-        announcement.exportCountry?.countryID,
-        'exportCountry.countryID'
-      )
-    ),
-    importCountryId: textOf(
-      requireField(
-        announcement.importCountry?.countryID,
-        'importCountry.countryID'
-      )
-    ),
+    exportCountryId,
+    importCountryId,
     statusCode: 'OK'
   }
 }

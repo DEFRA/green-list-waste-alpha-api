@@ -94,7 +94,7 @@ listed below returns a proper SOAP fault (`soapenv:Fault`), not a 404.
 | ------ | ------------------- | ---------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | POST   | `/diwass/ping`      | `IamAliveRequest`                                                                              | Connectivity/auth check, mirrors `WasteV1`                                                                                                                                                                                                       |
 | POST   | `/diwass/operators` | `CreateOperatorRequest`, `FindOperatorRequest`, `GetOperatorRequest`, `ApproveOperatorRequest` | Mirrors `OperatorDirectoryServiceV2`. `ApproveOperatorRequest` is emulator-only (see Phase 1.5). Duplicate EORI/VAT is rejected with a 409 fault, matching DIWASS's own "cannot be two or more operators with the same VAT or EORI number" rule. |
-| POST   | `/diwass/annex-vii` | `CreateAnnex7DocumentTypeRequest`                                                              | Mirrors `WasteAnnex7V1`. Validates that at least one carrier, one recovery facility, one waste classification code, and a mass or volume measure are present before accepting.                                                                   |
+| POST   | `/diwass/annex-vii` | `CreateAnnex7DocumentTypeRequest`                                                              | Mirrors `WasteAnnex7V1`. Rejects as live DIWASS does: schema problems as SOAP Faults, business rules (mass or volume, unknown operator IDs) as NOTOK with DIWASS's error codes. See the implementation notes below.                               |
 
 ## Implementation notes worth knowing before touching this
 
@@ -119,11 +119,20 @@ listed below returns a proper SOAP fault (`soapenv:Fault`), not a 404.
   structurally close enough for client code to parse, not a guess at
   DIWASS's real algorithm. Same caveat for `OperatorInternalID` (real
   DIWASS's are opaque; the emulator just increments a counter).
-- **No cross-referencing between operators and Annex VII documents yet.**
-  The emulator doesn't check that a submitted Annex VII's arranger/
-  consignee/carrier/facility `OperatorInternalID`s exist or are `Valid` in
-  its own operator store. Deliberate simplification for Phase 1 - worth
-  adding once Phase 2 work starts, but shouldn't block it.
+- **The emulator rejects the way live DIWASS does** (checked against the live
+  payload pack run, 12 October 2026). Schema problems (no carrier, facility
+  or waste classification, a country that is not three digits, malformed
+  XML) are HTTP 500 SOAP Faults. Business rules are HTTP 200 with statusCode
+  NOTOK, coded errors and annexVIIDocumentNo UNKNOWN: a missing mass and
+  volume (MASS-VOLUME-NOT-FOUND), and an operator ID the emulator does not
+  know (OPERATOR-ID-NOT-FOUND). The waste producer rule is deliberately not
+  enforced, because DIWASS does not enforce it either.
+- **Operator IDs on an Annex VII must be registered** through
+  `/diwass/operators`, or be one of `PRE_REGISTERED_OPERATOR_IDS` in
+  `src/diwass-emulator/operators/store.js` (the published example request's
+  IDs and the spec pack sample's), which keep the example working. Status
+  (New or Valid) is not checked yet: live behaviour for a non-Valid operator
+  is untested.
 - **Namespaces and envelope shapes are copied from the spec pack's actual
   sample XML**, not invented - see `src/diwass-emulator/xml/build.js` for
   where each namespace URI and header shape came from. Adding a new

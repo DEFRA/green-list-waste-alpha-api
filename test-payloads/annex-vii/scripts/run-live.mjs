@@ -56,11 +56,16 @@ function livePayload(text) {
   const payload = JSON.parse(
     text.replace(
       /("(?:operatorId|carrierOperatorId)": ")(\d+)(")/g,
-      (all, pre, id, post) => (operatorMap[id] ? pre + operatorMap[id] + post : all)
+      (all, pre, id, post) =>
+        operatorMap[id] ? pre + operatorMap[id] + post : all
     )
   )
-  if (STRIP_COMMODITY && payload.shipment) delete payload.shipment.commodityCodes
-  if (DOC_SUFFIX && payload.annexVIIDocumentNo) payload.annexVIIDocumentNo += DOC_SUFFIX
+  if (STRIP_COMMODITY && payload.shipment) {
+    delete payload.shipment.commodityCodes
+  }
+  if (DOC_SUFFIX && payload.annexVIIDocumentNo) {
+    payload.annexVIIDocumentNo += DOC_SUFFIX
+  }
   return JSON.stringify(payload)
 }
 
@@ -78,15 +83,21 @@ async function runJsonCase(entry) {
     diwassStatus: parsed?.diwass?.status ?? null,
     documentNo: parsed?.diwass?.annexViiDocumentNo ?? null,
     requestId: parsed?.diwass?.requestId ?? null,
-    errors: (parsed?.diwass?.errors ?? []).map((e) => `${e.code}: ${e.description}`),
+    errors: (parsed?.diwass?.errors ?? []).map(
+      (e) => `${e.code}: ${e.description}`
+    ),
     message: parsed?.message ?? parsed?.diwass?.error ?? null,
     ms: Date.now() - started
   }
 }
 
 // ---- soap cases: one change each to the accepted baseline body ----
-const capturedRequest = read('live/evidence/2026-10-12-captured-run/2-soap-request-to-diwass.xml')
-const BASELINE_BODY = capturedRequest.match(/<soapenv:Body>([\s\S]*)<\/soapenv:Body>/)[1].trim()
+const capturedRequest = read(
+  'live/evidence/2026-10-12-captured-run/2-soap-request-to-diwass.xml'
+)
+const BASELINE_BODY = capturedRequest
+  .match(/<soapenv:Body>([\s\S]*)<\/soapenv:Body>/)[1]
+  .trim()
 
 const OPERATOR_NAMESPACES = {
   op: 'http://ec.europa.eu/tracesnt/directory/operator/v2',
@@ -127,30 +138,52 @@ const SOAP_CASES = {
   'err-soap-01': {
     change: 'Unclosed <v1:illegalActivityIndication> element',
     service: 'WasteAnnex7V1',
-    body: () => mutate(BASELINE_BODY, '<v1:illegalActivityIndication>false</v1:illegalActivityIndication>', '<v1:illegalActivityIndication>false')
+    body: () =>
+      mutate(
+        BASELINE_BODY,
+        '<v1:illegalActivityIndication>false</v1:illegalActivityIndication>',
+        '<v1:illegalActivityIndication>false'
+      )
   },
   'err-soap-02': {
     change: 'Empty actualQuantity (no MassMeasure or VolumeMeasure)',
     service: 'WasteAnnex7V1',
-    body: () => mutate(BASELINE_BODY, /<v11:actualQuantity>[\s\S]*?<\/v11:actualQuantity>/, '<v11:actualQuantity></v11:actualQuantity>')
+    body: () =>
+      mutate(
+        BASELINE_BODY,
+        /<v11:actualQuantity>[\s\S]*?<\/v11:actualQuantity>/,
+        '<v11:actualQuantity></v11:actualQuantity>'
+      )
   },
   'err-soap-03': {
     change: 'No <carrier> element',
     service: 'WasteAnnex7V1',
-    body: () => mutate(BASELINE_BODY, /<v11:carrier>[\s\S]*?<\/v11:carrier>/, '')
+    body: () =>
+      mutate(BASELINE_BODY, /<v11:carrier>[\s\S]*?<\/v11:carrier>/, '')
   },
   'err-soap-04': {
     change: 'No <wasteClassification> element',
     service: 'WasteAnnex7V1',
-    body: () => mutate(BASELINE_BODY, /<v11:wasteClassification>[\s\S]*?<\/v11:wasteClassification>/, '')
+    body: () =>
+      mutate(
+        BASELINE_BODY,
+        /<v11:wasteClassification>[\s\S]*?<\/v11:wasteClassification>/,
+        ''
+      )
   },
   'err-soap-05': {
     change: 'exportCountry countryID "GB" (alpha-2) instead of 826',
     service: 'WasteAnnex7V1',
-    body: () => mutate(BASELINE_BODY, /<v11:exportCountry>\s*<v11:countryID>826<\/v11:countryID>/, '<v11:exportCountry><v11:countryID>GB</v11:countryID>')
+    body: () =>
+      mutate(
+        BASELINE_BODY,
+        /<v11:exportCountry>\s*<v11:countryID>826<\/v11:countryID>/,
+        '<v11:exportCountry><v11:countryID>GB</v11:countryID>'
+      )
   },
   'err-soap-06': {
-    change: 'createOperator reusing the EORI of DEFRA-ALPHA-TEST (XI343558638334)',
+    change:
+      'createOperator reusing the EORI of DEFRA-ALPHA-TEST (XI343558638334)',
     service: 'OperatorDirectoryServiceV2',
     namespaces: OPERATOR_NAMESPACES,
     body: () => DUPLICATE_OPERATOR_BODY
@@ -158,17 +191,31 @@ const SOAP_CASES = {
   'err-soap-07': {
     change: 'consignee OperatorInternalID 999999 (does not exist)',
     service: 'WasteAnnex7V1',
-    body: () => mutate(BASELINE_BODY, /(<v11:consignee>[\s\S]*?<v11:OperatorInternalID>)248540(<\/v11:OperatorInternalID>)/, '$1999999$2')
+    body: () =>
+      mutate(
+        BASELINE_BODY,
+        /(<v11:consignee>[\s\S]*?<v11:OperatorInternalID>)248540(<\/v11:OperatorInternalID>)/,
+        '$1999999$2'
+      )
   },
   'err-soap-08': {
     change: 'arrangerIsProducer false, with no producer or declarationProducer',
     service: 'WasteAnnex7V1',
-    body: () => mutate(BASELINE_BODY, '<v1:arrangerIsProducer>true</v1:arrangerIsProducer>', '<v1:arrangerIsProducer>false</v1:arrangerIsProducer>')
+    body: () =>
+      mutate(
+        BASELINE_BODY,
+        '<v1:arrangerIsProducer>true</v1:arrangerIsProducer>',
+        '<v1:arrangerIsProducer>false</v1:arrangerIsProducer>'
+      )
   }
 }
 
 function tags(xml, tag) {
-  return [...xml.matchAll(new RegExp(`<[\\w:]*${tag}[^>]*>([^<]*)</[\\w:]*${tag}>`, 'g'))].map((m) => m[1])
+  return [
+    ...xml.matchAll(
+      new RegExp(`<[\\w:]*${tag}[^>]*>([^<]*)</[\\w:]*${tag}>`, 'g')
+    )
+  ].map((m) => m[1])
 }
 
 async function runSoapCase(entry) {
@@ -180,11 +227,14 @@ async function runSoapCase(entry) {
     operatorAccessId: ACT_AS
   })
   const started = Date.now()
-  const response = await fetch(`${diwassBase.replace(/\/$/, '')}/${spec.service}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'text/xml; charset=utf-8', SOAPAction: '' },
-    body: requestXml
-  })
+  const response = await fetch(
+    `${diwassBase.replace(/\/$/, '')}/${spec.service}`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/xml; charset=utf-8', SOAPAction: '' },
+      body: requestXml
+    }
+  )
   const text = await response.text()
   const codes = tags(text, 'code')
   const descriptions = tags(text, 'description')
@@ -194,8 +244,11 @@ async function runSoapCase(entry) {
     httpStatus: response.status,
     diwassStatus: tags(text, 'statusCode')[0] ?? (fault ? 'SOAP Fault' : null),
     documentNo: tags(text, 'annexVIIDocumentNo')[0] ?? null,
-    requestId: (text.match(/WS_REQUEST_ID<\/ID>\s*<Message>([^<]+)/) ?? [])[1] ?? null,
-    errors: fault ? [fault] : codes.map((c, i) => `${c}: ${descriptions[i] ?? ''}`.trim()),
+    requestId:
+      (text.match(/WS_REQUEST_ID<\/ID>\s*<Message>([^<]+)/) ?? [])[1] ?? null,
+    errors: fault
+      ? [fault]
+      : codes.map((c, i) => `${c}: ${descriptions[i] ?? ''}`.trim()),
     operatorIds: tags(text, 'OperatorInternalID'),
     ms: Date.now() - started
   }
@@ -214,14 +267,36 @@ for (const entry of entries) {
   } catch (error) {
     actual = { error: error.message }
   }
-  results.push({ id: entry.id, description: entry.description, expected: entry.expected, actual })
+  results.push({
+    id: entry.id,
+    description: entry.description,
+    expected: entry.expected,
+    actual
+  })
   console.log(
     `${entry.id.padEnd(12)} HTTP ${actual.httpStatus ?? '-'} ${actual.diwassStatus ?? ''} ${actual.documentNo ?? ''} ${(actual.errors ?? []).join(' | ')} ${actual.message ?? actual.error ?? ''}`
   )
 }
 
 const stamp = new Date().toISOString()
-const variant = [ONLY && 'partial', STRIP_COMMODITY && 'no-commodity'].filter(Boolean).join('-')
+const variant = [ONLY && 'partial', STRIP_COMMODITY && 'no-commodity']
+  .filter(Boolean)
+  .join('-')
 const outFile = `results/live-results-${stamp.slice(0, 10)}${variant ? '-' + variant : ''}.json`
-writeFileSync(packPath(outFile), JSON.stringify({ ranAt: stamp, diwassBase, actingAs: ACT_AS, operatorMap, stripCommodity: STRIP_COMMODITY, docSuffix: DOC_SUFFIX, results }, null, 2) + '\n')
+writeFileSync(
+  packPath(outFile),
+  JSON.stringify(
+    {
+      ranAt: stamp,
+      diwassBase,
+      actingAs: ACT_AS,
+      operatorMap,
+      stripCommodity: STRIP_COMMODITY,
+      docSuffix: DOC_SUFFIX,
+      results
+    },
+    null,
+    2
+  ) + '\n'
+)
 console.log(`\nwrote ${outFile}`)

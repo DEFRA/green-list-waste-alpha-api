@@ -84,6 +84,43 @@ export async function getOperatorByInternalId(db, operatorInternalId) {
 }
 
 /*
+[Pre-registered operators]
+Live DIWASS refuses an Annex VII that names an operator it does not know
+(OPERATOR-ID-NOT-FOUND, payload pack err-soap-07, 12 October 2026), and so
+does this emulator. These IDs count as registered without a createOperator
+call, so the published example request (examples/annexvii-create-request.json)
+and the spec pack's own sample request keep working as they always have.
+*/
+export const PRE_REGISTERED_OPERATOR_IDS = new Set([
+  // examples/annexvii-create-request.json
+  'OP-12345',
+  'OP-67890',
+  'OP-11111',
+  'OP-33333',
+  'OP-44444',
+  // The spec pack's Submit_annex7_request.xml sample
+  '235939',
+  '235977',
+  '237238',
+  '237256',
+  '237674'
+])
+
+export async function findUnknownOperatorIds(db, operatorInternalIds) {
+  const candidates = [...new Set(operatorInternalIds)].filter(
+    (id) => id && !PRE_REGISTERED_OPERATOR_IDS.has(String(id))
+  )
+  const numeric = candidates.map(Number).filter(Number.isFinite)
+  const registered = await db
+    .collection(OPERATORS_COLLECTION)
+    .find({ operatorInternalId: { $in: numeric } })
+    .project({ operatorInternalId: 1 })
+    .toArray()
+  const known = new Set(registered.map((op) => String(op.operatorInternalId)))
+  return candidates.filter((id) => !known.has(String(id)))
+}
+
+/*
 [Approve - Emulator Only]
 Real DIWASS never exposes an operator-side API call that flips status from
 New to Valid - only a competent authority does that through DIWASS's own web

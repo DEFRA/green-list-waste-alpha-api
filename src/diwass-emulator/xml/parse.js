@@ -1,4 +1,4 @@
-import { XMLParser } from 'fast-xml-parser'
+import { XMLParser, XMLValidator } from 'fast-xml-parser'
 
 /*
 [SOAP Parsing]
@@ -13,12 +13,24 @@ const parser = new XMLParser({
   attributeNamePrefix: '@_',
   removeNSPrefix: true,
   textNodeName: '#text',
-  trimValues: true
+  trimValues: true,
+  // Keep codes like the country ID 056 (Belgium) as strings, not the number 56.
+  numberParseOptions: { leadingZeros: false, hex: false }
 })
 
 export class SoapFormatError extends Error {}
 
+/*
+[Well-formedness]
+fast-xml-parser recovers silently from broken XML (an unclosed tag mis-nests
+the rest of the document), so check first. Live DIWASS refuses malformed XML
+outright with a SOAP Fault reading "Failed to copy a message" (12 October
+2026, payload pack err-soap-01), so that is the message used here.
+*/
 export function parseSoapMessage(rawXml) {
+  if (XMLValidator.validate(rawXml) !== true) {
+    throw new SoapFormatError('Failed to copy a message')
+  }
   const doc = parser.parse(rawXml)
   const envelope = doc.Envelope
 

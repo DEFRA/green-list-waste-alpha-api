@@ -5,49 +5,70 @@
       "file": "happy-path/01-standard-single-carrier.json",
       "target": "annexvii",
       "description": "Baseline scenario: arranger is also the waste producer, single road carrier, mass-only quantity, EC list of wastes classification, no transit countries.",
-      "expected": { "httpStatus": 201, "diwassStatus": "OK" }
+      "expected": {
+        "httpStatus": 201,
+        "diwassStatus": "OK"
+      }
     },
     {
       "id": "hp-02",
       "file": "happy-path/02-multi-carrier-multi-leg.json",
       "target": "annexvii",
       "description": "Two-leg journey (road then barge) with two carriers, mass and volume both supplied, one transit country.",
-      "expected": { "httpStatus": 201, "diwassStatus": "OK" }
+      "expected": {
+        "httpStatus": 201,
+        "diwassStatus": "OK"
+      }
     },
     {
       "id": "hp-03",
       "file": "happy-path/03-separate-waste-producer.json",
       "target": "annexvii",
       "description": "Arranger is NOT the waste producer: wasteProducer and its declaration are populated, classified under Basel Annex IX.",
-      "expected": { "httpStatus": 201, "diwassStatus": "OK" }
+      "expected": {
+        "httpStatus": 201,
+        "diwassStatus": "OK"
+      }
     },
     {
       "id": "hp-04",
       "file": "happy-path/04-volume-only-quantity.json",
       "target": "annexvii",
       "description": "Volume-only quantity (metersCubed), no tonnes.",
-      "expected": { "httpStatus": 201, "diwassStatus": "OK" }
+      "expected": {
+        "httpStatus": 201,
+        "diwassStatus": "OK"
+      }
     },
     {
       "id": "hp-05",
       "file": "happy-path/05-basel-annex-ix-classification.json",
       "target": "annexvii",
       "description": "Waste classified solely under Basel Annex IX (List B) rather than the EC list of wastes.",
-      "expected": { "httpStatus": 201, "diwassStatus": "OK" }
+      "expected": {
+        "httpStatus": 201,
+        "diwassStatus": "OK"
+      }
     },
     {
       "id": "hp-06",
       "file": "happy-path/06-oecd-green-list-classification.json",
       "target": "annexvii",
       "description": "Waste classified under the OECD green list (a code not already covered by Basel Annex IX).",
-      "expected": { "httpStatus": 201, "diwassStatus": "OK" }
+      "expected": {
+        "httpStatus": 201,
+        "diwassStatus": "OK"
+      }
     },
     {
       "id": "hp-07",
       "file": "happy-path/07-confidential-interim-facility-with-transit.json",
       "target": "annexvii",
       "description": "Interim, name-confidential recovery facility with a confidentiality explanation, plus a transit country.",
-      "expected": { "httpStatus": 201, "diwassStatus": "OK" }
+      "expected": {
+        "httpStatus": 201,
+        "diwassStatus": "OK"
+      }
     }
   ],
   "errorCases": [
@@ -103,8 +124,8 @@
       "description": "actualQuantity.tonnes and actualQuantity.metersCubed are both null - valid per the alpha's own JSON schema (quantitySchema has no .or() constraint), but DIWASS's own contract requires exactly one of mass or volume.",
       "expected": {
         "httpStatus": 201,
-        "diwassStatus": "ERROR",
-        "note": "Local write succeeds (Joi schema doesn't enforce mass-or-volume), but the downstream DIWASS/emulator submission is rejected once actualQuantity reaches the SOAP layer with neither MassMeasure nor VolumeMeasure - see ASSUMPTIONS.md item A1"
+        "diwassStatus": "NOTOK",
+        "note": "Local write succeeds (the JSON schema doesn't enforce mass-or-volume), then the emulator answers NOTOK with MASS-VOLUME-NOT-FOUND, as live DIWASS does (A1 confirmed)."
       },
       "assumption": "A1"
     },
@@ -126,8 +147,8 @@
       "type": "soap",
       "description": "Structurally malformed XML - an unclosed <v1:illegalActivityIndication> element breaks the document tree.",
       "expected": {
-        "httpStatus": 400,
-        "note": "CONFIRMED by this pack's own validation run: the emulator's parser (fast-xml-parser, called via parser.parse(rawXml) with no validation flag - see src/diwass-emulator/xml/parse.js) does NOT check XML well-formedness. It silently recovers from the unclosed tag, mis-nests the rest of the document, and the request fails later on an unrelated business rule (missing actualQuantity) rather than being rejected as malformed at the door. The resulting 400 is correct by coincidence, not because the malformed structure was detected. See ASSUMPTIONS.md item A5"
+        "httpStatus": 500,
+        "note": "SOAP Fault 'Failed to copy a message', HTTP 500, as live DIWASS answers malformed XML (A5)."
       },
       "assumption": "A5"
     },
@@ -138,8 +159,9 @@
       "type": "soap",
       "description": "Otherwise-valid request with an empty actualQuantity element (no MassMeasure or VolumeMeasure).",
       "expected": {
-        "httpStatus": 400,
-        "note": "Annex7ValidationError: actualQuantity must carry a MassMeasure or a VolumeMeasure"
+        "httpStatus": 200,
+        "diwassStatus": "NOTOK",
+        "note": "Business rule, as live: HTTP 200, NOTOK, MASS-VOLUME-NOT-FOUND, annexVIIDocumentNo UNKNOWN."
       }
     },
     {
@@ -149,8 +171,8 @@
       "type": "soap",
       "description": "No <carrier> element present at all.",
       "expected": {
-        "httpStatus": 400,
-        "note": "Annex7ValidationError: At least one carrier is required"
+        "httpStatus": 500,
+        "note": "Schema violation, as live: HTTP 500 SOAP Fault saying a carrier is expected."
       }
     },
     {
@@ -160,8 +182,8 @@
       "type": "soap",
       "description": "No <wasteClassification> element present at all.",
       "expected": {
-        "httpStatus": 400,
-        "note": "Annex7ValidationError: At least one wasteClassification code is required"
+        "httpStatus": 500,
+        "note": "Schema violation, as live: HTTP 500 SOAP Fault saying a wasteClassification is expected."
       }
     },
     {
@@ -171,8 +193,8 @@
       "type": "soap",
       "description": "exportCountry.countryID sent as the ISO alpha-2 code \"GB\" instead of the UN M49 numeric code the spec pack's own samples use (e.g. 826).",
       "expected": {
-        "httpStatus": 200,
-        "note": "The emulator does not validate country code format at all, so this is accepted - but the data contracts page documents that Annex VII country fields use UN M49 numeric codes, not alpha-2. Real DIWASS's actual behaviour here is unconfirmed and worth testing first. See ASSUMPTIONS.md item A2"
+        "httpStatus": 500,
+        "note": "Schema violation, as live: HTTP 500 SOAP Fault, 'GB' fails the three-digit CountryCodeType pattern (A2 resolved)."
       },
       "assumption": "A2"
     },
@@ -184,7 +206,7 @@
       "description": "CreateOperatorRequest reusing the EORI (GB123456789000) already registered for the seeded \"arranger\" operator.",
       "expected": {
         "httpStatus": 409,
-        "note": "DuplicateOperatorError - matches DIWASS's documented 'cannot be two or more operators with the same VAT/EORI number' rule"
+        "note": "DuplicateOperatorError. Differs from live: an operator user creating a duplicate gets HTTP 500 'Some business rules are not met' with no reason, so the emulator keeps the clearer 409."
       }
     },
     {
@@ -195,7 +217,8 @@
       "description": "consignee.OperatorInternalID set to 999999 - never registered via CreateOperatorRequest.",
       "expected": {
         "httpStatus": 200,
-        "note": "The emulator does not cross-reference party OperatorInternalIDs against its own operator store (documented gap - CLAUDE.md 'No cross-referencing between operators and Annex VII documents yet'), so this succeeds. Real DIWASS's actual behaviour for an unresolved or non-Valid OperatorInternalID is unconfirmed. See ASSUMPTIONS.md item A3"
+        "diwassStatus": "NOTOK",
+        "note": "As live: HTTP 200, NOTOK, CONSIGNEE-OPERATOR-IS-REQUIRED and OPERATOR-ID-NOT-FOUND (A3 resolved)."
       },
       "assumption": "A3"
     },
@@ -207,7 +230,7 @@
       "description": "shipmentArrangerIsAlsoProducerOrCollector is false, but no wasteProducer or declarationProducer block is supplied.",
       "expected": {
         "httpStatus": 200,
-        "note": "The emulator does not enforce the conditional-mandatory rule (wasteProducer/declarationProducer required unless the arranger is also the producer), so this succeeds. Real DIWASS's own parameter mapping documents this as a 'Yes, unless...' rule, so this is a likely-real rejection the emulator currently can't rehearse. See ASSUMPTIONS.md item A4"
+        "note": "Accepted, as live DIWASS accepts it: the producer rule is not enforced by DIWASS (A4 disproved), so DWT must enforce it."
       },
       "assumption": "A4"
     }

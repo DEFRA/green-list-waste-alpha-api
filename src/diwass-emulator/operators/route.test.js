@@ -270,7 +270,7 @@ describe('#diwassOperators', () => {
     )
   })
 
-  test('POST /diwass/operators rejects a payload that is not a SOAP envelope with a 400 SOAP fault', async () => {
+  test('POST /diwass/operators rejects a payload that is not a SOAP envelope with a SOAP fault (HTTP 500, as DIWASS answers faults)', async () => {
     const { statusCode, payload } = await server.inject({
       method: 'POST',
       url: '/diwass/operators',
@@ -278,7 +278,7 @@ describe('#diwassOperators', () => {
       payload: '<NotSoap>hello</NotSoap>'
     })
 
-    expect(statusCode).toBe(400)
+    expect(statusCode).toBe(500)
     expect(payload).toContain('<soapenv:Fault>')
     expect(payload).toContain('Not a SOAP envelope')
   })

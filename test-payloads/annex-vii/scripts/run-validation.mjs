@@ -35,7 +35,16 @@ const TARGET_PATHS = {
 
 function extractTag(xml, tag) {
   const match = xml.match(new RegExp(`<[\\w:]*${tag}>([^<]*)</[\\w:]*${tag}>`))
-  return match ? match[1] : null
+  return match ? unescapeXml(match[1]) : null
+}
+
+function unescapeXml(text) {
+  return text
+    .replace(/&apos;/g, "'")
+    .replace(/&quot;/g, '"')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&amp;/g, '&')
 }
 
 async function runCase(entry) {
@@ -62,8 +71,12 @@ async function runCase(entry) {
       actual.message = rawText.slice(0, 300)
     }
   } else {
-    actual.faultReason = extractTag(rawText, 'faultstring')
-    actual.responseSnippet = rawText.replace(/\s+/g, ' ').trim().slice(0, 300)
+    actual.faultReason = extractTag(rawText, 'faultstring') ?? undefined
+    actual.diwassStatus = extractTag(rawText, 'statusCode') ?? undefined
+    const codes = [
+      ...rawText.matchAll(/<[\w:]*code>([^<]*)<\/[\w:]*code>/g)
+    ].map((match) => match[1])
+    actual.errorCodes = codes.length ? codes : undefined
   }
 
   return actual

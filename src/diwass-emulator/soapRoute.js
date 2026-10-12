@@ -31,6 +31,7 @@ export function soapRoute({ path, operations }) {
           request.payload.toString('utf8')
         ))
       } catch (error) {
+        // Live DIWASS answers every SOAP Fault, malformed XML included, with HTTP 500.
         return h
           .response(
             buildSoapFault({
@@ -39,7 +40,7 @@ export function soapRoute({ path, operations }) {
             })
           )
           .type('text/xml')
-          .code(400)
+          .code(500)
       }
 
       const operationHandler = operations[operation]
