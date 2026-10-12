@@ -18,3 +18,37 @@ describe('#config', () => {
     ])
   })
 })
+
+describe('#validateDiwassCredentials', () => {
+  test('accepts both credentials set (live DIWASS)', async () => {
+    const { validateDiwassCredentials } = await import('#/config.js')
+
+    expect(() =>
+      validateDiwassCredentials({ username: 'n00o3ge6', authKey: 'key' })
+    ).not.toThrow()
+  })
+
+  test('accepts neither credential set (bundled emulator)', async () => {
+    const { validateDiwassCredentials } = await import('#/config.js')
+
+    expect(() =>
+      validateDiwassCredentials({ username: null, authKey: null })
+    ).not.toThrow()
+  })
+
+  test('rejects a username without an authentication key', async () => {
+    const { validateDiwassCredentials } = await import('#/config.js')
+
+    expect(() =>
+      validateDiwassCredentials({ username: 'n00o3ge6', authKey: '' })
+    ).toThrow('DIWASS_AUTH_KEY is not set')
+  })
+
+  test('rejects an authentication key without a username', async () => {
+    const { validateDiwassCredentials } = await import('#/config.js')
+
+    expect(() =>
+      validateDiwassCredentials({ username: null, authKey: 'key' })
+    ).toThrow('DIWASS_USERNAME is not set')
+  })
+})

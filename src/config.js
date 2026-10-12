@@ -166,3 +166,22 @@ export const config = convict({
 })
 
 config.validate({ allowed: 'strict' })
+
+/*
+[Half-set DIWASS credentials]
+Credentials are what switch outbound calls from the emulator to live DIWASS
+(see src/services/DiwassAnnexViiClient.js). With only one of the two set,
+calls would quietly go to the emulator's path on whatever DIWASS_BASE_URL
+points at - against live DIWASS that is an HTML 404, surfaced only per
+submission. Refuse to start instead.
+*/
+export function validateDiwassCredentials({ username, authKey }) {
+  if (Boolean(username) !== Boolean(authKey)) {
+    const missing = username ? 'DIWASS_AUTH_KEY' : 'DIWASS_USERNAME'
+    throw new Error(
+      `${missing} is not set: set both DIWASS_USERNAME and DIWASS_AUTH_KEY to call live DIWASS, or neither to use the bundled emulator`
+    )
+  }
+}
+
+validateDiwassCredentials(config.get('diwass'))
