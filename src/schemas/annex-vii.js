@@ -205,27 +205,29 @@ export const annexViiSchema = Joi.object({
   VII with arrangerIsProducer false and no producer (12 October 2026). So
   DWT has to.
   */
-  wasteProducer: partySchema.keys({
-    shipmentStartLocation: Joi.object({
-      description: Joi.string(),
-      operatorId: Joi.string().required(),
-      countryCode: Joi.string().required(),
-      postalCode: Joi.string().required(),
-      cityName: Joi.string().required(),
-      addressDetails: Joi.string().required(),
-      longitude: Joi.number(),
-      latitude: Joi.number(),
-      responsiblePerson: Joi.object({
-        name: Joi.string().required(),
-        phone: Joi.string().required(),
-        email: Joi.string().email().required()
-      }).required()
-    }).required(),
-    declaration: declarationSchema.required()
-  }).when('shipmentArranger.isAlsoWasteProducer', {
-    is: false,
-    then: Joi.required()
-  }),
+  wasteProducer: partySchema
+    .keys({
+      shipmentStartLocation: Joi.object({
+        description: Joi.string(),
+        operatorId: Joi.string().required(),
+        countryCode: Joi.string().required(),
+        postalCode: Joi.string().required(),
+        cityName: Joi.string().required(),
+        addressDetails: Joi.string().required(),
+        longitude: Joi.number(),
+        latitude: Joi.number(),
+        responsiblePerson: Joi.object({
+          name: Joi.string().required(),
+          phone: Joi.string().required(),
+          email: Joi.string().email().required()
+        }).required()
+      }).required(),
+      declaration: declarationSchema.required()
+    })
+    .when('shipmentArranger.isAlsoWasteProducer', {
+      is: false,
+      then: Joi.required()
+    }),
 
   recoveryFacility: facilitySchema.required(),
 
@@ -308,3 +310,30 @@ export const annexViiSchema = Joi.object({
     attachments: attachmentsSchema
   })
 })
+
+/*
+[Draft check]
+An operator prepares an Annex VII well before the load leaves, and only
+completes it once the truck is loaded. A draft is checked against the same
+schema, but anything that is only missing is allowed: required fields, an
+empty carriers list, a quantity with neither tonnes nor metersCubed, a
+waste identification with no code yet, and the waste producer rule. What has
+been filled in must still be well formed (an email must be an email, a date
+a date, no unknown fields). The full schema applies on submit.
+*/
+const MISSING_ONLY = new Set([
+  'any.required',
+  'array.min',
+  'object.missing',
+  'quantity.missing'
+])
+
+export function validateDraft(payload) {
+  const { error } = annexViiSchema.validate(payload, { abortEarly: false })
+  const problems = (error?.details ?? []).filter(
+    (detail) => !MISSING_ONLY.has(detail.type)
+  )
+  return problems.length
+    ? problems.map((detail) => detail.message).join('; ')
+    : null
+}

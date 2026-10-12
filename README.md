@@ -251,13 +251,17 @@ All of the above run together as the pre-commit hook
 
 ### The alpha's own domain API (JSON)
 
-| Method | Path                           | Description                                                                                                                    |
-| ------ | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
-| GET    | `/health`                      | Liveness check                                                                                                                 |
-| POST   | `/annexvii`                    | Validate and persist an Annex VII shipment document, then submit it to DIWASS (see [below](#submitting-an-annex-vii-document)) |
-| GET    | `/waste-codes/ewc`             | List EWC (European Waste Catalogue) codes                                                                                      |
-| GET    | `/waste-codes/basel-annex-ix`  | List Basel Annex IX (List B) codes                                                                                             |
-| GET    | `/waste-codes/oecd-green-list` | List OECD green list codes not already covered by Basel Annex IX                                                               |
+| Method | Path                              | Description                                                                                                                    |
+| ------ | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| GET    | `/health`                         | Liveness check                                                                                                                 |
+| POST   | `/annexvii`                       | Validate and persist an Annex VII shipment document, then submit it to DIWASS (see [below](#submitting-an-annex-vii-document)) |
+| POST   | `/annexvii/drafts`                | Save an Annex VII as a draft, without sending it to DIWASS (see [Drafts](#drafts-prepare-now-send-when-the-load-leaves))       |
+| GET    | `/annexvii/{submissionId}`        | Read an Annex VII record, draft or submitted                                                                                   |
+| PUT    | `/annexvii/{submissionId}`        | Replace a draft, or a submission DIWASS refused (`NOTOK`) or never received (`ERROR`); the record goes back to `DRAFT`         |
+| POST   | `/annexvii/{submissionId}/submit` | Run the full checks on a draft and send it to DIWASS                                                                           |
+| GET    | `/waste-codes/ewc`                | List EWC (European Waste Catalogue) codes                                                                                      |
+| GET    | `/waste-codes/basel-annex-ix`     | List Basel Annex IX (List B) codes                                                                                             |
+| GET    | `/waste-codes/oecd-green-list`    | List OECD green list codes not already covered by Basel Annex IX                                                               |
 
 ### The DIWASS emulator (SOAP/XML)
 
@@ -314,6 +318,34 @@ Posting the same example a second time returns `409`, because
 `annexVIIDocumentNo` is unique - either change that field or clear the
 collection (see [Inspecting MongoDB](#inspecting-mongodb)) before sending
 it again.
+
+### Drafts: prepare now, send when the load leaves
+
+Operators fill in an Annex VII well before a shipment and complete it only
+once the truck is loaded. DIWASS can hold a draft in its web UI but not
+through its API: every API create is a submission. So drafts live in this
+API, unsent, until the shipment starts moving.
+
+```bash
+# Save what is known now. Missing fields are fine; badly formed ones are not.
+curl -X POST http://localhost:3001/annexvii/drafts \
+  -H 'Content-Type: application/json' -d @my-draft.json
+# -> 201, { "submissionId": "...", "status": "DRAFT", ... }  (nothing sent to DIWASS)
+
+# Replace it as details firm up (carriers, quantity, shipment date).
+curl -X PUT http://localhost:3001/annexvii/<submissionId> \
+  -H 'Content-Type: application/json' -d @my-completed-annex-vii.json
+
+# The load has left: full checks, then send to DIWASS.
+curl -X POST http://localhost:3001/annexvii/<submissionId>/submit
+# -> 200, { "status": "SUBMITTED", "diwass": { "status": "OK", "annexViiDocumentNo": "GLW..." } }
+```
+
+A submit that fails the full checks returns `400` listing what is missing,
+and the draft is unchanged. A record DIWASS accepted cannot be edited or
+submitted again (`409`); one it refused (`NOTOK`) or never received
+(`ERROR`) can be fixed with `PUT` and submitted again. Records created with
+`POST /annexvii` are `SUBMITTED` straight away.
 
 ### Talking to the DIWASS emulator directly
 

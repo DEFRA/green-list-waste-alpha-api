@@ -40,3 +40,19 @@ curl -X POST http://127.0.0.1:3055/annexvii \
 
 A response with `diwass.status` `OK` and a `GLW.` document number is an
 acceptance. The outcome is also stored on the record in Mongo.
+
+## Draft, then submit (12 October 2026)
+
+DIWASS's API has no draft stage, so drafts are held in this API. The same
+payload went through the draft routes against live DIWASS:
+
+1. `POST /annexvii/drafts` with no carriers, no shipment date and no quantity:
+   201, status `DRAFT`. No call to DIWASS.
+2. `POST /annexvii/{id}/submit` straight away: 400, "not ready to submit",
+   listing the quantity, shipment date and carriers.
+3. `PUT /annexvii/{id}` with the complete payload: 200, still `DRAFT`. No
+   call to DIWASS.
+4. `POST /annexvii/{id}/submit`: 200, `SUBMITTED`, DIWASS `OK`,
+   GLW.GB260000001574i (request ID 3a2bace7-c254-4097-a448-e7ecea0b398f).
+   The only DIWASS call in the sequence.
+5. Submitting again: 409, already submitted.
