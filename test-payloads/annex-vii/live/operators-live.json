@@ -1,0 +1,18 @@
+{
+  "note": "Emulator operator IDs from operators/seeded-operators.json mapped to the team's live test operators in the DIWASS acceptance environment. The DIWASS user acts as DEFRA-ALPHA-TEST (248482), so it is always the arranger. DEFRA-ALPHA-TEST-B (248540) is consignee and recovery facility. Carriers and the separate waste producer use the competent-authority-created GB operators.",
+  "map": {
+    "200001": "248482",
+    "200002": "248540",
+    "200003": "248626",
+    "200004": "248625",
+    "200005": "248625",
+    "200006": "248540",
+    "200007": "248540"
+  },
+  "names": {
+    "248482": "DEFRA-ALPHA-TEST (XI, authority XI00)",
+    "248540": "DEFRA-ALPHA-TEST-B (XI, authority XI00)",
+    "248625": "DEFRA-ALPHA-TEST-GB-CA1 (GB, authority GB99)",
+    "248626": "DEFRA-ALPHA-TEST-GB-CA2-CARRIER (GB, authority GB99)"
+  }
+}

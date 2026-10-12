@@ -1,0 +1,137 @@
+{
+  "ranAt": "2026-10-12T10:12:20.002Z",
+  "diwassBase": "https://webgate.acceptance.ec.europa.eu/tracesnt-alpha/ws",
+  "actingAs": "248482",
+  "operatorMap": {
+    "200001": "248482",
+    "200002": "248540",
+    "200003": "248626",
+    "200004": "248625",
+    "200005": "248625",
+    "200006": "248540",
+    "200007": "248540"
+  },
+  "stripCommodity": true,
+  "docSuffix": "-R2",
+  "results": [
+    {
+      "id": "hp-01",
+      "description": "Baseline scenario: arranger is also the waste producer, single road carrier, mass-only quantity, EC list of wastes classification, no transit countries.",
+      "expected": {
+        "httpStatus": 201,
+        "diwassStatus": "OK"
+      },
+      "actual": {
+        "httpStatus": 201,
+        "diwassStatus": "OK",
+        "documentNo": "GLW.GB260000001567i",
+        "requestId": "29901f47-cf75-4ef2-8e50-41498e503078",
+        "errors": [],
+        "message": null,
+        "ms": 616
+      }
+    },
+    {
+      "id": "hp-02",
+      "description": "Two-leg journey (road then barge) with two carriers, mass and volume both supplied, one transit country.",
+      "expected": {
+        "httpStatus": 201,
+        "diwassStatus": "OK"
+      },
+      "actual": {
+        "httpStatus": 201,
+        "diwassStatus": "OK",
+        "documentNo": "GLW.GB260000001568i",
+        "requestId": "bac0633e-d782-45c1-ac2f-4f2bcf0f4cd5",
+        "errors": [],
+        "message": null,
+        "ms": 597
+      }
+    },
+    {
+      "id": "hp-03",
+      "description": "Arranger is NOT the waste producer: wasteProducer and its declaration are populated, classified under Basel Annex IX.",
+      "expected": {
+        "httpStatus": 201,
+        "diwassStatus": "OK"
+      },
+      "actual": {
+        "httpStatus": 201,
+        "diwassStatus": "OK",
+        "documentNo": "GLW.GB260000001569i",
+        "requestId": "38ec289e-211e-40db-87c6-83e7c9a8b1bd",
+        "errors": [],
+        "message": null,
+        "ms": 529
+      }
+    },
+    {
+      "id": "hp-04",
+      "description": "Volume-only quantity (metersCubed), no tonnes.",
+      "expected": {
+        "httpStatus": 201,
+        "diwassStatus": "OK"
+      },
+      "actual": {
+        "httpStatus": 201,
+        "diwassStatus": "OK",
+        "documentNo": "GLW.GB260000001570i",
+        "requestId": "82e1f5c1-b0e4-46bb-92d6-38dce4469b75",
+        "errors": [],
+        "message": null,
+        "ms": 439
+      }
+    },
+    {
+      "id": "hp-05",
+      "description": "Waste classified solely under Basel Annex IX (List B) rather than the EC list of wastes.",
+      "expected": {
+        "httpStatus": 201,
+        "diwassStatus": "OK"
+      },
+      "actual": {
+        "httpStatus": 201,
+        "diwassStatus": "OK",
+        "documentNo": "GLW.GB260000001571i",
+        "requestId": "696d4c38-3bfb-497d-a019-050fe23bab82",
+        "errors": [],
+        "message": null,
+        "ms": 466
+      }
+    },
+    {
+      "id": "hp-06",
+      "description": "Waste classified under the OECD green list (a code not already covered by Basel Annex IX).",
+      "expected": {
+        "httpStatus": 201,
+        "diwassStatus": "OK"
+      },
+      "actual": {
+        "httpStatus": 201,
+        "diwassStatus": "OK",
+        "documentNo": "GLW.GB260000001572i",
+        "requestId": "f8e37bb3-5438-4185-83c1-b2f3e3c9dfdc",
+        "errors": [],
+        "message": null,
+        "ms": 547
+      }
+    },
+    {
+      "id": "hp-07",
+      "description": "Interim, name-confidential recovery facility with a confidentiality explanation, plus a transit country.",
+      "expected": {
+        "httpStatus": 201,
+        "diwassStatus": "OK"
+      },
+      "actual": {
+        "httpStatus": 201,
+        "diwassStatus": "OK",
+        "documentNo": "GLW.GB260000001573i",
+        "requestId": "57e4f9cd-c4c7-4ac3-ae0e-e8313b1d355c",
+        "errors": [],
+        "message": null,
+        "ms": 547
+      }
+    }
+  ]
+}

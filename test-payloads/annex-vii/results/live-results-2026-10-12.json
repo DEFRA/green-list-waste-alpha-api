@@ -1,0 +1,414 @@
+{
+  "ranAt": "2026-10-12T10:11:45.151Z",
+  "diwassBase": "https://webgate.acceptance.ec.europa.eu/tracesnt-alpha/ws",
+  "actingAs": "248482",
+  "operatorMap": {
+    "200001": "248482",
+    "200002": "248540",
+    "200003": "248626",
+    "200004": "248625",
+    "200005": "248625",
+    "200006": "248540",
+    "200007": "248540"
+  },
+  "results": [
+    {
+      "id": "hp-01",
+      "description": "Baseline scenario: arranger is also the waste producer, single road carrier, mass-only quantity, EC list of wastes classification, no transit countries.",
+      "expected": {
+        "httpStatus": 201,
+        "diwassStatus": "OK"
+      },
+      "actual": {
+        "httpStatus": 201,
+        "diwassStatus": "NOTOK",
+        "documentNo": null,
+        "requestId": "68755d00-24cb-4713-9f65-2be1cf33d9d7",
+        "errors": [
+          "WASTE-CUSTOMS-INVALID-CODE: Invalid waste customs code."
+        ],
+        "message": null,
+        "ms": 509
+      }
+    },
+    {
+      "id": "hp-02",
+      "description": "Two-leg journey (road then barge) with two carriers, mass and volume both supplied, one transit country.",
+      "expected": {
+        "httpStatus": 201,
+        "diwassStatus": "OK"
+      },
+      "actual": {
+        "httpStatus": 201,
+        "diwassStatus": "NOTOK",
+        "documentNo": null,
+        "requestId": "2be48732-2307-4210-8800-c8784b2b5084",
+        "errors": [
+          "WASTE-CUSTOMS-INVALID-CODE: Invalid waste customs code."
+        ],
+        "message": null,
+        "ms": 351
+      }
+    },
+    {
+      "id": "hp-03",
+      "description": "Arranger is NOT the waste producer: wasteProducer and its declaration are populated, classified under Basel Annex IX.",
+      "expected": {
+        "httpStatus": 201,
+        "diwassStatus": "OK"
+      },
+      "actual": {
+        "httpStatus": 201,
+        "diwassStatus": "NOTOK",
+        "documentNo": null,
+        "requestId": "f9633d32-6345-4081-9d99-209e426e00f0",
+        "errors": [
+          "WASTE-CUSTOMS-INVALID-CODE: Invalid waste customs code."
+        ],
+        "message": null,
+        "ms": 315
+      }
+    },
+    {
+      "id": "hp-04",
+      "description": "Volume-only quantity (metersCubed), no tonnes.",
+      "expected": {
+        "httpStatus": 201,
+        "diwassStatus": "OK"
+      },
+      "actual": {
+        "httpStatus": 201,
+        "diwassStatus": "NOTOK",
+        "documentNo": null,
+        "requestId": "06381b99-240b-42ff-9971-81fce5250084",
+        "errors": [
+          "WASTE-CUSTOMS-INVALID-CODE: Invalid waste customs code."
+        ],
+        "message": null,
+        "ms": 253
+      }
+    },
+    {
+      "id": "hp-05",
+      "description": "Waste classified solely under Basel Annex IX (List B) rather than the EC list of wastes.",
+      "expected": {
+        "httpStatus": 201,
+        "diwassStatus": "OK"
+      },
+      "actual": {
+        "httpStatus": 201,
+        "diwassStatus": "NOTOK",
+        "documentNo": null,
+        "requestId": "7764f737-8950-4c15-9581-4ab98d119ea0",
+        "errors": [
+          "WASTE-CUSTOMS-INVALID-CODE: Invalid waste customs code."
+        ],
+        "message": null,
+        "ms": 268
+      }
+    },
+    {
+      "id": "hp-06",
+      "description": "Waste classified under the OECD green list (a code not already covered by Basel Annex IX).",
+      "expected": {
+        "httpStatus": 201,
+        "diwassStatus": "OK"
+      },
+      "actual": {
+        "httpStatus": 201,
+        "diwassStatus": "NOTOK",
+        "documentNo": null,
+        "requestId": "8a96c8cd-498f-4a30-9a02-0cd676962042",
+        "errors": [
+          "WASTE-CUSTOMS-INVALID-CODE: Invalid waste customs code."
+        ],
+        "message": null,
+        "ms": 266
+      }
+    },
+    {
+      "id": "hp-07",
+      "description": "Interim, name-confidential recovery facility with a confidentiality explanation, plus a transit country.",
+      "expected": {
+        "httpStatus": 201,
+        "diwassStatus": "OK"
+      },
+      "actual": {
+        "httpStatus": 201,
+        "diwassStatus": "NOTOK",
+        "documentNo": null,
+        "requestId": "9bbe3d30-d2e8-4748-87ea-f027f6de00bc",
+        "errors": [
+          "WASTE-CUSTOMS-INVALID-CODE: Invalid waste customs code."
+        ],
+        "message": null,
+        "ms": 262
+      }
+    },
+    {
+      "id": "err-json-01",
+      "description": "shipment.actualDateOfShipment omitted entirely.",
+      "expected": {
+        "httpStatus": 400,
+        "note": "Joi schema validation error - actualDateOfShipment is required"
+      },
+      "actual": {
+        "httpStatus": 400,
+        "diwassStatus": null,
+        "documentNo": null,
+        "requestId": null,
+        "errors": [],
+        "message": "\"shipment.actualDateOfShipment\" is required",
+        "ms": 9
+      }
+    },
+    {
+      "id": "err-json-02",
+      "description": "ecListOfWastes set to \"99 99 99\", not a real EWC code.",
+      "expected": {
+        "httpStatus": 400,
+        "note": "findInvalidWasteCodes rejects an unrecognised EWC code before the record is persisted"
+      },
+      "actual": {
+        "httpStatus": 400,
+        "diwassStatus": null,
+        "documentNo": null,
+        "requestId": null,
+        "errors": [],
+        "message": "Invalid waste classification code(s): ecListOfWastes: \"99 99 99\"",
+        "ms": 8
+      }
+    },
+    {
+      "id": "err-json-03",
+      "description": "carriers is an empty array.",
+      "expected": {
+        "httpStatus": 400,
+        "note": "Joi schema requires carriers to have at least one entry (.min(1))"
+      },
+      "actual": {
+        "httpStatus": 400,
+        "diwassStatus": null,
+        "documentNo": null,
+        "requestId": null,
+        "errors": [],
+        "message": "\"carriers\" must contain at least 1 items",
+        "ms": 8
+      }
+    },
+    {
+      "id": "err-json-04",
+      "description": "importerConsignee.contactDetails.email is not a valid email address.",
+      "expected": {
+        "httpStatus": 400,
+        "note": "Joi schema requires contactDetails.email to pass .email()"
+      },
+      "actual": {
+        "httpStatus": 400,
+        "diwassStatus": null,
+        "documentNo": null,
+        "requestId": null,
+        "errors": [],
+        "message": "\"importerConsignee.contactDetails.email\" must be a valid email",
+        "ms": 5
+      }
+    },
+    {
+      "id": "err-json-05",
+      "description": "actualQuantity.tonnes and actualQuantity.metersCubed are both null - valid per the alpha's own JSON schema (quantitySchema has no .or() constraint), but DIWASS's own contract requires exactly one of mass or volume.",
+      "expected": {
+        "httpStatus": 201,
+        "diwassStatus": "ERROR",
+        "note": "Local write succeeds (Joi schema doesn't enforce mass-or-volume), but the downstream DIWASS/emulator submission is rejected once actualQuantity reaches the SOAP layer with neither MassMeasure nor VolumeMeasure - see ASSUMPTIONS.md item A1"
+      },
+      "actual": {
+        "httpStatus": 201,
+        "diwassStatus": "NOTOK",
+        "documentNo": null,
+        "requestId": "47aae8ec-772d-45f0-9409-4b2471aafd29",
+        "errors": [
+          "MASS-VOLUME-NOT-FOUND: Mass or volume is mandatory",
+          "WASTE-CUSTOMS-INVALID-CODE: Invalid waste customs code."
+        ],
+        "message": null,
+        "ms": 273
+      }
+    },
+    {
+      "id": "err-json-06",
+      "description": "Reuses annexVIIDocumentNo \"AX-2026-HP-01\" - run this AFTER hp-01 has already been submitted once.",
+      "expected": {
+        "httpStatus": 409,
+        "note": "Mongo duplicate key (E11000) on annexVIIDocumentNo maps to Boom.conflict"
+      },
+      "actual": {
+        "httpStatus": 409,
+        "diwassStatus": null,
+        "documentNo": null,
+        "requestId": null,
+        "errors": [],
+        "message": "Annex VII document AX-2026-HP-01 already exists",
+        "ms": 13
+      }
+    },
+    {
+      "id": "err-soap-01",
+      "description": "Structurally malformed XML - an unclosed <v1:illegalActivityIndication> element breaks the document tree.",
+      "expected": {
+        "httpStatus": 400,
+        "note": "CONFIRMED by this pack's own validation run: the emulator's parser (fast-xml-parser, called via parser.parse(rawXml) with no validation flag - see src/diwass-emulator/xml/parse.js) does NOT check XML well-formedness. It silently recovers from the unclosed tag, mis-nests the rest of the document, and the request fails later on an unrelated business rule (missing actualQuantity) rather than being rejected as malformed at the door. The resulting 400 is correct by coincidence, not because the malformed structure was detected. See ASSUMPTIONS.md item A5"
+      },
+      "actual": {
+        "change": "Unclosed <v1:illegalActivityIndication> element",
+        "httpStatus": 500,
+        "diwassStatus": "SOAP Fault",
+        "documentNo": null,
+        "requestId": null,
+        "errors": [
+          "Failed to copy a message"
+        ],
+        "operatorIds": [],
+        "ms": 140
+      }
+    },
+    {
+      "id": "err-soap-02",
+      "description": "Otherwise-valid request with an empty actualQuantity element (no MassMeasure or VolumeMeasure).",
+      "expected": {
+        "httpStatus": 400,
+        "note": "Annex7ValidationError: actualQuantity must carry a MassMeasure or a VolumeMeasure"
+      },
+      "actual": {
+        "change": "Empty actualQuantity (no MassMeasure or VolumeMeasure)",
+        "httpStatus": 200,
+        "diwassStatus": "NOTOK",
+        "documentNo": "UNKNOWN",
+        "requestId": "1cd3cfbe-fb75-4a40-9844-5b33c9dac709",
+        "errors": [
+          "MASS-VOLUME-NOT-FOUND: Mass or volume is mandatory"
+        ],
+        "operatorIds": [],
+        "ms": 315
+      }
+    },
+    {
+      "id": "err-soap-03",
+      "description": "No <carrier> element present at all.",
+      "expected": {
+        "httpStatus": 400,
+        "note": "Annex7ValidationError: At least one carrier is required"
+      },
+      "actual": {
+        "change": "No <carrier> element",
+        "httpStatus": 500,
+        "diwassStatus": "SOAP Fault",
+        "documentNo": null,
+        "requestId": null,
+        "errors": [
+          "com.sun.istack.SAXParseException2; org.xml.sax.SAXException: org.xml.sax.SAXParseException; cvc-complex-type.2.4.a: Invalid content was found starting with element '{\"http://ec.europa.eu/tracesnt/waste/model/v1\":recoveryLaboratoryFacility}'. One of '{\"http://ec.europa.eu/tracesnt/waste/model/v1\":carrier}' is expected.\norg.xml.sax.SAXParseException; cvc-complex-type.2.4.a: Invalid content was found starting with element '{\"http://ec.europa.eu/tracesnt/waste/model/v1\":recoveryLaboratoryFacility}'. One of '{\"http://ec.europa.eu/tracesnt/waste/model/v1\":carrier}' is expected."
+        ],
+        "operatorIds": [],
+        "ms": 72
+      }
+    },
+    {
+      "id": "err-soap-04",
+      "description": "No <wasteClassification> element present at all.",
+      "expected": {
+        "httpStatus": 400,
+        "note": "Annex7ValidationError: At least one wasteClassification code is required"
+      },
+      "actual": {
+        "change": "No <wasteClassification> element",
+        "httpStatus": 500,
+        "diwassStatus": "SOAP Fault",
+        "documentNo": null,
+        "requestId": null,
+        "errors": [
+          "com.sun.istack.SAXParseException2; org.xml.sax.SAXException: org.xml.sax.SAXParseException; cvc-complex-type.2.4.a: Invalid content was found starting with element '{\"http://ec.europa.eu/tracesnt/waste/model/v1\":exportCountry}'. One of '{\"http://ec.europa.eu/tracesnt/waste/model/v1\":wasteClassification}' is expected.\norg.xml.sax.SAXParseException; cvc-complex-type.2.4.a: Invalid content was found starting with element '{\"http://ec.europa.eu/tracesnt/waste/model/v1\":exportCountry}'. One of '{\"http://ec.europa.eu/tracesnt/waste/model/v1\":wasteClassification}' is expected."
+        ],
+        "operatorIds": [],
+        "ms": 56
+      }
+    },
+    {
+      "id": "err-soap-05",
+      "description": "exportCountry.countryID sent as the ISO alpha-2 code \"GB\" instead of the UN M49 numeric code the spec pack's own samples use (e.g. 826).",
+      "expected": {
+        "httpStatus": 200,
+        "note": "The emulator does not validate country code format at all, so this is accepted - but the data contracts page documents that Annex VII country fields use UN M49 numeric codes, not alpha-2. Real DIWASS's actual behaviour here is unconfirmed and worth testing first. See ASSUMPTIONS.md item A2"
+      },
+      "actual": {
+        "change": "exportCountry countryID \"GB\" (alpha-2) instead of 826",
+        "httpStatus": 500,
+        "diwassStatus": "SOAP Fault",
+        "documentNo": null,
+        "requestId": null,
+        "errors": [
+          "com.sun.istack.SAXParseException2; org.xml.sax.SAXException: org.xml.sax.SAXParseException; cvc-pattern-valid: Value 'GB' is not facet-valid with respect to pattern '\\d\\d\\d' for type 'CountryCodeType'.\norg.xml.sax.SAXParseException; cvc-pattern-valid: Value 'GB' is not facet-valid with respect to pattern '\\d\\d\\d' for type 'CountryCodeType'."
+        ],
+        "operatorIds": [],
+        "ms": 76
+      }
+    },
+    {
+      "id": "err-soap-06",
+      "description": "CreateOperatorRequest reusing the EORI (GB123456789000) already registered for the seeded \"arranger\" operator.",
+      "expected": {
+        "httpStatus": 409,
+        "note": "DuplicateOperatorError - matches DIWASS's documented 'cannot be two or more operators with the same VAT/EORI number' rule"
+      },
+      "actual": {
+        "change": "createOperator reusing the EORI of DEFRA-ALPHA-TEST (XI343558638334)",
+        "httpStatus": 500,
+        "diwassStatus": "SOAP Fault",
+        "documentNo": null,
+        "requestId": null,
+        "errors": [
+          "Some business rules are not met"
+        ],
+        "operatorIds": [],
+        "ms": 492
+      }
+    },
+    {
+      "id": "err-soap-07",
+      "description": "consignee.OperatorInternalID set to 999999 - never registered via CreateOperatorRequest.",
+      "expected": {
+        "httpStatus": 200,
+        "note": "The emulator does not cross-reference party OperatorInternalIDs against its own operator store (documented gap - CLAUDE.md 'No cross-referencing between operators and Annex VII documents yet'), so this succeeds. Real DIWASS's actual behaviour for an unresolved or non-Valid OperatorInternalID is unconfirmed. See ASSUMPTIONS.md item A3"
+      },
+      "actual": {
+        "change": "consignee OperatorInternalID 999999 (does not exist)",
+        "httpStatus": 200,
+        "diwassStatus": "NOTOK",
+        "documentNo": "UNKNOWN",
+        "requestId": "6142c82d-5cb6-4673-878b-81be48f39904",
+        "errors": [
+          "CONSIGNEE-OPERATOR-IS-REQUIRED: Consignee is mandatory.",
+          "OPERATOR-ID-NOT-FOUND: Operator 999999 not found"
+        ],
+        "operatorIds": [],
+        "ms": 237
+      }
+    },
+    {
+      "id": "err-soap-08",
+      "description": "shipmentArrangerIsAlsoProducerOrCollector is false, but no wasteProducer or declarationProducer block is supplied.",
+      "expected": {
+        "httpStatus": 200,
+        "note": "The emulator does not enforce the conditional-mandatory rule (wasteProducer/declarationProducer required unless the arranger is also the producer), so this succeeds. Real DIWASS's own parameter mapping documents this as a 'Yes, unless...' rule, so this is a likely-real rejection the emulator currently can't rehearse. See ASSUMPTIONS.md item A4"
+      },
+      "actual": {
+        "change": "arrangerIsProducer false, with no producer or declarationProducer",
+        "httpStatus": 200,
+        "diwassStatus": "OK",
+        "documentNo": "GLW.GB260000001566i",
+        "requestId": "922d93e6-d846-4a8d-b995-1057f1579d7f",
+        "errors": [],
+        "operatorIds": [],
+        "ms": 478
+      }
+    }
+  ]
+}
