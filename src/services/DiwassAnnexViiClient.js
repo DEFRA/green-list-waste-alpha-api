@@ -6,7 +6,9 @@ import {
   textOf
 } from '#/diwass-emulator/xml/parse.js'
 import {
+  buildAnnex7SignalRequestBody,
   buildCreateAnnex7RequestBody,
+  buildUpdateAnnex7RequestBody,
   ANNEX_VII_REQUEST_NAMESPACES
 } from '#/diwass-emulator/annex-vii/mapping.js'
 
@@ -37,28 +39,33 @@ function liveCredentials() {
   return username && authKey ? { username, authKey } : null
 }
 
+// A create or update answers with Annex7DocumentTypeResponse; a signal
+// (such as Annex7Cancelled) with Annex7MovementDocumentTypeResponse.
+const RESPONSE_OPERATIONS = [
+  'Annex7DocumentTypeResponse',
+  'Annex7MovementDocumentTypeResponse'
+]
+
 /*
-[Submit Annex VII to DIWASS]
-Takes the same JSON payload the alpha's own /annexvii route already
-validated and persisted, builds the CreateAnnex7DocumentTypeRequest SOAP
-envelope DIWASS's own spec pack documents, and posts it to whichever base
-URL DIWASS/its emulator is reachable at. `fallbackBaseUrl` should be the
-calling request's own server address (request.server.info.uri) so this
-works self-contained with zero config against the bundled emulator.
+[Call WasteAnnex7V1]
+Every Annex VII operation goes to the same service, acting as an operator
+the DIWASS user is authorised for (BodyIdentity OperatorAccessIdentifier).
+A business rejection comes back as HTTP 200 with statusCode NOTOK, coded
+errors and annexVIIDocumentNo UNKNOWN. It is returned, not thrown, so the
+caller can store DIWASS's own error codes against the record.
 */
-export async function submitAnnexViiToDiwass(
-  payload,
-  { fallbackBaseUrl, fetchImpl = fetch } = {}
+async function callAnnex7(
+  bodyXml,
+  { operatorAccessId, fallbackBaseUrl, fetchImpl = fetch }
 ) {
   const baseUrl = resolveBaseUrl(fallbackBaseUrl)
   const security = liveCredentials()
   const path = security ? '/WasteAnnex7V1' : '/diwass/annex-vii'
-  const requestXml = buildSoapRequest(buildCreateAnnex7RequestBody(payload), {
+  const requestXml = buildSoapRequest(bodyXml, {
     namespaces: ANNEX_VII_REQUEST_NAMESPACES,
     webServiceClientId: config.get('diwass.webServiceClientId'),
     security,
-    // The arranger submits for itself, so the call acts as the arranger.
-    operatorAccessId: payload.shipmentArranger.operatorId
+    operatorAccessId
   })
 
   const response = await fetchImpl(`${baseUrl.replace(/\/$/, '')}${path}`, {
@@ -75,17 +82,12 @@ export async function submitAnnexViiToDiwass(
     payload: responsePayload
   } = parseSoapMessage(responseText)
 
-  if (operation !== 'Annex7DocumentTypeResponse') {
+  if (!RESPONSE_OPERATIONS.includes(operation)) {
     throw new DiwassRequestError(
       `Unexpected DIWASS response operation "${operation}"`
     )
   }
 
-  /*
-  A business rejection comes back as HTTP 200 with statusCode NOTOK, coded
-  errors, and annexVIIDocumentNo UNKNOWN. It is returned, not thrown, so the
-  caller can store DIWASS's own error codes against the record.
-  */
   const status = textOf(responsePayload.response?.statusCode)
   const documentNo = textOf(responsePayload.annexVIIDocumentNo)
 
@@ -100,6 +102,52 @@ export async function submitAnnexViiToDiwass(
     })),
     target: security ? 'diwass' : 'emulator'
   }
+}
+
+/*
+[Announce an Annex VII]
+Takes the JSON payload the alpha's routes already validated and stored,
+builds the CreateAnnex7DocumentTypeRequest DIWASS's spec documents, and
+posts it. DIWASS records it as Announced and assigns the document number.
+`fallbackBaseUrl` should be the calling request's own server address so this
+works self-contained with zero config against the bundled emulator.
+*/
+export async function submitAnnexViiToDiwass(payload, options = {}) {
+  return callAnnex7(buildCreateAnnex7RequestBody(payload), {
+    ...options,
+    // The arranger submits for itself, so the call acts as the arranger.
+    operatorAccessId: payload.shipmentArranger.operatorId
+  })
+}
+
+// Replace an announced Annex VII once the load is known (the whole document).
+export async function updateAnnexViiInDiwass(
+  payload,
+  annexVIIDocumentNo,
+  options = {}
+) {
+  return callAnnex7(buildUpdateAnnex7RequestBody(payload, annexVIIDocumentNo), {
+    ...options,
+    operatorAccessId: payload.shipmentArranger.operatorId
+  })
+}
+
+// Withdraw an announced Annex VII: the export will not happen.
+export async function cancelAnnexViiInDiwass(
+  { annexVIIDocumentNo, operatorAccessId, reason, signature },
+  options = {}
+) {
+  const result = await callAnnex7(
+    buildAnnex7SignalRequestBody({
+      annexVIIDocumentNo,
+      typeCode: 'Annex7Cancelled',
+      description: reason,
+      signature
+    }),
+    { ...options, operatorAccessId }
+  )
+  // A signal's response names a movement, not the document; keep the number.
+  return { ...result, annexViiDocumentNo: annexVIIDocumentNo }
 }
 
 // DIWASS echoes a tracing ID in a Message header: <ID>WS_REQUEST_ID</ID>.

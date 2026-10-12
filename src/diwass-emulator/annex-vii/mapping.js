@@ -312,7 +312,63 @@ export const ANNEX_VII_REQUEST_NAMESPACES = {
   v1: 'http://ec.europa.eu/tracesnt/waste/annex7/v1',
   v11: 'http://ec.europa.eu/tracesnt/waste/model/v1',
   v3: 'http://ec.europa.eu/tracesnt/body/v3',
-  v4: 'http://ec.europa.eu/sanco/tracesnt/base/v4'
+  v4: 'http://ec.europa.eu/sanco/tracesnt/base/v4',
+  n: 'http://ec.europa.eu/tracesnt/waste/notification/v1'
+}
+
+/*
+[Update an announced Annex VII]
+A create in DIWASS's API announces the Annex VII (its type is documented as
+"Announcement Document", and the web UI shows it as Announced). Once the load
+is known, UpdateAnnex7DocumentTypeRequest replaces it: the same type as the
+create, the whole document again, plus the annexVIIDocumentNo DIWASS
+assigned. Accepted live on 12 October 2026 (GLW.GB260000001574i).
+*/
+export function buildUpdateAnnex7RequestBody(payload, annexVIIDocumentNo) {
+  return buildCreateAnnex7RequestBody(payload)
+    .replace(
+      '<v1:CreateAnnex7DocumentTypeRequest>',
+      `<v1:UpdateAnnex7DocumentTypeRequest>
+    <v1:annexVIIDocumentNo>${escapeXml(annexVIIDocumentNo)}</v1:annexVIIDocumentNo>`
+    )
+    .replace(
+      '</v1:CreateAnnex7DocumentTypeRequest>',
+      '</v1:UpdateAnnex7DocumentTypeRequest>'
+    )
+}
+
+/*
+[Signal an Annex VII]
+CreateAnnex7SignalTypeRequest: a statement about an existing Annex VII. The
+live schema's codes for Annex VII are Annex7Cancelled (an export that will not
+happen) and ProperlyCarriedOut/ProperlyCompleted. Description and signature
+are optional in the schema.
+*/
+export function buildAnnex7SignalRequestBody({
+  annexVIIDocumentNo,
+  typeCode,
+  description,
+  signature
+}) {
+  const descriptionXml = description
+    ? `<n:description><v11:Description languageID="en">${escapeXml(description)}</v11:Description></n:description>`
+    : ''
+  const signatureXml = signature
+    ? `<n:signature>
+        <v11:name>${escapeXml(signature.name)}</v11:name>
+        <v11:organizationRole>${escapeXml(signature.organizationRole)}</v11:organizationRole>
+        <v11:timestamp>${new Date(signature.timestamp).toISOString()}</v11:timestamp>
+        ${signature.emailURI ? `<v11:emailURI>${escapeXml(signature.emailURI)}</v11:emailURI>` : ''}
+      </n:signature>`
+    : ''
+  return `<v1:CreateAnnex7SignalTypeRequest>
+    <v1:annexVIIDocumentNo>${escapeXml(annexVIIDocumentNo)}</v1:annexVIIDocumentNo>
+    <v1:statement>
+      <n:signal><n:typeCode>${escapeXml(typeCode)}</n:typeCode></n:signal>
+      ${descriptionXml}
+      ${signatureXml}
+    </v1:statement>
+  </v1:CreateAnnex7SignalTypeRequest>`
 }
 
 // --- inbound: DIWASS request XML -> stored record ------------------------

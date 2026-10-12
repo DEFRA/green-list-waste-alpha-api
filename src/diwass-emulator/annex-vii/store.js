@@ -34,3 +34,25 @@ export async function createAnnexViiDocument(db, document) {
 export async function getAnnexViiDocument(db, annexVIIDocumentNo) {
   return db.collection(ANNEX_VII_COLLECTION).findOne({ annexVIIDocumentNo })
 }
+
+// Replace an announced document. Returns false when there is no such document.
+export async function updateAnnexViiDocument(db, annexVIIDocumentNo, document) {
+  const result = await db
+    .collection(ANNEX_VII_COLLECTION)
+    .updateOne(
+      { annexVIIDocumentNo },
+      { $set: { ...document, updatedAt: new Date() } }
+    )
+  return result.matchedCount === 1
+}
+
+// Record a signal (such as Annex7Cancelled). Returns false when there is no such document.
+export async function addAnnexViiSignal(db, annexVIIDocumentNo, typeCode) {
+  const result = await db
+    .collection(ANNEX_VII_COLLECTION)
+    .updateOne(
+      { annexVIIDocumentNo },
+      { $push: { signals: { typeCode, receivedAt: new Date() } } }
+    )
+  return result.matchedCount === 1
+}

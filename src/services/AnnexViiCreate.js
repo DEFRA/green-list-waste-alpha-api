@@ -2,20 +2,26 @@ const COLLECTION = 'annex-vii'
 
 /*
 [Annex VII record]
-Stores the shipment as received, keyed by an ID this API assigns
-(submissionId). DIWASS assigns the real Annex VII document number, so a
-caller's annexVIIDocumentNo is optional and kept only as their own reference.
+Stores the shipment, keyed by an ID this API assigns (submissionId). DIWASS
+assigns the real Annex VII document number, so a caller's annexVIIDocumentNo
+is optional and kept only as their own reference.
 
-status is DRAFT while an operator is still preparing the Annex VII, and
-SUBMITTED once it has been sent to DIWASS. DIWASS's API has no draft stage
-(drafts exist only in its web UI), so a draft lives here alone until the
-shipment starts moving. The DIWASS outcome is in diwass: PENDING until the
-call returns, then OK, NOTOK or ERROR.
+The lifecycle follows DIWASS's own:
+- DRAFT: being prepared in DWT only. DIWASS's API cannot hold a draft (its
+  drafts exist only in its web UI), so nothing has been sent.
+- ANNOUNCED: created in DIWASS, which shows it as Announced. An operator
+  announces as soon as the export is planned and updates it once the load is
+  known (the way software providers already work; confirmed live on 12
+  October 2026). diwass holds the announcement outcome; diwass.lastUpdate the
+  latest update.
+- CANCELLED: the export will not happen. An announced one is withdrawn in
+  DIWASS with the Annex7Cancelled signal (diwass.cancellation).
 */
 export const DRAFT = 'DRAFT'
-export const SUBMITTED = 'SUBMITTED'
+export const ANNOUNCED = 'ANNOUNCED'
+export const CANCELLED = 'CANCELLED'
 
-// After these outcomes the record can be edited and sent again.
+// An announcement DIWASS refused or never received can be fixed and resent.
 const RETRYABLE_DIWASS_STATUSES = ['NOTOK', 'ERROR']
 
 // Fields this API sets; everything else on a record is the caller's content.
@@ -34,21 +40,47 @@ export function contentOf(record) {
   )
 }
 
-function withoutId({ _id, ...record }) {
-  return record
+function withoutId(record) {
+  if (!record) {
+    return null
+  }
+  const { _id, ...rest } = record
+  return rest
+}
+
+// Not yet in DIWASS: a draft, or an announcement that did not go through.
+const NOT_IN_DIWASS = {
+  $or: [
+    { status: DRAFT },
+    {
+      status: ANNOUNCED,
+      'diwass.status': { $in: RETRYABLE_DIWASS_STATUSES }
+    }
+  ]
+}
+
+// In DIWASS, with a document number, and no other change in flight.
+const IN_DIWASS_AND_FREE = {
+  status: ANNOUNCED,
+  'diwass.status': 'OK',
+  'diwass.busy': { $ne: true }
+}
+
+export function isInDiwass(record) {
+  return record.status === ANNOUNCED && record.diwass?.status === 'OK'
 }
 
 export async function createAnnexVii(
   db,
   annexVii,
-  { submissionId, receivedAt, status = SUBMITTED }
+  { submissionId, receivedAt, status = ANNOUNCED }
 ) {
   const record = {
     submissionId,
     receivedAt,
     status,
     ...annexVii,
-    ...(status === SUBMITTED && { diwass: { status: 'PENDING' } })
+    ...(status === ANNOUNCED && { diwass: { status: 'PENDING' } })
   }
   await db.collection(COLLECTION).insertOne({ ...record })
 
@@ -56,29 +88,18 @@ export async function createAnnexVii(
 }
 
 export async function getAnnexVii(db, submissionId) {
-  const record = await db.collection(COLLECTION).findOne({ submissionId })
-  return record ? withoutId(record) : null
-}
-
-// A record can change only while it is a draft or DIWASS has refused it.
-const EDITABLE = {
-  $or: [
-    { status: DRAFT },
-    { 'diwass.status': { $in: RETRYABLE_DIWASS_STATUSES } }
-  ]
+  return withoutId(await db.collection(COLLECTION).findOne({ submissionId }))
 }
 
 /*
 [Replace a draft]
 Replaces the caller's content and puts the record back to DRAFT. Allowed
-for a draft, or for a submission DIWASS refused (NOTOK) or never received
-(ERROR), so it can be fixed before being sent again. Returns null when the
-record does not exist or is not editable.
+while the record is not in DIWASS. Returns null otherwise.
 */
 export async function replaceDraft(db, submissionId, annexVii) {
   const existing = await db
     .collection(COLLECTION)
-    .findOne({ submissionId, ...EDITABLE })
+    .findOne({ submissionId, ...NOT_IN_DIWASS })
   if (!existing) {
     return null
   }
@@ -98,26 +119,27 @@ export async function replaceDraft(db, submissionId, annexVii) {
 }
 
 /*
-[Claim for submission]
-Moves an editable record to SUBMITTED with diwass PENDING in one atomic
-update, so two submit requests for the same draft cannot both reach DIWASS.
-The validated content is written at the same time, so what is stored is
-exactly what was sent. Returns null when the record is not editable.
+[Claim for announcement]
+Moves a record that is not yet in DIWASS to ANNOUNCED with diwass PENDING in
+one atomic update, so two requests cannot both create it in DIWASS. The
+validated content is written at the same time. Returns null when the record
+is already in DIWASS or cancelled.
 */
-export async function claimForSubmission(db, submissionId, annexVii) {
-  const claimed = await db.collection(COLLECTION).findOneAndUpdate(
-    { submissionId, ...EDITABLE },
-    {
-      $set: {
-        ...annexVii,
-        status: SUBMITTED,
-        updatedAt: new Date(),
-        diwass: { status: 'PENDING' }
-      }
-    },
-    { returnDocument: 'after' }
+export async function claimForAnnouncement(db, submissionId, annexVii) {
+  return withoutId(
+    await db.collection(COLLECTION).findOneAndUpdate(
+      { submissionId, ...NOT_IN_DIWASS },
+      {
+        $set: {
+          ...annexVii,
+          status: ANNOUNCED,
+          updatedAt: new Date(),
+          diwass: { status: 'PENDING' }
+        }
+      },
+      { returnDocument: 'after' }
+    )
   )
-  return claimed ? withoutId(claimed) : null
 }
 
 export async function recordDiwassResult(db, submissionId, diwass) {
@@ -126,4 +148,105 @@ export async function recordDiwassResult(db, submissionId, diwass) {
     .updateOne({ submissionId }, { $set: { diwass } })
 
   return diwass
+}
+
+/*
+[Lock an announced record]
+DIWASS forbids concurrent calls, and an update racing a cancel would leave
+the record unclear, so an update or cancel first takes this flag. Returns
+the record, or null when it is not in DIWASS or already busy.
+*/
+export async function lockAnnounced(db, submissionId) {
+  return withoutId(
+    await db
+      .collection(COLLECTION)
+      .findOneAndUpdate(
+        { submissionId, ...IN_DIWASS_AND_FREE },
+        { $set: { 'diwass.busy': true } },
+        { returnDocument: 'after' }
+      )
+  )
+}
+
+/*
+[Finish an update]
+Releases the lock and records the update's outcome. The caller's content is
+replaced only when DIWASS accepted the update, so the record always matches
+what DIWASS holds.
+*/
+export async function finishUpdate(
+  db,
+  submissionId,
+  { previous, annexVii, outcome }
+) {
+  const accepted = outcome.status === 'OK'
+  // Fields the new version leaves out are removed, as DIWASS's copy is replaced whole.
+  const dropped = accepted
+    ? Object.keys(contentOf(previous)).filter((key) => !(key in annexVii))
+    : []
+  return withoutId(
+    await db.collection(COLLECTION).findOneAndUpdate(
+      { submissionId },
+      {
+        $set: {
+          ...(accepted && annexVii),
+          ...(accepted && { updatedAt: new Date() }),
+          'diwass.lastUpdate': outcome
+        },
+        $unset: {
+          'diwass.busy': '',
+          ...Object.fromEntries(dropped.map((key) => [key, '']))
+        }
+      },
+      { returnDocument: 'after' }
+    )
+  )
+}
+
+/*
+[Cancel]
+Not yet in DIWASS: just marked CANCELLED here. In DIWASS: called after the
+Annex7Cancelled signal, and marked CANCELLED only if DIWASS accepted it.
+*/
+export async function cancelLocally(db, submissionId) {
+  return withoutId(
+    await db
+      .collection(COLLECTION)
+      .findOneAndUpdate(
+        { submissionId, ...NOT_IN_DIWASS },
+        { $set: { status: CANCELLED, updatedAt: new Date() } },
+        { returnDocument: 'after' }
+      )
+  )
+}
+
+export async function finishCancellation(db, submissionId, outcome) {
+  const accepted = outcome.status === 'OK'
+  return withoutId(
+    await db.collection(COLLECTION).findOneAndUpdate(
+      { submissionId },
+      {
+        $set: {
+          ...(accepted && { status: CANCELLED, updatedAt: new Date() }),
+          'diwass.cancellation': outcome
+        },
+        $unset: { 'diwass.busy': '' }
+      },
+      { returnDocument: 'after' }
+    )
+  )
+}
+
+/*
+[Older records]
+Records from before the lifecycle was named have no status, or SUBMITTED.
+Both were sent to DIWASS on create, so they are ANNOUNCED.
+*/
+export async function migrateAnnexViiStatuses(db) {
+  await db
+    .collection(COLLECTION)
+    .updateMany(
+      { $or: [{ status: { $exists: false } }, { status: 'SUBMITTED' }] },
+      { $set: { status: ANNOUNCED } }
+    )
 }

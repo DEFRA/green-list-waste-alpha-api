@@ -43,6 +43,9 @@ acceptance. The outcome is also stored on the record in Mongo.
 
 ## Draft, then submit (12 October 2026)
 
+The submit route used here has since become `POST /annexvii/{id}/announce`,
+with updates and cancellation added; see `evidence/2026-10-12-lifecycle`.
+
 DIWASS's API has no draft stage, so drafts are held in this API. The same
 payload went through the draft routes against live DIWASS:
 

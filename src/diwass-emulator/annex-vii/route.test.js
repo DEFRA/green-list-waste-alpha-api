@@ -257,4 +257,55 @@ describe('#diwassAnnexVii', () => {
     expect(statusCode).toBe(200)
     expect(payload).toContain('<ns5:statusCode>OK</ns5:statusCode>')
   })
+
+  test('POST /diwass/annex-vii updates an announced document, and refuses an unknown one', async () => {
+    const created = await submit(submitAnnex7RequestXml)
+    const documentNo = created.payload.match(
+      /<ns4:annexVIIDocumentNo>([^<]+)</
+    )[1]
+    const asUpdate = (number) =>
+      submitAnnex7RequestXml
+        .replace(
+          /CreateAnnex7DocumentTypeRequest/g,
+          'UpdateAnnex7DocumentTypeRequest'
+        )
+        .replace(
+          '<v1:UpdateAnnex7DocumentTypeRequest>',
+          `<v1:UpdateAnnex7DocumentTypeRequest><v1:annexVIIDocumentNo>${number}</v1:annexVIIDocumentNo>`
+        )
+
+    const updated = await submit(asUpdate(documentNo))
+    expect(updated.statusCode).toBe(200)
+    expect(updated.payload).toContain('<ns5:statusCode>OK</ns5:statusCode>')
+    expect(updated.payload).toContain(documentNo)
+
+    const unknown = await submit(asUpdate('GLW.GB269999999999i'))
+    expect(unknown.payload).toContain('<ns5:statusCode>NOTOK</ns5:statusCode>')
+    expect(unknown.payload).toContain('GREEN-LISTED-DOCUMENT-NOT-FOUND')
+  })
+
+  test('POST /diwass/annex-vii accepts an Annex7Cancelled signal with a movement response', async () => {
+    const created = await submit(submitAnnex7RequestXml)
+    const documentNo = created.payload.match(
+      /<ns4:annexVIIDocumentNo>([^<]+)</
+    )[1]
+    const signal = (number) => `<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:v1="http://ec.europa.eu/tracesnt/waste/annex7/v1" xmlns:n="http://ec.europa.eu/tracesnt/waste/notification/v1">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <v1:CreateAnnex7SignalTypeRequest>
+      <v1:annexVIIDocumentNo>${number}</v1:annexVIIDocumentNo>
+      <v1:statement><n:signal><n:typeCode>Annex7Cancelled</n:typeCode></n:signal></v1:statement>
+    </v1:CreateAnnex7SignalTypeRequest>
+  </soapenv:Body>
+</soapenv:Envelope>`
+
+    const cancelled = await submit(signal(documentNo))
+    expect(cancelled.statusCode).toBe(200)
+    expect(cancelled.payload).toContain('Annex7MovementDocumentTypeResponse')
+    expect(cancelled.payload).toContain('<ns5:statusCode>OK</ns5:statusCode>')
+
+    const unknown = await submit(signal('GLW.GB269999999999i'))
+    expect(unknown.payload).toContain('GREEN-LISTED-DOCUMENT-NOT-FOUND')
+  })
 })

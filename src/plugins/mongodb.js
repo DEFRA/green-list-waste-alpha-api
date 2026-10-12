@@ -2,6 +2,7 @@ import { MongoClient } from 'mongodb'
 import { LockManager } from 'mongo-locks'
 
 import { seedReferenceCodes } from '#/common/helpers/seed-reference-codes.js'
+import { migrateAnnexViiStatuses } from '#/services/AnnexViiCreate.js'
 
 export const mongoDb = {
   plugin: {
@@ -19,6 +20,7 @@ export const mongoDb = {
       const locker = new LockManager(db.collection('mongo-locks'))
 
       await createIndexes(db)
+      await migrateAnnexViiStatuses(db)
       await seedReferenceCodes(db, locker, server.logger)
 
       server.logger.info(`MongoDb connected to ${databaseName}`)

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+  <S:Header>
+    <Message xmlns="http://ec.europa.eu/sanco/tracesnt/message/v1" severity="debugging">
+      <ID>WS_REQUEST_ID</ID>
+      <Message>37552759-1379-48a0-a590-a854f68fe227</Message>
+    </Message>
+    <ns2:Security xmlns:ns1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:ns2="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
+      <ns1:Timestamp>
+        <ns1:Created>2026-10-12T13:19:36.835+02:00</ns1:Created>
+        <ns1:Expires>2026-10-12T13:19:41.835+02:00</ns1:Expires>
+      </ns1:Timestamp>
+    </ns2:Security>
+  </S:Header>
+  <S:Body>
+    <ns3:Annex7MovementDocumentTypeResponse xmlns:ns2="http://ec.europa.eu/sanco/tracesnt/base/v4" xmlns:ns3="http://ec.europa.eu/tracesnt/waste/annex7/v1" xmlns:ns4="http://ec.europa.eu/tracesnt/waste/notification/v1" xmlns:ns5="http://ec.europa.eu/tracesnt/waste/model/v1" xmlns:ns6="http://www.w3.org/2000/09/xmldsig#" xmlns:ns7="http://ec.europa.eu/tracesnt/body/v3" xmlns:ns8="urn:un:unece:uncefact:codelist:standard:ISO:ISO2AlphaLanguageCode:2006-10-27">
+      <ns3:response>
+        <ns4:statusCode>OK</ns4:statusCode>
+      </ns3:response>
+      <ns3:movement>
+        <ns5:annexVIIDocumentNo>GLW.GB260000001576i</ns5:annexVIIDocumentNo>
+      </ns3:movement>
+    </ns3:Annex7MovementDocumentTypeResponse>
+  </S:Body>
+</S:Envelope>

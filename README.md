@@ -251,17 +251,18 @@ All of the above run together as the pre-commit hook
 
 ### The alpha's own domain API (JSON)
 
-| Method | Path                              | Description                                                                                                                    |
-| ------ | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| GET    | `/health`                         | Liveness check                                                                                                                 |
-| POST   | `/annexvii`                       | Validate and persist an Annex VII shipment document, then submit it to DIWASS (see [below](#submitting-an-annex-vii-document)) |
-| POST   | `/annexvii/drafts`                | Save an Annex VII as a draft, without sending it to DIWASS (see [Drafts](#drafts-prepare-now-send-when-the-load-leaves))       |
-| GET    | `/annexvii/{submissionId}`        | Read an Annex VII record, draft or submitted                                                                                   |
-| PUT    | `/annexvii/{submissionId}`        | Replace a draft, or a submission DIWASS refused (`NOTOK`) or never received (`ERROR`); the record goes back to `DRAFT`         |
-| POST   | `/annexvii/{submissionId}/submit` | Run the full checks on a draft and send it to DIWASS                                                                           |
-| GET    | `/waste-codes/ewc`                | List EWC (European Waste Catalogue) codes                                                                                      |
-| GET    | `/waste-codes/basel-annex-ix`     | List Basel Annex IX (List B) codes                                                                                             |
-| GET    | `/waste-codes/oecd-green-list`    | List OECD green list codes not already covered by Basel Annex IX                                                               |
+| Method | Path                                | Description                                                                                                        |
+| ------ | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| GET    | `/health`                           | Liveness check                                                                                                     |
+| POST   | `/annexvii`                         | Validate, persist and announce an Annex VII in DIWASS in one step (see [below](#submitting-an-annex-vii-document)) |
+| POST   | `/annexvii/drafts`                  | Save an Annex VII as a draft in DWT only (see [Lifecycle](#lifecycle-draft-announce-update-cancel))                |
+| GET    | `/annexvii/{submissionId}`          | Read an Annex VII record                                                                                           |
+| PUT    | `/annexvii/{submissionId}`          | Replace an Annex VII: a draft is saved here; an announced one is sent to DIWASS as an update                       |
+| POST   | `/annexvii/{submissionId}/announce` | Run the full checks on a draft and announce it in DIWASS                                                           |
+| POST   | `/annexvii/{submissionId}/cancel`   | Cancel: an announced Annex VII is withdrawn in DIWASS with the `Annex7Cancelled` signal                            |
+| GET    | `/waste-codes/ewc`                  | List EWC (European Waste Catalogue) codes                                                                          |
+| GET    | `/waste-codes/basel-annex-ix`       | List Basel Annex IX (List B) codes                                                                                 |
+| GET    | `/waste-codes/oecd-green-list`      | List OECD green list codes not already covered by Basel Annex IX                                                   |
 
 ### The DIWASS emulator (SOAP/XML)
 
@@ -319,33 +320,49 @@ Posting the same example a second time returns `409`, because
 collection (see [Inspecting MongoDB](#inspecting-mongodb)) before sending
 it again.
 
-### Drafts: prepare now, send when the load leaves
+### Lifecycle: draft, announce, update, cancel
 
-Operators fill in an Annex VII well before a shipment and complete it only
-once the truck is loaded. DIWASS can hold a draft in its web UI but not
-through its API: every API create is a submission. So drafts live in this
-API, unsent, until the shipment starts moving.
+DIWASS's own lifecycle, which software providers already work to: the
+Annex VII is **announced** in DIWASS as soon as the export is planned, then
+**updated** once the truck is loaded, or **cancelled** if the export does
+not go ahead. A create through DIWASS's API is an announcement (the web UI
+shows it as Announced); DIWASS's drafts exist only in its web UI. So a
+record here is `DRAFT`, `ANNOUNCED` or `CANCELLED`.
 
 ```bash
-# Save what is known now. Missing fields are fine; badly formed ones are not.
+# Optional: save a draft. Missing fields are fine; badly formed ones are not. Nothing goes to DIWASS.
 curl -X POST http://localhost:3001/annexvii/drafts \
   -H 'Content-Type: application/json' -d @my-draft.json
-# -> 201, { "submissionId": "...", "status": "DRAFT", ... }  (nothing sent to DIWASS)
+# -> 201, { "submissionId": "...", "status": "DRAFT", ... }
 
-# Replace it as details firm up (carriers, quantity, shipment date).
+# Announce it in DIWASS once the export is planned (or create and announce in one step with POST /annexvii).
+curl -X POST http://localhost:3001/annexvii/<submissionId>/announce
+# -> 200, { "status": "ANNOUNCED", "diwass": { "status": "OK", "annexViiDocumentNo": "GLW..." } }
+
+# The truck is loaded: send the whole, updated Annex VII. It goes to DIWASS as an update.
 curl -X PUT http://localhost:3001/annexvii/<submissionId> \
-  -H 'Content-Type: application/json' -d @my-completed-annex-vii.json
+  -H 'Content-Type: application/json' -d @my-loaded-annex-vii.json
+# -> 200, { "status": "ANNOUNCED", "diwass": { ..., "lastUpdate": { "status": "OK", ... } } }
 
-# The load has left: full checks, then send to DIWASS.
-curl -X POST http://localhost:3001/annexvii/<submissionId>/submit
-# -> 200, { "status": "SUBMITTED", "diwass": { "status": "OK", "annexViiDocumentNo": "GLW..." } }
+# Or the export is off: withdraw it in DIWASS.
+curl -X POST http://localhost:3001/annexvii/<submissionId>/cancel \
+  -H 'Content-Type: application/json' -d '{ "reason": "Buyer withdrew" }'
+# -> 200, { "status": "CANCELLED", "diwass": { ..., "cancellation": { "status": "OK", ... } } }
 ```
 
-A submit that fails the full checks returns `400` listing what is missing,
-and the draft is unchanged. A record DIWASS accepted cannot be edited or
-submitted again (`409`); one it refused (`NOTOK`) or never received
-(`ERROR`) can be fixed with `PUT` and submitted again. Records created with
-`POST /annexvii` are `SUBMITTED` straight away.
+- An announce that fails the full checks returns `400` listing what is
+  missing; the draft is unchanged.
+- An update to an announced Annex VII must be complete (`400` otherwise).
+  If DIWASS refuses it the response is `422` with DIWASS's error codes; if
+  DIWASS cannot be reached, `502`. Either way the record keeps the version
+  DIWASS holds, with the attempt stored in `diwass.lastUpdate`.
+- An announcement DIWASS refused (`NOTOK`) or never received (`ERROR`) can
+  be fixed with `PUT` (it goes back to `DRAFT`) and announced again.
+- The cancel is signed by `cancelledBy` (`name`, `roleInOrganisation`,
+  `email`) if given, otherwise by the arranger's declared signatory. A
+  cancelled Annex VII cannot be changed (`409`).
+- Records from before this lifecycle (`SUBMITTED` or no status) are
+  `ANNOUNCED` from the next start-up.
 
 ### Talking to the DIWASS emulator directly
 

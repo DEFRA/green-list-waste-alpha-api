@@ -1,0 +1,107 @@
+{
+  "ranAt": "2026-10-12T11:14:45.260Z",
+  "document": "GLW.GB260000001574i",
+  "results": [
+    {
+      "id": "upd-carrier",
+      "change": "Carrier 248626 replaced by 248625",
+      "actingAs": "248482",
+      "httpStatus": 200,
+      "statusCode": "OK",
+      "annexVIIDocumentNo": "GLW.GB260000001574i",
+      "requestId": "bdd604bf-03cb-4169-93a3-f4cac455db00",
+      "errors": [],
+      "responseRoot": "ns3:Annex7DocumentTypeResponse"
+    },
+    {
+      "id": "upd-consignee-facility",
+      "change": "Consignee and recovery facility 248540 replaced by 248625",
+      "actingAs": "248482",
+      "httpStatus": 200,
+      "statusCode": "OK",
+      "annexVIIDocumentNo": "GLW.GB260000001574i",
+      "requestId": "f26b41d6-c7db-49f7-b316-62b259ea495d",
+      "errors": [],
+      "responseRoot": "ns3:Annex7DocumentTypeResponse"
+    },
+    {
+      "id": "upd-waste-code",
+      "change": "Waste code Basel B3020 replaced by B1010",
+      "actingAs": "248482",
+      "httpStatus": 200,
+      "statusCode": "OK",
+      "annexVIIDocumentNo": "GLW.GB260000001574i",
+      "requestId": "b0bf1049-3781-485d-aedd-f7d9d6da8cd6",
+      "errors": [],
+      "responseRoot": "ns3:Annex7DocumentTypeResponse"
+    },
+    {
+      "id": "upd-import-country",
+      "change": "Import country GB replaced by DE",
+      "actingAs": "248482",
+      "httpStatus": 200,
+      "statusCode": "OK",
+      "annexVIIDocumentNo": "GLW.GB260000001574i",
+      "requestId": "c4b301d5-f332-4fd4-92f8-ee50a2e0404c",
+      "errors": [],
+      "responseRoot": "ns3:Annex7DocumentTypeResponse"
+    },
+    {
+      "id": "upd-restore",
+      "change": "Back to the current state (no change)",
+      "actingAs": "248482",
+      "httpStatus": 200,
+      "statusCode": "OK",
+      "annexVIIDocumentNo": "GLW.GB260000001574i",
+      "requestId": "98aa27a9-9a66-45ef-80a9-9b8fb3f5f285",
+      "errors": [],
+      "responseRoot": "ns3:Annex7DocumentTypeResponse"
+    },
+    {
+      "id": "upd-other-operators-doc",
+      "change": "Update GLW.GB260000001552i (arranger 248540) while acting as 248482",
+      "actingAs": "248482",
+      "httpStatus": 200,
+      "statusCode": "OK",
+      "annexVIIDocumentNo": "GLW.GB260000001552i",
+      "requestId": "c8b79e9c-2e90-4253-b3e6-c7600a9d8017",
+      "errors": [],
+      "responseRoot": "ns3:Annex7DocumentTypeResponse"
+    },
+    {
+      "id": "upd-unknown-doc",
+      "change": "Update GLW.GB269999999999i, which does not exist",
+      "actingAs": "248482",
+      "httpStatus": 200,
+      "statusCode": "NOTOK",
+      "annexVIIDocumentNo": "GLW.GB269999999999i",
+      "requestId": "1124ad9d-7cdb-4775-be5c-81a7af1f6584",
+      "errors": [
+        "GREEN-LISTED-DOCUMENT-NOT-FOUND:"
+      ],
+      "responseRoot": "ns3:Annex7DocumentTypeResponse"
+    },
+    {
+      "id": "cancel",
+      "change": "Annex7Cancelled signal for GLW.GB260000001574i",
+      "actingAs": "248482",
+      "httpStatus": 200,
+      "statusCode": "OK",
+      "annexVIIDocumentNo": "GLW.GB260000001574i",
+      "requestId": "a88f347e-c7e4-43f8-bba4-84be11a53ce0",
+      "errors": [],
+      "responseRoot": "ns3:Annex7MovementDocumentTypeResponse"
+    },
+    {
+      "id": "upd-after-cancel",
+      "change": "Update GLW.GB260000001574i after cancelling it",
+      "actingAs": "248482",
+      "httpStatus": 200,
+      "statusCode": "OK",
+      "annexVIIDocumentNo": "GLW.GB260000001574i",
+      "requestId": "503af841-02da-4d36-af08-e5c13ad73d1b",
+      "errors": [],
+      "responseRoot": "ns3:Annex7DocumentTypeResponse"
+    }
+  ]
+}

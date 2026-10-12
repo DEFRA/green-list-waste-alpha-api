@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:v1="http://ec.europa.eu/tracesnt/waste/annex7/v1" xmlns:v11="http://ec.europa.eu/tracesnt/waste/model/v1" xmlns:v3="http://ec.europa.eu/tracesnt/body/v3" xmlns:v4="http://ec.europa.eu/sanco/tracesnt/base/v4" xmlns:n="http://ec.europa.eu/tracesnt/waste/notification/v1">
+  <soapenv:Header>
+    <wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" soapenv:mustUnderstand="1">
+      <wsse:UsernameToken wsu:Id="UsernameToken-1">
+        <wsse:Username>n00o3ge6</wsse:Username>
+        <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest">[REDACTED digest]</wsse:Password>
+        <wsse:Nonce EncodingType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary">[REDACTED nonce]</wsse:Nonce>
+        <wsu:Created>2026-10-12T11:19:35.226Z</wsu:Created>
+      </wsse:UsernameToken>
+      <wsu:Timestamp wsu:Id="TS-1">
+        <wsu:Created>2026-10-12T11:19:35.226Z</wsu:Created>
+        <wsu:Expires>2026-10-12T11:20:30.226Z</wsu:Expires>
+      </wsu:Timestamp>
+    </wsse:Security>
+    <v3:BodyIdentity>
+      <v3:OperatorAccessIdentifier>248482</v3:OperatorAccessIdentifier>
+    </v3:BodyIdentity>
+    <v4:LanguageCode>en</v4:LanguageCode>
+    <v4:WebServiceClientId>wsr-system</v4:WebServiceClientId>
+  </soapenv:Header>
+  <soapenv:Body>
+    <v1:UpdateAnnex7DocumentTypeRequest>
+      <v1:annexVIIDocumentNo>GLW.GB260000001575i</v1:annexVIIDocumentNo>
+      <v1:takeBackIndication>false</v1:takeBackIndication>
+      <v1:illegalActivityIndication>false</v1:illegalActivityIndication>
+      <v1:arrangerIsProducer>true</v1:arrangerIsProducer>
+      <v1:shipmentDestination>R</v1:shipmentDestination>
+      <v1:transportAnnouncement>
+        <v11:arranger>
+          <v11:PartyUUID>e8fb97e0-89dd-4784-bdaa-c1f0d7222aeb</v11:PartyUUID>
+          <v11:Contact>
+            <v11:Name>Craig Taylor</v11:Name>
+            <v11:TelephoneCompleteNumber>+442078878888</v11:TelephoneCompleteNumber>
+            <v11:EmailURI>craig.taylor@equalexperts.com</v11:EmailURI>
+          </v11:Contact>
+          <v11:OperatorInternalID>248482</v11:OperatorInternalID>
+        </v11:arranger>
+        <v11:consignee>
+          <v11:PartyUUID>7705ebd9-265a-43d7-ac4b-6b869cf167ae</v11:PartyUUID>
+          <v11:Contact>
+            <v11:Name>Craig Taylor</v11:Name>
+            <v11:TelephoneCompleteNumber>+442078878888</v11:TelephoneCompleteNumber>
+            <v11:EmailURI>craig.taylor@equalexperts.com</v11:EmailURI>
+          </v11:Contact>
+          <v11:OperatorInternalID>248540</v11:OperatorInternalID>
+        </v11:consignee>
+        <v11:actualQuantity>
+          <v11:MassMeasure>
+            <v11:tonnes>1.42</v11:tonnes>
+          </v11:MassMeasure>
+        </v11:actualQuantity>
+        <v11:actualDateOfShipment>2026-10-19</v11:actualDateOfShipment>
+        <v11:shipmentOriginLocation>
+          <v11:AddressDetails>Tate Modern, Bankside, London SE1 9TG (DEFRA-ALPHA-TEST)</v11:AddressDetails>
+        </v11:shipmentOriginLocation>
+        <v11:shipmentLocationResponsiblePerson>
+          <v11:Name>Craig Taylor</v11:Name>
+          <v11:TelephoneCompleteNumber>+442078878888</v11:TelephoneCompleteNumber>
+          <v11:EmailURI>craig.taylor@equalexperts.com</v11:EmailURI>
+        </v11:shipmentLocationResponsiblePerson>
+        <v11:carrier>
+          <v11:PartyUUID>7d16f366-2b48-4bfd-ab0e-a1d18287106b</v11:PartyUUID>
+          <v11:Contact>
+            <v11:Name>Craig Taylor</v11:Name>
+            <v11:TelephoneCompleteNumber>+442078878888</v11:TelephoneCompleteNumber>
+            <v11:EmailURI>craig.taylor@equalexperts.com</v11:EmailURI>
+          </v11:Contact>
+          <v11:OperatorInternalID>248626</v11:OperatorInternalID>
+          <v11:MeansOfTransportCode>R</v11:MeansOfTransportCode>
+        </v11:carrier>
+        <v11:recoveryLaboratoryFacility>
+          <v11:PartyUUID>794533ad-2e68-45dd-bc9c-711c5519fcc6</v11:PartyUUID>
+          <v11:Contact>
+            <v11:Name>Craig Taylor</v11:Name>
+            <v11:TelephoneCompleteNumber>+442078878888</v11:TelephoneCompleteNumber>
+            <v11:EmailURI>craig.taylor@equalexperts.com</v11:EmailURI>
+          </v11:Contact>
+          <v11:OperatorInternalID>248540</v11:OperatorInternalID>
+          <v11:operationalIndicators>
+            <v11:InterimFacility>false</v11:InterimFacility>
+          </v11:operationalIndicators>
+          <v11:wasteFacilityNameConfidential>false</v11:wasteFacilityNameConfidential>
+          <v11:facilityLaboratoryTypeCode>R</v11:facilityLaboratoryTypeCode>
+        </v11:recoveryLaboratoryFacility>
+        <v11:recoveryDisposalTypeCode>R3</v11:recoveryDisposalTypeCode>
+        <v11:usualDescriptionOfTheWaste>
+          <v11:Description languageID="en">TEST ONLY - DEFRA-ALPHA-TEST end-to-end test through the alpha API. Paper and cardboard waste.</v11:Description>
+        </v11:usualDescriptionOfTheWaste>
+        <v11:wasteClassification>
+          <v11:WasteTypeCode listID="Basel_B">B3020</v11:WasteTypeCode>
+        </v11:wasteClassification>
+        <v11:exportCountry>
+          <v11:countryID>826</v11:countryID>
+        </v11:exportCountry>
+        <v11:importCountry>
+          <v11:countryID>826</v11:countryID>
+        </v11:importCountry>
+      </v1:transportAnnouncement>
+      <v1:declarationArranger>
+        <v11:PartyUUID>e8fb97e0-89dd-4784-bdaa-c1f0d7222aeb</v11:PartyUUID>
+        <v11:Signature>
+          <v11:name>Test Signatory (DEFRA-ALPHA-TEST)</v11:name>
+          <v11:organizationRole>Director (test)</v11:organizationRole>
+          <v11:timestamp>2026-10-08T21:00:00.000Z</v11:timestamp>
+          <v11:emailURI>craig.taylor@equalexperts.com</v11:emailURI>
+        </v11:Signature>
+      </v1:declarationArranger>
+    </v1:UpdateAnnex7DocumentTypeRequest>
+  </soapenv:Body>
+</soapenv:Envelope>

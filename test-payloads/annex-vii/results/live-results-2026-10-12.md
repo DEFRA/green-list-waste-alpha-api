@@ -97,3 +97,31 @@ both now stop at the API with a 400 and never reach DIWASS:
 The emulator was also changed to reject the way live DIWASS does (schema
 faults as HTTP 500, business rules as NOTOK, unknown operator IDs refused).
 The pack, now 22 cases, matches 22 of 22 against it (`validation-results.md`).
+
+## Announce, update, cancel (same day)
+
+A software provider said their users announce an Annex VII in DIWASS as soon
+as an export is planned, and update it once the truck is loaded; DIWASS's
+own drafts exist only in its web UI. The live schema agrees: the create type
+is documented as "Announcement Document", and the web UI shows an API-created
+Annex VII as Announced. An update through the API was applied (the web UI
+showed the new 1.35 tonnes; `live/evidence/2026-10-12-update-after-announce`).
+
+`scripts/probe-update-live.mjs` then probed GLW.GB260000001574i, one change
+at a time, sending the whole document each time
+(`live-update-probes-2026-10-12.json`):
+
+| Probe | Result |
+| --- | --- |
+| Change the carrier | OK |
+| Change the consignee and recovery facility | OK |
+| Change the waste code (B3020 to B1010) | OK |
+| Change the import country (GB to DE) | OK |
+| Update GLW.GB260000001552i (arranger 248540) acting as 248482 | OK. Not conclusive: the one DIWASS user holds authorisations for both operators |
+| Update a number that does not exist | NOTOK, GREEN-LISTED-DOCUMENT-NOT-FOUND (no description) |
+| Annex7Cancelled signal | OK, answered with Annex7MovementDocumentTypeResponse |
+| Update after the cancel | OK. DIWASS does not lock a cancelled Annex VII against updates, or the signal did not change its status; to check in the web UI |
+
+So everything on an announced Annex VII can change, including its parties and
+waste code. The API now follows this lifecycle (draft, announce, update,
+cancel), proven end to end in `live/evidence/2026-10-12-lifecycle`.
