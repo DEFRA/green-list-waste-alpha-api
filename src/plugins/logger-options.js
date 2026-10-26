@@ -13,12 +13,15 @@ const formatters = {
       serviceName
     })
   },
-  'pino-pretty': { transport: { target: 'pino-pretty' } }
+  'pino-pretty': {
+    transport: { target: 'pino-pretty' },
+    logEvents: false
+  }
 }
 
 export const loggerOptions = {
   enabled: logConfig.isEnabled,
-  ignorePaths: ['/health'],
+  ignorePaths: ['/health', '/create-fake-requests/*'],
   redact: {
     paths: logConfig.redact,
     remove: true
