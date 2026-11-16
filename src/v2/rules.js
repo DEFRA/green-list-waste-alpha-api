@@ -185,6 +185,23 @@ export function movementProblems(body) {
   }
 }
 
+function legOrderProblem(body, movement) {
+  const next = movement.collections.length + 1
+  if (body.legOrder !== next) {
+    return problem(
+      'legOrder',
+      `legOrder must be the next leg: expected ${next}`
+    )
+  }
+  const beyondPlan = body.legOrder > movement.legs.length && !body.carrier
+  return beyondPlan
+    ? problem(
+        'legOrder',
+        `The plan has ${movement.legs.length} leg(s). Give a carrier to add another`
+      )
+    : null
+}
+
 export function collectionProblems(body, movement) {
   const found = []
   if (body.legOrder === 1 && !body.quantity) {
@@ -193,18 +210,9 @@ export function collectionProblems(body, movement) {
   if (!movement) {
     return found
   }
-  const done = movement.collections.length
-  if (body.legOrder !== done + 1) {
-    found.push(
-      problem('legOrder', `legOrder must be the next leg: expected ${done + 1}`)
-    )
-  } else if (body.legOrder > movement.legs.length && !body.carrier) {
-    found.push(
-      problem(
-        'legOrder',
-        `The plan has ${movement.legs.length} leg(s). Give a carrier to add another`
-      )
-    )
+  const legIssue = legOrderProblem(body, movement)
+  if (legIssue) {
+    found.push(legIssue)
   }
   const last = movement.collections.at(-1)
   if (last && new Date(body.collectedAt) < new Date(last.collectedAt)) {
