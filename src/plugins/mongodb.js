@@ -2,6 +2,7 @@ import { MongoClient } from 'mongodb'
 import { LockManager } from 'mongo-locks'
 
 import { seedReferenceCodes } from '#/common/helpers/seed-reference-codes.js'
+import { createV2Indexes } from '#/v2/movements.js'
 import { migrateAnnexViiStatuses } from '#/services/AnnexViiCreate.js'
 
 export const mongoDb = {
@@ -71,4 +72,6 @@ async function createIndexes(db) {
   await db
     .collection('diwass-annex-vii')
     .createIndex({ annexVIIDocumentNo: 1 }, { unique: true })
+
+  await createV2Indexes(db)
 }
