@@ -452,6 +452,241 @@ describe('#v2 common model endpoints', () => {
     })
   })
 
+  describe('more refusals', () => {
+    const site = {
+      address: { fullAddress: 'x', postcode: '20457', countryCode: 'DE' }
+    }
+    const collectOnce = (movementId, extra = {}) =>
+      call('POST', '/v2/collection', {
+        movementId,
+        legOrder: 1,
+        collectedAt: '2026-12-01T08:30:00Z',
+        quantity: { tonnes: 1 },
+        ...extra
+      })
+    async function readyForDelivery() {
+      const { movementId } = await arrange()
+      await collectOnce(movementId)
+      return movementId
+    }
+    const reason = async (body) => {
+      const res = await call('POST', '/v2/movement', body)
+      expect(res.statusCode).toBe(422)
+      return res.result.details.map((d) => d.message).join(' | ')
+    }
+
+    test('movement rules name each problem', async () => {
+      const neither = exportBody({
+        originCountry: 'FR',
+        destinationCountry: 'DE'
+      })
+      expect(await reason(neither)).toMatch(/must be GB/)
+
+      const twoArrangers = exportBody()
+      twoArrangers.parties.push(
+        party(['ARRANGER'], 'Second Arranger', { arrangerType: 'BROKER' })
+      )
+      twoArrangers.wasteItems.push(twoArrangers.wasteItems[0])
+      twoArrangers.wasteItems[0].treatments.push({ code: 'R4' })
+      const text = await reason(twoArrangers)
+      expect(text).toMatch(/exactly one ARRANGER/)
+      expect(text).toMatch(/exactly one waste item/)
+      expect(text).toMatch(/one treatment/)
+
+      const noType = exportBody()
+      delete noType.parties[0].arrangerType
+      expect(await reason(noType)).toMatch(/arrangerType is needed/)
+
+      const badLeg = exportBody()
+      badLeg.legs[0].carrier.roles = ['PRODUCER']
+      expect(await reason(badLeg)).toMatch(/must hold the CARRIER role/)
+
+      const ids = exportBody()
+      ids.parties[0].identifiers = [
+        { scheme: 'DIWASS_UUID', value: 'nope', main: true },
+        { scheme: 'EORI', value: 'GB1', main: true }
+      ]
+      const idText = await reason(ids)
+      expect(idText).toMatch(/must be a UUID/)
+      expect(idText).toMatch(/at most/)
+
+      const national = exportBody({ destinationCountry: 'GB' })
+      national.parties = [
+        party(['ARRANGER'], 'A One', { arrangerType: 'OTHER' }),
+        party(['ARRANGER'], 'A Two', { arrangerType: 'OTHER' })
+      ]
+      expect(await reason(national)).toMatch(/at most one ARRANGER/)
+    })
+
+    test('a collection cannot be dated before the previous one, and a delivery cannot be dated before a collection', async () => {
+      const movementId = await readyForDelivery()
+      const early = await call('POST', '/v2/collection', {
+        movementId,
+        legOrder: 2,
+        collectedAt: '2026-11-30T08:30:00Z',
+        carrier: party(['CARRIER'], 'Second Haulier Ltd')
+      })
+      expect(early.statusCode).toBe(422)
+      expect(early.result.details[0].message).toMatch(/before the previous/)
+      const delivery = await call('POST', '/v2/delivery', {
+        movementIds: [movementId],
+        deliveredAt: '2026-11-30T10:00:00Z',
+        deliverySite: site
+      })
+      expect(delivery.statusCode).toBe(422)
+    })
+
+    test('a delivery refuses an unknown, a cancelled, a repeated and a double movement', async () => {
+      const unknown = await call('POST', '/v2/delivery', {
+        movementIds: ['7d1c4e0a-3b52-4c1e-9a77-2f0c1d6b8e11'],
+        deliveredAt: '2026-12-02T10:00:00Z',
+        deliverySite: site
+      })
+      expect(unknown.statusCode).toBe(422)
+
+      const cancelled = (await arrange()).movementId
+      await call(
+        'PUT',
+        `/v2/movement/${cancelled}`,
+        {
+          status: 'CANCELLED',
+          cancellation: {
+            reason: 'No',
+            cancelledBy: { name: 'A', roleInOrganisation: 'B' }
+          }
+        },
+        { 'if-match': '1' }
+      )
+      const body = (ids) => ({
+        movementIds: ids,
+        deliveredAt: '2026-12-02T10:00:00Z',
+        deliverySite: site
+      })
+      expect(
+        (await call('POST', '/v2/delivery', body([cancelled]))).statusCode
+      ).toBe(409)
+
+      const first = await readyForDelivery()
+      const second = await readyForDelivery()
+      expect(
+        (await call('POST', '/v2/delivery', body([first, second]))).statusCode
+      ).toBe(422)
+      expect(
+        (await call('POST', '/v2/delivery', body([first]))).statusCode
+      ).toBe(201)
+      expect(
+        (await call('POST', '/v2/delivery', body([first]))).statusCode
+      ).toBe(409)
+      expect((await collectOnce(first)).statusCode).toBe(409)
+    })
+
+    test('a national movement takes no facility receipt, and a receipt cannot predate the delivery', async () => {
+      const national = exportBody({ destinationCountry: 'GB' })
+      national.parties = [
+        party(['ARRANGER', 'PRODUCER'], 'Prod Ltd', { arrangerType: 'OTHER' }),
+        party(['RECEIVER'], 'Recv Ltd')
+      ]
+      const { movementId } = (await call('POST', '/v2/movement', national))
+        .result
+      await collectOnce(movementId)
+      const delivered = await call('POST', '/v2/delivery', {
+        movementIds: [movementId],
+        deliveredAt: '2026-12-02T10:00:00Z',
+        deliverySite: {
+          address: { fullAddress: 'x', postcode: 'LS1 1AA', countryCode: 'GB' }
+        }
+      })
+      const { deliveryId } = delivered.result.deliveries[0]
+      const facility = await call('POST', '/v2/receipt', {
+        deliveryId,
+        receivedBy: 'FACILITY',
+        receivedAt: '2026-12-02T11:00:00Z',
+        outcome: { status: 'ACCEPTED', acceptedQuantity: { tonnes: 1 } },
+        treatments: [{ code: 'R3' }]
+      })
+      expect(facility.statusCode).toBe(422)
+      const early = await call('POST', '/v2/receipt', {
+        deliveryId,
+        receivedBy: 'RECEIVER',
+        receivedAt: '2026-12-01T11:00:00Z',
+        outcome: { status: 'PART_ACCEPTED', acceptedQuantity: { tonnes: 1 } }
+      })
+      expect(early.statusCode).toBe(422)
+      expect(early.result.details.map((d) => d.message).join(' ')).toMatch(
+        /before the delivery/
+      )
+      expect(early.result.details.map((d) => d.message).join(' ')).toMatch(
+        /needs reason/
+      )
+    })
+
+    test('PUT: unknown movement, a body in neither form, rule and code failures, duplicate number', async () => {
+      const url = '/v2/movement/7d1c4e0a-3b52-4c1e-9a77-2f0c1d6b8e11'
+      expect(
+        (await call('PUT', url, exportBody(), { 'if-match': '1' })).statusCode
+      ).toBe(404)
+
+      const { movementId } = await arrange({
+        annexViiNumber: 'GLW.GB26PUT0001i'
+      })
+      const mine = `/v2/movement/${movementId}`
+      expect(
+        (await call('PUT', mine, { nonsense: true }, { 'if-match': '1' }))
+          .statusCode
+      ).toBe(400)
+      expect(
+        (await call('PUT', mine, exportBody(), { 'if-match': 'abc' }))
+          .statusCode
+      ).toBe(412)
+
+      const badCode = exportBody()
+      badCode.wasteItems[0].classification.codes = [
+        { scheme: 'EWC', value: '99 99 99' }
+      ]
+      expect(
+        (await call('PUT', mine, badCode, { 'if-match': '1' })).statusCode
+      ).toBe(400)
+      expect(
+        (
+          await call(
+            'PUT',
+            mine,
+            exportBody({ destinationCountry: 'GB', originCountry: 'DE' }),
+            { 'if-match': '1' }
+          )
+        ).statusCode
+      ).toBe(422)
+
+      const other = await arrange({ annexViiNumber: 'GLW.GB26PUT0002i' })
+      const clash = await call(
+        'PUT',
+        `/v2/movement/${other.movementId}`,
+        exportBody({ annexViiNumber: 'GLW.GB26PUT0001i' }),
+        { 'if-match': '1' }
+      )
+      expect(clash.statusCode).toBe(409)
+    })
+
+    test('a concurrent change is refused with 409 rather than overwritten', async () => {
+      const { movementId } = await arrange()
+      const base = {
+        movementId,
+        legOrder: 1,
+        collectedAt: '2026-12-01T08:30:00Z',
+        quantity: { tonnes: 1 }
+      }
+      const both = await Promise.all([
+        call('POST', '/v2/collection', base),
+        call('POST', '/v2/collection', base)
+      ])
+      // Only one can win. The other is a 409 if it raced, or a 422 if it read
+      // after the first had finished and so sent the wrong leg.
+      const codes = both.map((r) => r.statusCode).sort()
+      expect(codes[0]).toBe(201)
+      expect([409, 422]).toContain(codes[1])
+    })
+  })
+
   test('GET /v2/movement/{id} is 404 for an unknown movement and 400 for a bad id', async () => {
     expect(
       (await call('GET', '/v2/movement/7d1c4e0a-3b52-4c1e-9a77-2f0c1d6b8e11'))

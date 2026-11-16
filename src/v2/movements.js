@@ -157,11 +157,12 @@ export function cancel(db, existing, cancellation, signer) {
 }
 
 export function recordCollection(db, existing, body) {
-  const { movementId: _id, legOrder, ...details } = body
+  const { legOrder } = body
   const index = legOrder - 1
   const planned = existing.legs[index]
   const carrierChanged = Boolean(body.carrier)
-  const collection = { legOrder, ...details }
+  const collection = { ...body }
+  delete collection.movementId
   delete collection.carrier
   const leg = carrierChanged
     ? {
