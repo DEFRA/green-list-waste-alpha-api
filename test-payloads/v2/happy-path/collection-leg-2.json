@@ -1,0 +1,13 @@
+{
+  "movementId": "{{movementId}}",
+  "legOrder": 2,
+  "collectedAt": "2026-12-01T14:00:00Z",
+  "meansOfTransport": "ROAD",
+  "vehicleRegistration": "XY99 ZZZ",
+  "evidence": [
+    {
+      "type": "ANNEX_VII_NO",
+      "reference": "GLW.GB26000000000123i"
+    }
+  ]
+}

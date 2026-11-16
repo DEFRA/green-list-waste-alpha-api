@@ -1,0 +1,16 @@
+{
+  "movementId": "{{movementId}}",
+  "legOrder": 1,
+  "collectedAt": "2026-12-01T08:30:00Z",
+  "quantity": {
+    "metersCubed": 28
+  },
+  "meansOfTransport": "ROAD",
+  "vehicleRegistration": "AB12 CDE",
+  "evidence": [
+    {
+      "type": "ANNEX_VII_NO",
+      "reference": "GLW.GB26000000000123i"
+    }
+  ]
+}

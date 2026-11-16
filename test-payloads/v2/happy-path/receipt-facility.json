@@ -1,0 +1,26 @@
+{
+  "deliveryId": "{{deliveryId}}",
+  "receivedBy": "FACILITY",
+  "receivedAt": "2026-12-03T14:00:00Z",
+  "outcome": {
+    "status": "PART_ACCEPTED",
+    "acceptedQuantity": {
+      "tonnes": 23
+    },
+    "rejectedQuantity": {
+      "tonnes": 0.4
+    },
+    "reason": {
+      "languageCode": "en",
+      "value": "Contaminated bales removed"
+    }
+  },
+  "treatments": [
+    {
+      "code": "R3",
+      "weight": {
+        "tonnes": 23
+      }
+    }
+  ]
+}

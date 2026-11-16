@@ -1,0 +1,7 @@
+{
+  "yourUniqueReference": "PACK-{{runId}}",
+  "originCountry": "GB",
+  "destinationCountry": "DE",
+  "transitCountries": ["NL"],
+  "plannedCollectionAt": "2026-12-01T08:00:00Z"
+}

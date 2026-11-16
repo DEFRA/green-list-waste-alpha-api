@@ -1,0 +1,13 @@
+{
+  "movementIds": ["{{movementId}}"],
+  "deliveredAt": "2026-12-03T10:00:00Z",
+  "deliverySite": {
+    "name": "Example Reprocessor Ltd",
+    "address": {
+      "fullAddress": "9 Mill Lane, Leeds",
+      "postcode": "LS1 1AA",
+      "countryCode": "GB",
+      "cityName": "Bristol"
+    }
+  }
+}

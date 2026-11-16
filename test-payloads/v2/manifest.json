@@ -1,0 +1,1129 @@
+{
+  "description": "Test pack for the /v2 common model endpoints. Run in order within a scenario; {{name}} is replaced by a saved value.",
+  "scenarios": [
+    {
+      "id": "H1",
+      "title": "Export, the whole journey, with the facility receipt",
+      "steps": [
+        {
+          "name": "Arrange",
+          "file": "happy-path/arrange-export.json",
+          "method": "POST",
+          "path": "/v2/movement",
+          "expect": 201,
+          "save": {
+            "movementId": "movementId",
+            "revision": "revision"
+          },
+          "check": {
+            "status": "ARRANGED",
+            "kind": "EXPORT",
+            "revision": 1,
+            "externalSubmissions.0.status": "NOT_ENABLED"
+          }
+        },
+        {
+          "name": "Record collection",
+          "file": "happy-path/collection.json",
+          "method": "POST",
+          "path": "/v2/collection",
+          "expect": 201,
+          "save": {
+            "revision": "revision"
+          },
+          "check": {
+            "status": "COLLECTED",
+            "revision": 2
+          }
+        },
+        {
+          "name": "Record delivery",
+          "file": "happy-path/delivery.json",
+          "method": "POST",
+          "path": "/v2/delivery",
+          "expect": 201,
+          "save": {
+            "deliveryId": "deliveries.0.deliveryId"
+          },
+          "check": {
+            "movements.0.status": "DELIVERED"
+          }
+        },
+        {
+          "name": "Consignee receipt",
+          "file": "happy-path/receipt-consignee.json",
+          "method": "POST",
+          "path": "/v2/receipt",
+          "expect": 201,
+          "check": {
+            "movements.0.status": "RECEIVED"
+          }
+        },
+        {
+          "name": "Facility receipt",
+          "file": "happy-path/receipt-facility.json",
+          "method": "POST",
+          "path": "/v2/receipt",
+          "expect": 201,
+          "check": {
+            "fact.receivedBy": "FACILITY"
+          }
+        },
+        {
+          "name": "Read the movement",
+          "method": "GET",
+          "path": "/v2/movement/{{movementId}}",
+          "expect": 200,
+          "check": {
+            "status": "RECEIVED",
+            "facts.0.type": "ARRANGED",
+            "facts.1.type": "COLLECTED",
+            "facts.2.type": "DELIVERED",
+            "facts.3.type": "RECEIVED",
+            "facts.4.type": "RECEIVED"
+          }
+        }
+      ]
+    },
+    {
+      "id": "H2",
+      "title": "Export measured in cubic metres only",
+      "steps": [
+        {
+          "name": "Arrange",
+          "file": "happy-path/arrange-export-cubic-metres.json",
+          "method": "POST",
+          "path": "/v2/movement",
+          "expect": 201,
+          "save": {
+            "movementId": "movementId",
+            "revision": "revision"
+          },
+          "check": {
+            "status": "ARRANGED",
+            "externalSubmissions.0.status": "NOT_ENABLED"
+          }
+        },
+        {
+          "name": "Record collection",
+          "file": "happy-path/collection-cubic-metres.json",
+          "method": "POST",
+          "path": "/v2/collection",
+          "expect": 201,
+          "save": {
+            "revision": "revision"
+          },
+          "check": {
+            "status": "COLLECTED"
+          }
+        },
+        {
+          "name": "Record delivery",
+          "file": "happy-path/delivery.json",
+          "method": "POST",
+          "path": "/v2/delivery",
+          "expect": 201,
+          "save": {
+            "deliveryId": "deliveries.0.deliveryId"
+          },
+          "check": {
+            "movements.0.status": "DELIVERED"
+          }
+        },
+        {
+          "name": "Record receipt",
+          "file": "happy-path/receipt-consignee.json",
+          "method": "POST",
+          "path": "/v2/receipt",
+          "expect": 201,
+          "check": {
+            "movements.0.status": "RECEIVED"
+          }
+        }
+      ]
+    },
+    {
+      "id": "H3",
+      "title": "Export with two carriers (second leg is a hand-over)",
+      "steps": [
+        {
+          "name": "Arrange",
+          "file": "happy-path/arrange-export-two-carriers.json",
+          "method": "POST",
+          "path": "/v2/movement",
+          "expect": 201,
+          "save": {
+            "movementId": "movementId",
+            "revision": "revision"
+          },
+          "check": {
+            "status": "ARRANGED",
+            "externalSubmissions.0.status": "NOT_ENABLED"
+          }
+        },
+        {
+          "name": "Record collection",
+          "file": "happy-path/collection.json",
+          "method": "POST",
+          "path": "/v2/collection",
+          "expect": 201,
+          "save": {
+            "revision": "revision"
+          },
+          "check": {
+            "status": "COLLECTED"
+          }
+        },
+        {
+          "name": "Second carrier collects",
+          "file": "happy-path/collection-leg-2.json",
+          "method": "POST",
+          "path": "/v2/collection",
+          "expect": 201,
+          "save": {
+            "revision": "revision"
+          },
+          "check": {
+            "status": "COLLECTED",
+            "facts.2.type": "HANDED_OVER",
+            "facts.2.receivedFromLeg": 1
+          }
+        },
+        {
+          "name": "Record delivery",
+          "file": "happy-path/delivery.json",
+          "method": "POST",
+          "path": "/v2/delivery",
+          "expect": 201,
+          "save": {
+            "deliveryId": "deliveries.0.deliveryId"
+          },
+          "check": {
+            "movements.0.status": "DELIVERED"
+          }
+        },
+        {
+          "name": "Record receipt",
+          "file": "happy-path/receipt-consignee.json",
+          "method": "POST",
+          "path": "/v2/receipt",
+          "expect": 201,
+          "check": {
+            "movements.0.status": "RECEIVED"
+          }
+        }
+      ]
+    },
+    {
+      "id": "H4",
+      "title": "Change the plan, then cancel",
+      "steps": [
+        {
+          "name": "Arrange",
+          "file": "happy-path/arrange-export.json",
+          "method": "POST",
+          "path": "/v2/movement",
+          "expect": 201,
+          "save": {
+            "movementId": "movementId",
+            "revision": "revision"
+          },
+          "check": {
+            "status": "ARRANGED",
+            "externalSubmissions.0.status": "NOT_ENABLED"
+          }
+        },
+        {
+          "name": "Change the plan",
+          "file": "happy-path/change-plan.json",
+          "method": "PUT",
+          "path": "/v2/movement/{{movementId}}",
+          "headers": {
+            "If-Match": "{{revision}}"
+          },
+          "expect": 200,
+          "save": {
+            "revision": "revision"
+          },
+          "check": {
+            "status": "ARRANGED",
+            "revision": 2,
+            "destinationCountry": "FR"
+          }
+        },
+        {
+          "name": "Cancel",
+          "file": "happy-path/cancel.json",
+          "method": "PUT",
+          "path": "/v2/movement/{{movementId}}",
+          "headers": {
+            "If-Match": "{{revision}}"
+          },
+          "expect": 200,
+          "check": {
+            "status": "CANCELLED"
+          }
+        }
+      ]
+    },
+    {
+      "id": "H5",
+      "title": "National movement, the whole journey",
+      "steps": [
+        {
+          "name": "Arrange",
+          "file": "happy-path/arrange-national.json",
+          "method": "POST",
+          "path": "/v2/movement",
+          "expect": 201,
+          "save": {
+            "movementId": "movementId",
+            "revision": "revision"
+          },
+          "check": {
+            "kind": "NATIONAL"
+          }
+        },
+        {
+          "name": "Record collection",
+          "file": "happy-path/collection-national.json",
+          "method": "POST",
+          "path": "/v2/collection",
+          "expect": 201,
+          "save": {
+            "revision": "revision"
+          },
+          "check": {
+            "status": "COLLECTED"
+          }
+        },
+        {
+          "name": "Record delivery",
+          "file": "happy-path/delivery-national.json",
+          "method": "POST",
+          "path": "/v2/delivery",
+          "expect": 201,
+          "save": {
+            "deliveryId": "deliveries.0.deliveryId"
+          },
+          "check": {
+            "movements.0.status": "DELIVERED"
+          }
+        },
+        {
+          "name": "Record receipt",
+          "file": "happy-path/receipt-consignee.json",
+          "method": "POST",
+          "path": "/v2/receipt",
+          "expect": 201,
+          "check": {
+            "movements.0.status": "RECEIVED"
+          }
+        }
+      ]
+    },
+    {
+      "id": "H6",
+      "title": "Receipt quantity differs from the collection (warning, not a refusal)",
+      "steps": [
+        {
+          "name": "Arrange",
+          "file": "happy-path/arrange-export.json",
+          "method": "POST",
+          "path": "/v2/movement",
+          "expect": 201,
+          "save": {
+            "movementId": "movementId",
+            "revision": "revision"
+          },
+          "check": {
+            "status": "ARRANGED",
+            "externalSubmissions.0.status": "NOT_ENABLED"
+          }
+        },
+        {
+          "name": "Record collection",
+          "file": "happy-path/collection.json",
+          "method": "POST",
+          "path": "/v2/collection",
+          "expect": 201,
+          "save": {
+            "revision": "revision"
+          },
+          "check": {
+            "status": "COLLECTED"
+          }
+        },
+        {
+          "name": "Record delivery",
+          "file": "happy-path/delivery.json",
+          "method": "POST",
+          "path": "/v2/delivery",
+          "expect": 201,
+          "save": {
+            "deliveryId": "deliveries.0.deliveryId"
+          },
+          "check": {
+            "movements.0.status": "DELIVERED"
+          }
+        },
+        {
+          "name": "Record receipt",
+          "file": "happy-path/receipt-consignee-quantity-differs.json",
+          "method": "POST",
+          "path": "/v2/receipt",
+          "expect": 201,
+          "check": {
+            "warnings.0.code": "QUANTITY_DIFFERS"
+          }
+        }
+      ]
+    },
+    {
+      "id": "E1",
+      "title": "Required fields missing: 400 with every problem listed",
+      "steps": [
+        {
+          "name": "Required fields missing: 400 with every problem listed",
+          "file": "error-cases/01-missing-required-fields.json",
+          "method": "POST",
+          "path": "/v2/movement",
+          "expect": 400,
+          "check": {
+            "details.0.path": "parties"
+          }
+        }
+      ]
+    },
+    {
+      "id": "E2",
+      "title": "Waste code not in its list: 400",
+      "steps": [
+        {
+          "name": "Waste code not in its list: 400",
+          "file": "error-cases/02-invalid-waste-code.json",
+          "method": "POST",
+          "path": "/v2/movement",
+          "expect": 400
+        }
+      ]
+    },
+    {
+      "id": "E3",
+      "title": "Neither tonnes nor cubic metres: 400",
+      "steps": [
+        {
+          "name": "Neither tonnes nor cubic metres: 400",
+          "file": "error-cases/03-neither-tonnes-nor-cubic-metres.json",
+          "method": "POST",
+          "path": "/v2/movement",
+          "expect": 400
+        }
+      ]
+    },
+    {
+      "id": "E4",
+      "title": "Invalid email: 400",
+      "steps": [
+        {
+          "name": "Invalid email: 400",
+          "file": "error-cases/04-invalid-email.json",
+          "method": "POST",
+          "path": "/v2/movement",
+          "expect": 400
+        }
+      ]
+    },
+    {
+      "id": "E5",
+      "title": "Import: 422",
+      "steps": [
+        {
+          "name": "Import: 422",
+          "file": "error-cases/05-import-not-supported.json",
+          "method": "POST",
+          "path": "/v2/movement",
+          "expect": 422
+        }
+      ]
+    },
+    {
+      "id": "E6",
+      "title": "Two receivers: 422",
+      "steps": [
+        {
+          "name": "Two receivers: 422",
+          "file": "error-cases/06-two-receivers.json",
+          "method": "POST",
+          "path": "/v2/movement",
+          "expect": 422
+        }
+      ]
+    },
+    {
+      "id": "E7",
+      "title": "No producer when the arranger is not one: 422",
+      "steps": [
+        {
+          "name": "No producer when the arranger is not one: 422",
+          "file": "error-cases/07-no-producer.json",
+          "method": "POST",
+          "path": "/v2/movement",
+          "expect": 422
+        }
+      ]
+    },
+    {
+      "id": "E8",
+      "title": "National movement with a bad postcode: 422",
+      "steps": [
+        {
+          "name": "National movement with a bad postcode: 422",
+          "file": "error-cases/08-national-bad-postcode.json",
+          "method": "POST",
+          "path": "/v2/movement",
+          "expect": 422
+        }
+      ]
+    },
+    {
+      "id": "E9",
+      "title": "Same annexViiNumber twice: 409",
+      "steps": [
+        {
+          "name": "First use of the number",
+          "file": "error-cases/09-duplicate-annex-vii-number.json",
+          "method": "POST",
+          "path": "/v2/movement",
+          "expect": 201
+        },
+        {
+          "name": "Same annexViiNumber twice: 409",
+          "file": "error-cases/09-duplicate-annex-vii-number.json",
+          "method": "POST",
+          "path": "/v2/movement",
+          "expect": 409
+        }
+      ]
+    },
+    {
+      "id": "E10",
+      "title": "Carrier listed in parties[]: 422",
+      "steps": [
+        {
+          "name": "Carrier listed in parties[]: 422",
+          "file": "error-cases/10-carrier-in-parties.json",
+          "method": "POST",
+          "path": "/v2/movement",
+          "expect": 422
+        }
+      ]
+    },
+    {
+      "id": "E11",
+      "title": "Legs not numbered from 1: 422",
+      "steps": [
+        {
+          "name": "Legs not numbered from 1: 422",
+          "file": "error-cases/11-legs-not-numbered-from-1.json",
+          "method": "POST",
+          "path": "/v2/movement",
+          "expect": 422
+        }
+      ]
+    },
+    {
+      "id": "E12",
+      "title": "Collection skips a leg: 422",
+      "steps": [
+        {
+          "name": "Arrange",
+          "file": "happy-path/arrange-export.json",
+          "method": "POST",
+          "path": "/v2/movement",
+          "expect": 201,
+          "save": {
+            "movementId": "movementId",
+            "revision": "revision"
+          },
+          "check": {
+            "status": "ARRANGED",
+            "externalSubmissions.0.status": "NOT_ENABLED"
+          }
+        },
+        {
+          "name": "Collection skips a leg: 422",
+          "file": "error-cases/12-collection-leg-skipped.json",
+          "method": "POST",
+          "path": "/v2/collection",
+          "expect": 422
+        }
+      ]
+    },
+    {
+      "id": "E13",
+      "title": "First collection has no quantity: 422",
+      "steps": [
+        {
+          "name": "Arrange",
+          "file": "happy-path/arrange-export.json",
+          "method": "POST",
+          "path": "/v2/movement",
+          "expect": 201,
+          "save": {
+            "movementId": "movementId",
+            "revision": "revision"
+          },
+          "check": {
+            "status": "ARRANGED",
+            "externalSubmissions.0.status": "NOT_ENABLED"
+          }
+        },
+        {
+          "name": "First collection has no quantity: 422",
+          "file": "error-cases/13-collection-no-quantity.json",
+          "method": "POST",
+          "path": "/v2/collection",
+          "expect": 422
+        }
+      ]
+    },
+    {
+      "id": "E14",
+      "title": "Collection for a movement that does not exist: 422",
+      "steps": [
+        {
+          "name": "Collection for a movement that does not exist: 422",
+          "file": "error-cases/14-collection-unknown-movement.json",
+          "method": "POST",
+          "path": "/v2/collection",
+          "expect": 422
+        }
+      ]
+    },
+    {
+      "id": "E15",
+      "title": "Delivery before any collection: 422",
+      "steps": [
+        {
+          "name": "Arrange",
+          "file": "happy-path/arrange-export.json",
+          "method": "POST",
+          "path": "/v2/movement",
+          "expect": 201,
+          "save": {
+            "movementId": "movementId",
+            "revision": "revision"
+          },
+          "check": {
+            "status": "ARRANGED",
+            "externalSubmissions.0.status": "NOT_ENABLED"
+          }
+        },
+        {
+          "name": "Delivery before any collection: 422",
+          "file": "happy-path/delivery.json",
+          "method": "POST",
+          "path": "/v2/delivery",
+          "expect": 422
+        }
+      ]
+    },
+    {
+      "id": "E16",
+      "title": "Delivery site in the wrong country: 422",
+      "steps": [
+        {
+          "name": "Arrange",
+          "file": "happy-path/arrange-export.json",
+          "method": "POST",
+          "path": "/v2/movement",
+          "expect": 201,
+          "save": {
+            "movementId": "movementId",
+            "revision": "revision"
+          },
+          "check": {
+            "status": "ARRANGED",
+            "externalSubmissions.0.status": "NOT_ENABLED"
+          }
+        },
+        {
+          "name": "Record collection",
+          "file": "happy-path/collection.json",
+          "method": "POST",
+          "path": "/v2/collection",
+          "expect": 201,
+          "save": {
+            "revision": "revision"
+          },
+          "check": {
+            "status": "COLLECTED"
+          }
+        },
+        {
+          "name": "Delivery site in the wrong country: 422",
+          "file": "error-cases/15-delivery-wrong-country.json",
+          "method": "POST",
+          "path": "/v2/delivery",
+          "expect": 422
+        }
+      ]
+    },
+    {
+      "id": "E17",
+      "title": "Rejected receipt with no reason: 422",
+      "steps": [
+        {
+          "name": "Arrange",
+          "file": "happy-path/arrange-export.json",
+          "method": "POST",
+          "path": "/v2/movement",
+          "expect": 201,
+          "save": {
+            "movementId": "movementId",
+            "revision": "revision"
+          },
+          "check": {
+            "status": "ARRANGED",
+            "externalSubmissions.0.status": "NOT_ENABLED"
+          }
+        },
+        {
+          "name": "Record collection",
+          "file": "happy-path/collection.json",
+          "method": "POST",
+          "path": "/v2/collection",
+          "expect": 201,
+          "save": {
+            "revision": "revision"
+          },
+          "check": {}
+        },
+        {
+          "name": "Record delivery",
+          "file": "happy-path/delivery.json",
+          "method": "POST",
+          "path": "/v2/delivery",
+          "expect": 201,
+          "save": {
+            "deliveryId": "deliveries.0.deliveryId"
+          },
+          "check": {
+            "movements.0.status": "DELIVERED"
+          }
+        },
+        {
+          "name": "Rejected receipt with no reason: 422",
+          "file": "error-cases/16-receipt-rejected-no-reason.json",
+          "method": "POST",
+          "path": "/v2/receipt",
+          "expect": 422
+        }
+      ]
+    },
+    {
+      "id": "E18",
+      "title": "Accepted receipt that also gives a rejected quantity: 422",
+      "steps": [
+        {
+          "name": "Arrange",
+          "file": "happy-path/arrange-export.json",
+          "method": "POST",
+          "path": "/v2/movement",
+          "expect": 201,
+          "save": {
+            "movementId": "movementId",
+            "revision": "revision"
+          },
+          "check": {
+            "status": "ARRANGED",
+            "externalSubmissions.0.status": "NOT_ENABLED"
+          }
+        },
+        {
+          "name": "Record collection",
+          "file": "happy-path/collection.json",
+          "method": "POST",
+          "path": "/v2/collection",
+          "expect": 201,
+          "save": {
+            "revision": "revision"
+          },
+          "check": {}
+        },
+        {
+          "name": "Record delivery",
+          "file": "happy-path/delivery.json",
+          "method": "POST",
+          "path": "/v2/delivery",
+          "expect": 201,
+          "save": {
+            "deliveryId": "deliveries.0.deliveryId"
+          },
+          "check": {
+            "movements.0.status": "DELIVERED"
+          }
+        },
+        {
+          "name": "Accepted receipt that also gives a rejected quantity: 422",
+          "file": "error-cases/17-receipt-accepted-with-rejected.json",
+          "method": "POST",
+          "path": "/v2/receipt",
+          "expect": 422
+        }
+      ]
+    },
+    {
+      "id": "E19",
+      "title": "Facility receipt before the consignee receipt: 422",
+      "steps": [
+        {
+          "name": "Arrange",
+          "file": "happy-path/arrange-export.json",
+          "method": "POST",
+          "path": "/v2/movement",
+          "expect": 201,
+          "save": {
+            "movementId": "movementId",
+            "revision": "revision"
+          },
+          "check": {
+            "status": "ARRANGED",
+            "externalSubmissions.0.status": "NOT_ENABLED"
+          }
+        },
+        {
+          "name": "Record collection",
+          "file": "happy-path/collection.json",
+          "method": "POST",
+          "path": "/v2/collection",
+          "expect": 201,
+          "save": {
+            "revision": "revision"
+          },
+          "check": {}
+        },
+        {
+          "name": "Record delivery",
+          "file": "happy-path/delivery.json",
+          "method": "POST",
+          "path": "/v2/delivery",
+          "expect": 201,
+          "save": {
+            "deliveryId": "deliveries.0.deliveryId"
+          },
+          "check": {
+            "movements.0.status": "DELIVERED"
+          }
+        },
+        {
+          "name": "Facility receipt before the consignee receipt: 422",
+          "file": "happy-path/receipt-facility.json",
+          "method": "POST",
+          "path": "/v2/receipt",
+          "expect": 422
+        }
+      ]
+    },
+    {
+      "id": "E20",
+      "title": "Facility receipt with no treatments: 422",
+      "steps": [
+        {
+          "name": "Arrange",
+          "file": "happy-path/arrange-export.json",
+          "method": "POST",
+          "path": "/v2/movement",
+          "expect": 201,
+          "save": {
+            "movementId": "movementId",
+            "revision": "revision"
+          },
+          "check": {
+            "status": "ARRANGED",
+            "externalSubmissions.0.status": "NOT_ENABLED"
+          }
+        },
+        {
+          "name": "Record collection",
+          "file": "happy-path/collection.json",
+          "method": "POST",
+          "path": "/v2/collection",
+          "expect": 201,
+          "save": {
+            "revision": "revision"
+          },
+          "check": {}
+        },
+        {
+          "name": "Record delivery",
+          "file": "happy-path/delivery.json",
+          "method": "POST",
+          "path": "/v2/delivery",
+          "expect": 201,
+          "save": {
+            "deliveryId": "deliveries.0.deliveryId"
+          },
+          "check": {
+            "movements.0.status": "DELIVERED"
+          }
+        },
+        {
+          "name": "Record receipt",
+          "file": "happy-path/receipt-consignee.json",
+          "method": "POST",
+          "path": "/v2/receipt",
+          "expect": 201,
+          "check": {}
+        },
+        {
+          "name": "Facility receipt with no treatments: 422",
+          "file": "error-cases/18-facility-no-treatments.json",
+          "method": "POST",
+          "path": "/v2/receipt",
+          "expect": 422
+        }
+      ]
+    },
+    {
+      "id": "E21",
+      "title": "The consignee records a receipt twice: 409",
+      "steps": [
+        {
+          "name": "Arrange",
+          "file": "happy-path/arrange-export.json",
+          "method": "POST",
+          "path": "/v2/movement",
+          "expect": 201,
+          "save": {
+            "movementId": "movementId",
+            "revision": "revision"
+          },
+          "check": {
+            "status": "ARRANGED",
+            "externalSubmissions.0.status": "NOT_ENABLED"
+          }
+        },
+        {
+          "name": "Record collection",
+          "file": "happy-path/collection.json",
+          "method": "POST",
+          "path": "/v2/collection",
+          "expect": 201,
+          "save": {
+            "revision": "revision"
+          },
+          "check": {}
+        },
+        {
+          "name": "Record delivery",
+          "file": "happy-path/delivery.json",
+          "method": "POST",
+          "path": "/v2/delivery",
+          "expect": 201,
+          "save": {
+            "deliveryId": "deliveries.0.deliveryId"
+          },
+          "check": {
+            "movements.0.status": "DELIVERED"
+          }
+        },
+        {
+          "name": "Record receipt",
+          "file": "happy-path/receipt-consignee.json",
+          "method": "POST",
+          "path": "/v2/receipt",
+          "expect": 201,
+          "check": {}
+        },
+        {
+          "name": "The consignee records a receipt twice: 409",
+          "file": "happy-path/receipt-consignee.json",
+          "method": "POST",
+          "path": "/v2/receipt",
+          "expect": 409
+        }
+      ]
+    },
+    {
+      "id": "E22",
+      "title": "Receipt for a delivery that does not exist: 422",
+      "steps": [
+        {
+          "name": "Receipt for a delivery that does not exist: 422",
+          "file": "happy-path/receipt-consignee.json",
+          "method": "POST",
+          "path": "/v2/receipt",
+          "expect": 422,
+          "vars": {
+            "deliveryId": "7d1c4e0a-3b52-4c1e-9a77-2f0c1d6b8e11"
+          }
+        }
+      ]
+    },
+    {
+      "id": "E23",
+      "title": "Change the plan without If-Match: 428",
+      "steps": [
+        {
+          "name": "Arrange",
+          "file": "happy-path/arrange-export.json",
+          "method": "POST",
+          "path": "/v2/movement",
+          "expect": 201,
+          "save": {
+            "movementId": "movementId",
+            "revision": "revision"
+          },
+          "check": {
+            "status": "ARRANGED",
+            "externalSubmissions.0.status": "NOT_ENABLED"
+          }
+        },
+        {
+          "name": "Change the plan without If-Match: 428",
+          "file": "happy-path/change-plan.json",
+          "method": "PUT",
+          "path": "/v2/movement/{{movementId}}",
+          "expect": 428
+        }
+      ]
+    },
+    {
+      "id": "E24",
+      "title": "Change the plan with an old revision: 412",
+      "steps": [
+        {
+          "name": "Arrange",
+          "file": "happy-path/arrange-export.json",
+          "method": "POST",
+          "path": "/v2/movement",
+          "expect": 201,
+          "save": {
+            "movementId": "movementId",
+            "revision": "revision"
+          },
+          "check": {
+            "status": "ARRANGED",
+            "externalSubmissions.0.status": "NOT_ENABLED"
+          }
+        },
+        {
+          "name": "Change the plan with an old revision: 412",
+          "file": "happy-path/change-plan.json",
+          "method": "PUT",
+          "path": "/v2/movement/{{movementId}}",
+          "expect": 412,
+          "headers": {
+            "If-Match": "99"
+          }
+        }
+      ]
+    },
+    {
+      "id": "E25",
+      "title": "Change the plan after a collection: 409",
+      "steps": [
+        {
+          "name": "Arrange",
+          "file": "happy-path/arrange-export.json",
+          "method": "POST",
+          "path": "/v2/movement",
+          "expect": 201,
+          "save": {
+            "movementId": "movementId",
+            "revision": "revision"
+          },
+          "check": {
+            "status": "ARRANGED",
+            "externalSubmissions.0.status": "NOT_ENABLED"
+          }
+        },
+        {
+          "name": "Record collection",
+          "file": "happy-path/collection.json",
+          "method": "POST",
+          "path": "/v2/collection",
+          "expect": 201,
+          "save": {
+            "revision": "revision"
+          },
+          "check": {}
+        },
+        {
+          "name": "Change the plan after a collection: 409",
+          "file": "happy-path/change-plan.json",
+          "method": "PUT",
+          "path": "/v2/movement/{{movementId}}",
+          "expect": 409,
+          "headers": {
+            "If-Match": "{{revision}}"
+          }
+        }
+      ]
+    },
+    {
+      "id": "E26",
+      "title": "Collect after cancelling: 409",
+      "steps": [
+        {
+          "name": "Arrange",
+          "file": "happy-path/arrange-export.json",
+          "method": "POST",
+          "path": "/v2/movement",
+          "expect": 201,
+          "save": {
+            "movementId": "movementId",
+            "revision": "revision"
+          },
+          "check": {
+            "status": "ARRANGED",
+            "externalSubmissions.0.status": "NOT_ENABLED"
+          }
+        },
+        {
+          "name": "Cancel",
+          "file": "happy-path/cancel.json",
+          "method": "PUT",
+          "path": "/v2/movement/{{movementId}}",
+          "headers": {
+            "If-Match": "{{revision}}"
+          },
+          "expect": 200
+        },
+        {
+          "name": "Collect after cancelling: 409",
+          "file": "happy-path/collection.json",
+          "method": "POST",
+          "path": "/v2/collection",
+          "expect": 409
+        }
+      ]
+    },
+    {
+      "id": "E27",
+      "title": "Read a movement that does not exist: 404",
+      "steps": [
+        {
+          "name": "Read",
+          "method": "GET",
+          "path": "/v2/movement/7d1c4e0a-3b52-4c1e-9a77-2f0c1d6b8e11",
+          "expect": 404
+        }
+      ]
+    },
+    {
+      "id": "E28",
+      "title": "Read with an id that is not a UUID: 400",
+      "steps": [
+        {
+          "name": "Read",
+          "method": "GET",
+          "path": "/v2/movement/not-a-uuid",
+          "expect": 400
+        }
+      ]
+    }
+  ]
+}
