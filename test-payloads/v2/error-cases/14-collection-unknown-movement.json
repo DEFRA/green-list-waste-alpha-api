@@ -1,0 +1,17 @@
+{
+  "movementId": "7d1c4e0a-3b52-4c1e-9a77-2f0c1d6b8e11",
+  "legOrder": 1,
+  "collectedAt": "2026-12-01T08:30:00Z",
+  "quantity": {
+    "tonnes": 23.4,
+    "isEstimate": false
+  },
+  "meansOfTransport": "ROAD",
+  "vehicleRegistration": "AB12 CDE",
+  "evidence": [
+    {
+      "type": "ANNEX_VII_NO",
+      "reference": "GLW.GB26000000000123i"
+    }
+  ]
+}

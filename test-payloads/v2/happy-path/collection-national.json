@@ -1,0 +1,11 @@
+{
+  "movementId": "{{movementId}}",
+  "legOrder": 1,
+  "collectedAt": "2026-12-01T08:30:00Z",
+  "quantity": {
+    "tonnes": 23.4,
+    "isEstimate": false
+  },
+  "meansOfTransport": "ROAD",
+  "vehicleRegistration": "AB12 CDE"
+}

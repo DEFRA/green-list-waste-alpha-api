@@ -1,0 +1,14 @@
+{
+  "deliveryId": "{{deliveryId}}",
+  "receivedBy": "RECEIVER",
+  "receivedAt": "2026-12-03T10:20:00Z",
+  "outcome": {
+    "status": "ACCEPTED",
+    "acceptedQuantity": {
+      "tonnes": 20
+    },
+    "rejectedQuantity": {
+      "tonnes": 3.4
+    }
+  }
+}

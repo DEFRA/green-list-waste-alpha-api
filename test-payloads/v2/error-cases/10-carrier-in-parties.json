@@ -1,0 +1,155 @@
+{
+  "yourUniqueReference": "PACK-{{runId}}",
+  "originCountry": "GB",
+  "destinationCountry": "DE",
+  "transitCountries": ["NL"],
+  "plannedCollectionAt": "2026-12-01T08:00:00Z",
+  "parties": [
+    {
+      "roles": ["ARRANGER", "PRODUCER"],
+      "name": "Example Exporter Ltd",
+      "identifiers": [
+        {
+          "scheme": "EORI",
+          "value": "GB123456789000",
+          "main": true
+        }
+      ],
+      "contact": {
+        "contactPerson": "Test Contact",
+        "email": "test.contact@example.co.uk",
+        "phone": "+441170000000"
+      },
+      "address": {
+        "fullAddress": "1 Dock Road, Bristol",
+        "postcode": "BS1 4XX",
+        "countryCode": "GB",
+        "cityName": "Bristol"
+      },
+      "arrangerType": "OTHER"
+    },
+    {
+      "roles": ["RECEIVER"],
+      "name": "Example Recovery GmbH",
+      "identifiers": [
+        {
+          "scheme": "EORI",
+          "value": "GB123456789000",
+          "main": true
+        }
+      ],
+      "contact": {
+        "contactPerson": "Test Contact",
+        "email": "test.contact@example.co.uk",
+        "phone": "+441170000000"
+      },
+      "address": {
+        "fullAddress": "Hafenstrasse 4, Hamburg",
+        "postcode": "20457",
+        "countryCode": "DE",
+        "cityName": "Hamburg"
+      }
+    },
+    {
+      "roles": ["FACILITY"],
+      "name": "Example Recovery GmbH Plant",
+      "identifiers": [
+        {
+          "scheme": "EORI",
+          "value": "GB123456789000",
+          "main": true
+        }
+      ],
+      "contact": {
+        "contactPerson": "Test Contact",
+        "email": "test.contact@example.co.uk",
+        "phone": "+441170000000"
+      },
+      "address": {
+        "fullAddress": "Hafenstrasse 4, Hamburg",
+        "postcode": "20457",
+        "countryCode": "DE",
+        "cityName": "Hamburg"
+      },
+      "facilityType": "RECOVERY",
+      "isInterimFacility": false
+    },
+    {
+      "roles": ["CARRIER"],
+      "name": "Example Haulage 9 Ltd",
+      "identifiers": [
+        {
+          "scheme": "EORI",
+          "value": "GB123456789000",
+          "main": true
+        }
+      ],
+      "contact": {
+        "contactPerson": "Test Contact",
+        "email": "test.contact@example.co.uk",
+        "phone": "+441170000000"
+      },
+      "address": {
+        "fullAddress": "1 Dock Road, Bristol",
+        "postcode": "BS1 4XX",
+        "countryCode": "GB",
+        "cityName": "Bristol"
+      }
+    }
+  ],
+  "legs": [
+    {
+      "order": 1,
+      "carrier": {
+        "roles": ["CARRIER"],
+        "name": "Example Haulage 1 Ltd",
+        "identifiers": [
+          {
+            "scheme": "EORI",
+            "value": "GB123456789000",
+            "main": true
+          }
+        ],
+        "contact": {
+          "contactPerson": "Test Contact",
+          "email": "test.contact@example.co.uk",
+          "phone": "+441170000000"
+        },
+        "address": {
+          "fullAddress": "1 Dock Road, Bristol",
+          "postcode": "BS1 4XX",
+          "countryCode": "GB",
+          "cityName": "Bristol"
+        }
+      },
+      "meansOfTransport": "ROAD"
+    }
+  ],
+  "wasteItems": [
+    {
+      "classification": {
+        "wasteDescription": "Baled waste paper",
+        "codes": [
+          {
+            "scheme": "EWC",
+            "value": "15 01 01"
+          },
+          {
+            "scheme": "BASEL_ANNEX_IX",
+            "value": "B3020"
+          }
+        ],
+        "commodityCodes": ["4707 10 00"]
+      },
+      "quantity": {
+        "tonnes": 24,
+        "isEstimate": true
+      },
+      "treatments": [
+        {
+          "code": "R3"
+        }
+      ]
+    }
+  ]
+}

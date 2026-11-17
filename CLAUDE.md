@@ -89,6 +89,29 @@ Two distinct surfaces, one deployed service.
 | GET    | `/waste-codes/basel-annex-ix`       | List Basel Annex IX (List B) codes                                                                                                                                                                                        |
 | GET    | `/waste-codes/oecd-green-list`      | List OECD green list codes not already covered by Basel Annex IX                                                                                                                                                          |
 
+### The common model API (`/v2`, JSON)
+
+Four shared endpoints that would exist in both National and International
+waste, added beside the `/annexvii` endpoints above, which stay as they are.
+Design and payloads: the "Export journey" page on the alpha playback site.
+Code is in `src/v2/` (`schemas.js` shape, `rules.js` rule set, `movements.js`
+store, `routes.js`).
+
+| Method | Path                | Purpose                                                                                                                       |
+| ------ | ------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| POST   | `/v2/movement`      | Arrange a movement. Derives `kind` from origin and destination (NATIONAL or EXPORT; IMPORT is refused). Returns `movementId`. |
+| PUT    | `/v2/movement/{id}` | Needs `If-Match: <revision>`. Replace the plan, or cancel with `status: "CANCELLED"`. Only before the first collection.       |
+| GET    | `/v2/movement/{id}` | Read a movement with its facts.                                                                                               |
+| POST   | `/v2/collection`    | Record one leg; `movementId` is in the body. The first is COLLECTED, later ones HANDED_OVER.                                  |
+| POST   | `/v2/delivery`      | Group movements delivered to one site; mints `deliveryId`.                                                                    |
+| POST   | `/v2/receipt`       | One receipt per role (RECEIVER, then optionally FACILITY) for the `deliveryId` in the body.                                   |
+
+Status is the furthest fact reached. Refusals share one shape with
+`details[]`: 400 shape or code lists, 422 rules, 409 state, 412/428
+`If-Match`. DIWASS submission is not built: every response carries
+`externalSubmissions: [{ system: 'DIWASS', status: 'NOT_ENABLED' }]` so it can
+be switched on later. Auth is left to the API gateway, as for `/annexvii`.
+
 ### The DIWASS emulator (SOAP/XML)
 
 DIWASS itself exposes one endpoint per WSDL service and dispatches

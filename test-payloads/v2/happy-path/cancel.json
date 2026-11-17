@@ -1,0 +1,10 @@
+{
+  "status": "CANCELLED",
+  "cancellation": {
+    "reason": "Buyer withdrew the order",
+    "cancelledBy": {
+      "name": "John Doe",
+      "roleInOrganisation": "Director"
+    }
+  }
+}

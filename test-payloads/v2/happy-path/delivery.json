@@ -1,0 +1,13 @@
+{
+  "movementIds": ["{{movementId}}"],
+  "deliveredAt": "2026-12-03T10:00:00Z",
+  "deliverySite": {
+    "name": "Example Recovery GmbH",
+    "address": {
+      "fullAddress": "Hafenstrasse 4, Hamburg",
+      "postcode": "20457",
+      "countryCode": "DE",
+      "cityName": "Hamburg"
+    }
+  }
+}

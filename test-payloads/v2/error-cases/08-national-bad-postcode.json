@@ -1,0 +1,109 @@
+{
+  "yourUniqueReference": "PACK-{{runId}}",
+  "originCountry": "GB",
+  "destinationCountry": "GB",
+  "plannedCollectionAt": "2026-12-01T08:00:00Z",
+  "parties": [
+    {
+      "roles": ["ARRANGER", "PRODUCER"],
+      "name": "Example Producer Ltd",
+      "identifiers": [
+        {
+          "scheme": "EORI",
+          "value": "GB123456789000",
+          "main": true
+        }
+      ],
+      "contact": {
+        "contactPerson": "Test Contact",
+        "email": "test.contact@example.co.uk",
+        "phone": "+441170000000"
+      },
+      "address": {
+        "fullAddress": "1 Dock Road, Bristol",
+        "postcode": "BS1 4XX",
+        "countryCode": "GB",
+        "cityName": "Bristol"
+      },
+      "arrangerType": "OTHER"
+    },
+    {
+      "roles": ["RECEIVER"],
+      "name": "Example Reprocessor Ltd",
+      "identifiers": [
+        {
+          "scheme": "EORI",
+          "value": "GB123456789000",
+          "main": true
+        }
+      ],
+      "contact": {
+        "contactPerson": "Test Contact",
+        "email": "test.contact@example.co.uk",
+        "phone": "+441170000000"
+      },
+      "address": {
+        "fullAddress": "9 Mill Lane, Leeds",
+        "postcode": "NOT A POSTCODE",
+        "countryCode": "GB",
+        "cityName": "Bristol"
+      }
+    }
+  ],
+  "legs": [
+    {
+      "order": 1,
+      "carrier": {
+        "roles": ["CARRIER"],
+        "name": "Example Haulage 1 Ltd",
+        "identifiers": [
+          {
+            "scheme": "EORI",
+            "value": "GB123456789000",
+            "main": true
+          }
+        ],
+        "contact": {
+          "contactPerson": "Test Contact",
+          "email": "test.contact@example.co.uk",
+          "phone": "+441170000000"
+        },
+        "address": {
+          "fullAddress": "1 Dock Road, Bristol",
+          "postcode": "BS1 4XX",
+          "countryCode": "GB",
+          "cityName": "Bristol"
+        }
+      },
+      "meansOfTransport": "ROAD"
+    }
+  ],
+  "wasteItems": [
+    {
+      "classification": {
+        "wasteDescription": "Baled waste paper",
+        "codes": [
+          {
+            "scheme": "EWC",
+            "value": "15 01 01"
+          },
+          {
+            "scheme": "BASEL_ANNEX_IX",
+            "value": "B3020"
+          }
+        ],
+        "commodityCodes": ["4707 10 00"]
+      },
+      "quantity": {
+        "tonnes": 24,
+        "isEstimate": true
+      },
+      "treatments": [
+        {
+          "code": "R3"
+        }
+      ]
+    }
+  ],
+  "wasteSource": "COMMERCIAL"
+}
