@@ -33,7 +33,7 @@
           <v11:name>Test Signatory (DEFRA-ALPHA-TEST)</v11:name>
           <v11:organizationRole>Director (test)</v11:organizationRole>
           <v11:timestamp>2026-10-12T11:19:36.561Z</v11:timestamp>
-          <v11:emailURI>craig.taylor@equalexperts.com</v11:emailURI>
+          <v11:emailURI>test@test.com</v11:emailURI>
         </n:signature>
       </v1:statement>
     </v1:CreateAnnex7SignalTypeRequest>
