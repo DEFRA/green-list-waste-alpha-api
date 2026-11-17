@@ -31,7 +31,7 @@
           <v11:Contact>
             <v11:Name>Craig Taylor</v11:Name>
             <v11:TelephoneCompleteNumber>+442078878888</v11:TelephoneCompleteNumber>
-            <v11:EmailURI>craig.taylor@equalexperts.com</v11:EmailURI>
+            <v11:EmailURI>test@test.com</v11:EmailURI>
           </v11:Contact>
           <v11:OperatorInternalID>248482</v11:OperatorInternalID>
         </v11:arranger>
@@ -40,7 +40,7 @@
           <v11:Contact>
             <v11:Name>Craig Taylor</v11:Name>
             <v11:TelephoneCompleteNumber>+442078878888</v11:TelephoneCompleteNumber>
-            <v11:EmailURI>craig.taylor@equalexperts.com</v11:EmailURI>
+            <v11:EmailURI>test@test.com</v11:EmailURI>
           </v11:Contact>
           <v11:OperatorInternalID>248540</v11:OperatorInternalID>
         </v11:consignee>
@@ -56,14 +56,14 @@
         <v11:shipmentLocationResponsiblePerson>
           <v11:Name>Craig Taylor</v11:Name>
           <v11:TelephoneCompleteNumber>+442078878888</v11:TelephoneCompleteNumber>
-          <v11:EmailURI>craig.taylor@equalexperts.com</v11:EmailURI>
+          <v11:EmailURI>test@test.com</v11:EmailURI>
         </v11:shipmentLocationResponsiblePerson>
         <v11:carrier>
           <v11:PartyUUID>7d16f366-2b48-4bfd-ab0e-a1d18287106b</v11:PartyUUID>
           <v11:Contact>
             <v11:Name>Craig Taylor</v11:Name>
             <v11:TelephoneCompleteNumber>+442078878888</v11:TelephoneCompleteNumber>
-            <v11:EmailURI>craig.taylor@equalexperts.com</v11:EmailURI>
+            <v11:EmailURI>test@test.com</v11:EmailURI>
           </v11:Contact>
           <v11:OperatorInternalID>248626</v11:OperatorInternalID>
           <v11:MeansOfTransportCode>R</v11:MeansOfTransportCode>
@@ -73,7 +73,7 @@
           <v11:Contact>
             <v11:Name>Craig Taylor</v11:Name>
             <v11:TelephoneCompleteNumber>+442078878888</v11:TelephoneCompleteNumber>
-            <v11:EmailURI>craig.taylor@equalexperts.com</v11:EmailURI>
+            <v11:EmailURI>test@test.com</v11:EmailURI>
           </v11:Contact>
           <v11:OperatorInternalID>248540</v11:OperatorInternalID>
           <v11:operationalIndicators>
@@ -102,7 +102,7 @@
           <v11:name>Test Signatory (DEFRA-ALPHA-TEST)</v11:name>
           <v11:organizationRole>Director (test)</v11:organizationRole>
           <v11:timestamp>2026-10-08T21:00:00.000Z</v11:timestamp>
-          <v11:emailURI>craig.taylor@equalexperts.com</v11:emailURI>
+          <v11:emailURI>test@test.com</v11:emailURI>
         </v11:Signature>
       </v1:declarationArranger>
     </v1:CreateAnnex7DocumentTypeRequest>

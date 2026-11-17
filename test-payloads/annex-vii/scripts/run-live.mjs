@@ -115,7 +115,7 @@ const DUPLICATE_OPERATOR_BODY = `<op:CreateOperatorRequest><op:Operator>
   </opb:Address></opb:OperatorAddress>
   <opb:OperatorContactDetail><opb:ContactDetail type="phone">+442078878888</opb:ContactDetail></opb:OperatorContactDetail>
   <opb:OperatorContactDetail><opb:ContactDetail type="contact_person_name">Craig Taylor</opb:ContactDetail></opb:OperatorContactDetail>
-  <opb:OperatorContactDetail><opb:ContactDetail type="email">craig.taylor@equalexperts.com</opb:ContactDetail></opb:OperatorContactDetail>
+  <opb:OperatorContactDetail><opb:ContactDetail type="email">test@test.com</opb:ContactDetail></opb:OperatorContactDetail>
   <opb:Identifier type="eori" name="EORI" main="true">XI343558638334</opb:Identifier>
   <opb:Activity>
     <opb:ActivityType>

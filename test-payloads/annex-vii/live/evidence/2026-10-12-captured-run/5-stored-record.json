@@ -12,7 +12,7 @@
     "contactDetails": {
       "contactPerson": "Craig Taylor",
       "phone": "+442078878888",
-      "email": "craig.taylor@equalexperts.com"
+      "email": "test@test.com"
     },
     "isAlsoWasteProducer": true
   },
@@ -22,7 +22,7 @@
     "contactDetails": {
       "contactPerson": "Craig Taylor",
       "phone": "+442078878888",
-      "email": "craig.taylor@equalexperts.com"
+      "email": "test@test.com"
     }
   },
   "shipment": {
@@ -41,7 +41,7 @@
     "shipmentLocationResponsiblePerson": {
       "name": "Craig Taylor",
       "phone": "+442078878888",
-      "email": "craig.taylor@equalexperts.com"
+      "email": "test@test.com"
     }
   },
   "carriers": [
@@ -51,7 +51,7 @@
       "contactDetails": {
         "contactPerson": "Craig Taylor",
         "phone": "+442078878888",
-        "email": "craig.taylor@equalexperts.com"
+        "email": "test@test.com"
       },
       "meansOfTransportCode": "R",
       "transferDate": {
@@ -60,7 +60,7 @@
       "declaration": {
         "authenticatedBy": {
           "name": "Test Carrier Signatory",
-          "email": "craig.taylor@equalexperts.com",
+          "email": "test@test.com",
           "roleInOrganisation": "Logistics (test)",
           "authenticationTimestamp": {
             "$date": "2026-10-08T21:00:00Z"
@@ -76,7 +76,7 @@
     "contactDetails": {
       "contactPerson": "Craig Taylor",
       "phone": "+442078878888",
-      "email": "craig.taylor@equalexperts.com"
+      "email": "test@test.com"
     },
     "facilityType": "recoveryFacility",
     "isInterimFacility": false,
@@ -97,7 +97,7 @@
   "declarationOfShipmentArranger": {
     "authenticatedBy": {
       "name": "Test Signatory (DEFRA-ALPHA-TEST)",
-      "email": "craig.taylor@equalexperts.com",
+      "email": "test@test.com",
       "roleInOrganisation": "Director (test)",
       "authenticationTimestamp": {
         "$date": "2026-10-08T21:00:00Z"

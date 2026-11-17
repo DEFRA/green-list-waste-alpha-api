@@ -122,7 +122,7 @@ const probes = [
         name: 'Test Signatory (DEFRA-ALPHA-TEST)',
         organizationRole: 'Director (test)',
         timestamp: new Date().toISOString(),
-        emailURI: 'craig.taylor@equalexperts.com'
+        emailURI: 'test@test.com'
       }
     }),
     actAs: '248482'
